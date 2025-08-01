@@ -30,21 +30,11 @@ public class LoginServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet NewServlet</title>");
+            out.println("<title>Authenticate</title>");
             out.println("<link rel=\"stylesheet\" href=\"style.css\">");
             out.println("</head>");
             out.println("<body class=\"client\">");
-            out.println("<div class=\"auth-page\">\n" +
-                        "        <div class=\"auth-container\">\n" +
-                        "            <h2>Login</h2>\n" +
-                        "            <form id=\"login-form\" method=\"POST\">\n" +
-                        "                <input type=\"text\" id=\"username\" placeholder=\"Username\" name=\"username\">\n" +
-                        "                <input type=\"password\" id=\"password\" placeholder=\"Password\" name=\"password\">\n" +
-                        "                <button type=\"submit\" name=\"submit\">Login</button>\n" +
-                        "            </form>\n" +
-                        "            <p class=\"register\">Don't have an account? <a href=\"client/register.php\">Register here</a></p>\n" +
-                        "        </div>\n" +
-                        "    </div>");
+            out.println("<h1 class=\"auth-page\"> Verified </h1>");
             out.println("</body>");
             out.println("</html>");
         }
