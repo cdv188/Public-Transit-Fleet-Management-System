@@ -3,6 +3,6 @@
 ---
 
 <h3>Group Members:</h3>
-- Chester Don Valencerina
-- Louis Tran
-- Ali Nayef
+<p>Chester Don Valencerina</p>
+<p>Louis Tran</p>
+<p>Ali Nayef</p>
