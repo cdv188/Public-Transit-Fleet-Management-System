@@ -85,30 +85,32 @@ A controller class is used to manage communication across all layers.
 ---
 
 ## 📁 Updated Project Structure
+
+```
 src/
 ├── main/
-│ ├── java/
-│ │ ├── businesslayers/
-│ │ ├── builder/
-│ │ ├── command/
-│ │ ├── observer/
-│ │ ├── simplefactory/
-│ │ ├── strategy/
-│ │ ├── controller/
-│ │ ├── datacccesslayer/
-│ │ │ ├── consumptionlogs/
-│ │ │ ├── operatorlogs/
-│ │ │ ├── users/
-│ │ │ ├── vehicleassignment/
-│ │ │ ├── vehiclelocation/
-│ │ │ └── vehicles/
-│ │ ├── database/
-│ │ ├── datatransferobject/
-│ │ ├── filter/
-│ │ ├── MaintenanceLogDAO/
-│ │ └── viewLayer/
+│ └── java/
+│   ├── businesslayers/
+│   ├── builder/
+│   ├── command/
+│   ├── observer/
+│   ├── simplefactory/
+│   ├── strategy/
+│   ├── controller/
+│   ├── datacccesslayer/
+│   │ ├── consumptionlogs/
+│   │ ├── operatorlogs/
+│   │ ├── users/
+│   │ ├── vehicleassignment/
+│   │ ├── vehiclelocation/
+│   │ └── vehicles/
+│   ├── database/
+│   ├── datatransferobject/
+│   ├── filter/
+│   ├── MaintenanceLogDAO/
+│   └── viewLayer/
 │ ├── resources/
-│ │ └── META-INF/
+│   └── META-INF/
 │ └── webapp/
 │ ├── css/
 │ ├── META-INF/
@@ -118,6 +120,7 @@ src/
 ├── java/
 └── resources/
 
+```
 ---
 
 ## 💻 GitHub Workflow
