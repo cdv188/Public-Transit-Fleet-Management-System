@@ -84,6 +84,47 @@ A controller class is used to manage communication across all layers.
 
 ---
 
+## 📁 Updated Project Structure
+Group#_Final_Project/
+│
+├── java/
+│ ├── businesslayers/
+│ │ ├── builder/
+│ │ ├── command/
+│ │ ├── observer/
+│ │ ├── simplefactory/
+│ │ └── strategy/
+│ │
+│ ├── controller/
+│ ├── dataaccesslayer/
+│ │ ├── consumptionlogs/
+│ │ ├── operatorlogs/
+│ │ ├── users/
+│ │ ├── vehicleassignment/
+│ │ ├── vehiclelocation/
+│ │ └── vehicles/
+│ │
+│ ├── database/
+│ ├── datatransferobject/
+│ ├── filter/
+│ ├── MaintenanceLogDAO/
+│ └── viewlayer/
+│
+├── resources/
+│ └── META-INF/
+│
+├── webapp/
+│ ├── css/
+│ ├── META-INF/
+│ ├── views/
+│ └── WEB-INF/
+│
+├── pom.xml
+├── README.md
+└── .gitignore
+
+---
+
 ## 💻 GitHub Workflow
 
 - One **Team Lead** manages a private repository
