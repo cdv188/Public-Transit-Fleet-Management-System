@@ -4,9 +4,41 @@
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>viewlayer.LoginServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShowVehicleListServlet</servlet-name>
+        <servlet-class>viewlayer.ShowVehicleListServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>VehicleControllerServlet</servlet-name>
+        <servlet-class>viewlayer.VehicleControllerServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>RegisterVehicleServlet</servlet-name>
+        <servlet-class>viewlayer.RegisterVehicleServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowVehicleByIdServlet</servlet-name>
+        <servlet-class>viewlayer.ShowVehicleByIdServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowVehicleListServlet</servlet-name>
+        <url-pattern>/ShowVehicleList</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>VehicleControllerServlet</servlet-name>
+        <url-pattern>/VehicleController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>RegisterVehicleServlet</servlet-name>
+        <url-pattern>/RegisterVehicle</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowVehicleByIdServlet</servlet-name>
+        <url-pattern>/ShowVehicleById</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
