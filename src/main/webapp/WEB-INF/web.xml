@@ -32,6 +32,10 @@
         <servlet-name>ShowMaintenanceByIdServlet</servlet-name>
         <servlet-class>viewlayer.ShowMaintenanceByIdServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>UpdateVehicleServlet</servlet-name>
+        <servlet-class>viewlayer.UpdateVehicleServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>FrontController</servlet-name>
         <url-pattern>/controller</url-pattern>
@@ -63,6 +67,10 @@
     <servlet-mapping>
         <servlet-name>ShowMaintenanceByIdServlet</servlet-name>
         <url-pattern>/ShowMaintenanceById</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateVehicleServlet</servlet-name>
+        <url-pattern>/UpdateVehicle</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

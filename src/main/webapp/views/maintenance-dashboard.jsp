@@ -23,6 +23,8 @@
             <c:if test="${isManager}">
                 <a href="ShowMaintenance?action=schedule">Schedule Maintenance</a>
                 <a href="RegisterVehicle">Register Vehicle</a>
+                <a href="reports.jsp">Reports</a>
+                <a href="gpsDashboard.jsp">GPS Dashboard</a>
             </c:if>
             <a href="dashboard.jsp">Dashboard</a>
         </div>
@@ -94,6 +96,7 @@
                         <tr>
                             <th>Vehicle</th>
                             <th>Description</th>
+                            <th>Scheduled Date</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -103,9 +106,17 @@
                             <tr>
                                 <td>${alert.vehicleNumber}</td>
                                 <td>${alert.taskDescription}</td>
+                                <td>${task.scheduledDate}</td>
                                 <td><span class="status-badge status-alert">${alert.status}</span></td>
                                 <td>
                                     <a href="ShowMaintenanceById?id=${alert.taskId}" class="btn">View</a>
+                                    <c:if test="${isManager}">
+                                        <form style="display:inline;" method="post" action="ShowMaintenance?action=update">
+                                                <input type="hidden" name="taskId" value="${alert.taskId}">
+                                                <input type="hidden" name="status" value="In-Progress">
+                                                <button type="submit" class="btn btn-warning">Start</button>
+                                        </form>
+                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>

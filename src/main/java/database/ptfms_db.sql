@@ -37,7 +37,7 @@ CREATE TABLE `VehicleAssignments` (
 CREATE TABLE `Vehicles` (
     `vehicle_id` INT AUTO_INCREMENT PRIMARY KEY,
     `vehicle_number` VARCHAR(50) NOT NULL UNIQUE,
-    `vehicle_type` ENUM('Diesel Bus', 'Electric Light Rail', 'Diesel-Electric Train') NOT NULL,
+    `vehicle_type` VARCHAR(50) NOT NULL,
     `fuel_type` VARCHAR(50) NOT NULL,
     `consumption_rate` DECIMAL(10, 2) NOT NULL,
     `max_passengers` INT NOT NULL,
@@ -155,11 +155,4 @@ INSERT INTO `MaintenanceLog` (`vehicle_id`, `task_description`, `scheduled_date`
 (1, 'Routine 500-hour inspection.', '2025-06-01', '2025-06-02', 'Completed'),
 (3, 'ALERT: Pantograph nearing wear threshold.', NULL, NULL, 'Alert'),
 (5, 'Annual engine checkup.', '2025-08-15', NULL, 'Scheduled');
-
-INSERT INTO `VehicleAssignments` (`user_id`, `vehicle_id`, `start_time`, `end_time`) VALUES
-(2, 1, '2025-07-21 06:00:00', '2025-07-21 14:00:00'),
-
-(3, 3, '2025-07-21 08:30:00', NULL),
-
-(4, 5, '2025-07-20 10:00:00', '2025-07-20 18:00:00');
 

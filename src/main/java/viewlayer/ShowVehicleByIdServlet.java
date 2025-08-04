@@ -1,5 +1,6 @@
 package viewlayer;
 
+import command.DeleteVehicleCommand;
 import userDAO.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,11 +12,13 @@ import vehicelDAO.VehicleLogic;
 import vehicleSimpleFactory.Vehicle;
 
 /**
- * ShowVehicleByIdServlet - Shows vehicle details
+ * ShowVehicleByIdServlet - Shows vehicle details and handles delete operations
  * Accessible by all authenticated users (Managers and Operators)
+ * Delete functionality only available to Managers
  * @author Chester
  */
 public class ShowVehicleByIdServlet extends HttpServlet {
+    private DeleteVehicleCommand deleteCommand = new DeleteVehicleCommand();
 
     /**
      * Check if user is authenticated
@@ -38,9 +41,10 @@ public class ShowVehicleByIdServlet extends HttpServlet {
     }
 
     /**
-     * Processes requests for both HTTP GET and POST methods.
+     * Handles GET requests - Shows vehicle details
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         // Check if user is authenticated
@@ -50,6 +54,7 @@ public class ShowVehicleByIdServlet extends HttpServlet {
         }
         
         String vehicleIdStr = request.getParameter("id");
+        String success = request.getParameter("success");
 
         try {
             int vehicleId = Integer.parseInt(vehicleIdStr);
@@ -59,6 +64,11 @@ public class ShowVehicleByIdServlet extends HttpServlet {
             if (vehicle == null) {
                 response.sendRedirect("ShowVehicleList?error=notfound");
                 return;
+            }
+
+            // Set success message if coming from update
+            if ("updated".equals(success)) {
+                request.setAttribute("successMessage", "Vehicle updated successfully!");
             }
 
             // Set attributes for JSP
@@ -77,20 +87,35 @@ public class ShowVehicleByIdServlet extends HttpServlet {
         }
     }
 
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
+    /**
+     * Handles POST requests - Processes delete operations
+     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        
+        // Check if user is authenticated and is a Manager
+        if (!isAuthenticated(request)) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
+        }
+        
+        if (!isManager(request)) {
+            response.sendRedirect("ShowVehicleList?error=unauthorized");
+            return;
+        }
+        
+        String action = request.getParameter("action");
+        
+        if ("delete".equals(action)) {
+            deleteCommand.execute(request, response);
+        } else {
+            response.sendRedirect("ShowVehicleList?error=invalidaction");
+        }
     }
 
     @Override
     public String getServletInfo() {
-        return "Vehicle Details Servlet - Authenticated Access";
+        return "Vehicle Details Servlet - Authenticated Access, Manager Delete";
     }
 }

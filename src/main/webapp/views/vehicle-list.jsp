@@ -22,6 +22,8 @@
             <!-- Only show Register Vehicle link to Managers -->
             <c:if test="${isManager}">
                 <a href="RegisterVehicle">Register Vehicle</a>
+                <a href="reports.jsp">Reports</a>
+                <a href="gpsDashboard.jsp">GPS Dashboard</a>
             </c:if>
             <a href="ShowMaintenance">Maintenance Dashboard</a>
             <a href="dashboard.jsp">Dashboard</a>

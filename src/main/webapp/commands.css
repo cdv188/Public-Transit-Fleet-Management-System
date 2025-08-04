@@ -73,6 +73,11 @@ form {
     box-shadow: 0 0 5px rgba(0, 121, 107, 0.3);
 }
 
+.nav > a{
+    font-weight: bold;
+    margin-right: 10px;
+}
+
 button, .btn {
     display: inline-block;
     padding: 10px 15px;
