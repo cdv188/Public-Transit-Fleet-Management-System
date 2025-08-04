@@ -46,6 +46,11 @@
         <servlet-name>FrontController</servlet-name>
         <servlet-class>viewlayer.FrontController</servlet-class>
     </servlet>
+  
+    <servlet>
+     <servlet-name>SimulateGPSServlet</servlet-name>
+     <servlet-class>viewlayer.SimulateGPSServlet</servlet-class>
+    </servlet>
 
     <!-- Existing mappings -->
     <servlet-mapping>
@@ -89,6 +94,10 @@
     <servlet-mapping>
         <servlet-name>FrontController</servlet-name>
         <url-pattern>/FrontController</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+     <servlet-name>SimulateGPSServlet</servlet-name>
+     <url-pattern>/simulateGPS</url-pattern>
     </servlet-mapping>
 
     <session-config>

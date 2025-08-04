@@ -1,24 +1,43 @@
-/* General Layout */
+/* General Layout - Dark Theme to match vehicle.css and maintenance.css */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f7f9fc;
+    background-color: #1a1a1a;  /* Dark background */
     margin: 0;
     padding: 0;
-    color: #333;
+    color: white;  /* White text */
 }
 
 .container {
     max-width: 900px;
     margin: 30px auto;
     padding: 20px;
-    background: #fff;
+    background: #222;  /* Dark container */
     border-radius: 8px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+/* Navigation - Matching other CSS files */
+.nav { 
+    margin-bottom: 20px; 
+}
+
+.nav a { 
+    margin-right: 15px; 
+    text-decoration: none; 
+    color: #efb60b;  /* Yellow/gold color */
+    transition: 0.3s; 
+    font-weight: 600;
+}
+
+.nav a:hover { 
+    text-decoration: underline;  
+    color: #ffc107;  /* Lighter yellow on hover */
+    transition: 0.3s;
 }
 
 /* Page Headers */
 h1, h2, h3 {
-    color: #2c3e50;
+    color: white;
     margin-bottom: 15px;
 }
 
@@ -35,60 +54,96 @@ label {
     font-weight: bold;
     margin-bottom: 5px;
     display: block;
+    color: white;
 }
 
-input[type="text"], input[type="number"], input[type="email"], select {
+input[type="text"], 
+input[type="number"], 
+input[type="email"], 
+select {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccd0d5;
+    border: 1px solid #555;
     border-radius: 4px;
     font-size: 14px;
+    background-color: #393E46;  /* Dark input background */
+    color: white;
+}
+
+input:focus, select:focus {
+    outline: none;
+    border-color: #efb60b;
+    box-shadow: 0 0 5px rgba(239, 182, 11, 0.3);
 }
 
 button, .btn {
-    background-color: #3498db;
+    background-color: #efb60b;  /* Yellow/gold button */
     color: white;
     padding: 10px 18px;
     border: none;
     border-radius: 4px;
     font-size: 14px;
     cursor: pointer;
-    transition: background 0.2s ease-in-out;
+    transition: background 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    margin: 5px;
 }
 
 button:hover, .btn:hover {
-    background-color: #2980b9;
+    background-color: #FEA405;  /* Lighter on hover */
+    transition: 0.3s;
 }
 
 /* Messages */
 .success {
-    color: #27ae60;
-    font-weight: bold;
-    margin-bottom: 10px;
+    color: #28a745;
+    background-color: rgba(40, 167, 69, 0.1);
+    border: 1px solid #28a745;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
 }
 
 .error {
-    color: #e74c3c;
-    font-weight: bold;
-    margin-bottom: 10px;
+    color: #dc3545;
+    background-color: rgba(220, 53, 69, 0.1);
+    border: 1px solid #dc3545;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 20px;
 }
 
 /* Current Status Display */
 .current-status {
-    background-color: #ecf9f1;
-    border: 1px solid #27ae60;
+    background-color: #393E46;  /* Dark gray background */
+    border: 1px solid #555;
     padding: 15px;
     border-radius: 5px;
     margin-bottom: 20px;
 }
 
+.current-status h3 {
+    color: #efb60b;
+    margin-top: 0;
+}
+
+/* Status Form */
+.status-form {
+    background-color: #393E46;
+    padding: 20px;
+    border-radius: 5px;
+    border: 1px solid #555;
+}
+
 /* Logs Section */
 .log {
-    background-color: #f4f4f4;
+    background-color: #393E46;
     padding: 15px;
     border-radius: 4px;
     margin-bottom: 20px;
-    border-left: 4px solid #3498db;
+    border-left: 4px solid #efb60b;
+    color: white;
 }
 
 /* Tables */
@@ -99,26 +154,117 @@ table {
 }
 
 table th, table td {
-    border: 1px solid #ddd;
+    border: 1px solid #555;
     padding: 10px;
     text-align: left;
-}
-
-table th {
-    background-color: #3498db;
     color: white;
 }
 
+table th {
+    background-color: #393E46;
+    color: white;
+    font-weight: bold;
+}
+
 table tr:nth-child(even) {
-    background-color: #f9f9f9;
+    background-color: #2C2C2C;
+}
+
+table tr:hover {
+    background-color: grey;
+    transition: 0.5s;
 }
 
 /* Links */
 a {
-    color: #3498db;
+    color: #efb60b;
     text-decoration: none;
 }
 
 a:hover {
     text-decoration: underline;
+    color: #ffc107;
+}
+
+/* Report Cards */
+.report-card {
+    border: 1px solid #555;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #393E46;
+}
+
+.report-card h3 {
+    margin-top: 0;
+    color: #efb60b;
+}
+
+/* Map Placeholder for GPS */
+.map-placeholder {
+    background-color: #393E46;
+    padding: 20px;
+    border: 2px dashed #555;
+    text-align: center;
+    margin: 20px 0;
+    border-radius: 5px;
+}
+
+.map-placeholder h3 {
+    color: #efb60b;
+}
+
+/* Summary boxes */
+.summary {
+    background-color: #393E46;
+    padding: 15px;
+    margin: 20px 0;
+    border-radius: 5px;
+    border-left: 4px solid #efb60b;
+}
+
+.summary h3 {
+    color: #efb60b;
+    margin-top: 0;
+}
+
+/* Check result boxes for system checks */
+.check-result {
+    border: 1px solid #555;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+    background-color: #393E46;
+}
+
+.check-result h3 {
+    color: #efb60b;
+    margin-top: 0;
+}
+
+.warning {
+    color: #ff9800;
+}
+
+/* Button variants */
+.btn-secondary {
+    background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+    background-color: #545b62;
+}
+
+.btn-success {
+    background-color: #28a745;
+}
+
+.btn-success:hover {
+    background-color: #1e7e34;
+}
+
+/* Small text */
+small {
+    color: #999;
+    font-size: 12px;
 }

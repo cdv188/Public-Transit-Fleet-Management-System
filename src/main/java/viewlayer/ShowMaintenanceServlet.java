@@ -83,6 +83,9 @@ public class ShowMaintenanceServlet extends HttpServlet {
         out.println("<div class='nav'>");
         out.println("<a href='ShowVehicleList'>Vehicle List</a>");
         out.println("<a href='ShowMaintenance?action=schedule'>Schedule Maintenance</a>");
+        out.println("<a href='gpsDashboard'>GPS Dashboard</a>");
+        out.println("<a href='reports'>Reports</a>");
+        out.println("<a href='FrontController?action=runSystemChecks'>Run System Checks</a>");
         out.println("</div>");
         out.println("<h1>Maintenance Dashboard</h1>");
 

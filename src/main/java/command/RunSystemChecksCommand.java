@@ -25,7 +25,7 @@ public class RunSystemChecksCommand implements Command {
             out.println("<title>System Checks - PTFMS</title>");
             out.println("<meta charset='UTF-8'>");
             out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-            out.println("<link rel='stylesheet' href='css/commands.css'>");
+            out.println("<link rel='stylesheet' href='commands.css'>");
             out.println("</head>");
             out.println("<body>");
             out.println("<div class='container'>");

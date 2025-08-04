@@ -56,6 +56,12 @@ public class ReportsServlet extends HttpServlet {
         out.println("<link rel=\"stylesheet\" href=\"commands.css\">  ");
         out.println("</head><body>");
         out.println("<div class='container'>");
+        out.println("<div class='nav'>");
+        out.println("<a href='ShowVehicleList'>Vehicle List</a>");
+        out.println("<a href='ShowMaintenance'>Maintenance Dashboard</a>");
+        out.println("<a href='gpsDashboard'>GPS Dashboard</a>");
+        out.println("<a href='FrontController?action=runSystemChecks'>System Checks</a>");
+        out.println("</div>");
         out.println("<h1>Fleet Management Reports</h1>");
         out.println("<p>Select a report to generate:</p>");
         out.println("<a class='btn' href='" + request.getContextPath() + "/reports?reportType=fuelCost'>Fuel Cost Report</a><br><br>");

@@ -52,6 +52,8 @@ public class RegisterVehicleServlet extends HttpServlet {
         out.println("<div class='nav'>");
         out.println("<a href='ShowVehicleList'>Vehicle List</a>");
         out.println("<a href='ShowMaintenance'>Maintenance Dashboard</a>");
+        out.println("<a href='gpsDashboard'>GPS Dashboard</a>");
+        out.println("<a href='reports'>Reports</a>");
         out.println("</div>");
         out.println("<h1>Register New Vehicle</h1>");
         

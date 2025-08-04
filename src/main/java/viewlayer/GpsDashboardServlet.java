@@ -41,6 +41,12 @@ public class GpsDashboardServlet extends HttpServlet {
             out.println("</head>");
             out.println("<body>");
             out.println("<div class='container'>");
+            out.println("<div class='nav'>");
+            out.println("<a href='ShowVehicleList'>Vehicle List</a>");
+            out.println("<a href='ShowMaintenance'>Maintenance Dashboard</a>");
+            out.println("<a href='reports'>Reports</a>");
+            out.println("<a href='FrontController?action=runSystemChecks'>System Checks</a>");
+            out.println("</div>");
             out.println("<h1>GPS Dashboard</h1>");
             out.println("<p>Vehicle locations are shown in the table below.</p>");
             out.println("<a href='" + request.getContextPath() + "/simulateGPS' class='btn'>Simulate GPS Updates</a>");
