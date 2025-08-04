@@ -210,13 +210,7 @@ public class ScheduleMaintenanceCommand implements Command {
 
             // Validate status
             if (status == null || status.trim().isEmpty()) {
-                status = "Scheduled"; // Default status
-            }
-
-            if (!isValidStatus(status)) {
-                request.setAttribute("error", "Invalid status selected");
-                showSchedulingForm(request, response);
-                return;
+                status = "Scheduled";
             }
 
             // Create the maintenance log entry
@@ -275,7 +269,11 @@ public class ScheduleMaintenanceCommand implements Command {
             boolean success = logic.updateMaintenanceLog(existingTask);
 
             if (success) {
-                response.sendRedirect("ShowMaintenance?successMessage=success");
+                if (newStatus.equals("In-Progress")){
+                    response.sendRedirect("ShowMaintenance?successMessage=taskstarted");
+                }else{
+                    response.sendRedirect("ShowMaintenance?successMessage=success");
+                }
             } else {
                 response.sendRedirect("ShowMaintenance?error=failed");
             }

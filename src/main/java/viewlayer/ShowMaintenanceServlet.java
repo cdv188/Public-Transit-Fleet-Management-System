@@ -95,6 +95,9 @@ public class ShowMaintenanceServlet extends HttpServlet {
         if("failed".equals(request.getParameter("error"))){
             out.println("<div class='error'>Failed to Register</div>");
         }
+        if("taskstarted".equals(request.getParameter("successMessage"))){
+            out.println("<div class='inprogress'>Task Started</div>");
+        }
         out.println("<div class='dashboard-grid'>");
         
         // Alerts card
