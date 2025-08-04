@@ -146,11 +146,3 @@ INSERT INTO MaintenanceLog (vehicle_id, task_description, scheduled_date, comple
 (1, 'Oil change', '2025-08-10', NULL, 'Scheduled'),
 (2, 'Brake replacement', '2025-08-12', NULL, 'Scheduled');
 
-
--- IMPORTANT: First select the correct database
-USE ptfms_db;
--- Add high consumption for vehicle 1 (normal rate is 25.5)
-INSERT INTO ConsumptionLogs (vehicle_id, log_date, usage_amount) VALUES
-(1, CURDATE(), 35.0),
-(1, DATE_SUB(CURDATE(), INTERVAL 1 DAY), 38.0),
-(1, DATE_SUB(CURDATE(), INTERVAL 2 DAY), 40.0);
