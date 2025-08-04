@@ -1,4 +1,4 @@
-package vehicle;
+package vehicleSimpleFactory;
 
 /**
  *
@@ -11,6 +11,7 @@ public class VehicleBuilder {
     private double consumptionRate;
     private int maxCapacity;
     private String route;
+    private int vehicleId;
     
     public VehicleBuilder vehicleNumber(String num){
         this.number = num;
@@ -42,7 +43,12 @@ public class VehicleBuilder {
         return this;
     }
     
+    public VehicleBuilder vehicleId (int id){
+        this.vehicleId = id;
+        return this;
+    }
+    
     public Vehicle build(){
-        return new Vehicle(number, vehicleType, fuelType, maxCapacity, consumptionRate, route);
+        return new Vehicle(number, vehicleType, fuelType, maxCapacity, consumptionRate, route, vehicleId);
     }
 }
