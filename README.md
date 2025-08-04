@@ -87,35 +87,35 @@ A controller class is used to manage communication across all layers.
 ## 📁 Updated Project Structure
 
 ```
-src/
-├── main/
-│ └── java/
-│   ├── businesslayers/
-│       ├── builder/
-│       ├── command/
-│       ├── observer/
-│       ├── simplefactory/
-│       ├── strategy/
-│       └── controller/
-│   ├── datacccesslayer/
-│       ├── consumptionlogs/
-│       ├── operatorlogs/
-│       ├── users/
-│       ├── vehicleassignment/
-│       ├── vehiclelocation/
-│       └── vehicles/
-│   ├── database/
-│   ├── datatransferobject/
-│   ├── filter/
-│   ├── MaintenanceLogDAO/
-│   └── viewLayer/
-│ ├── resources/
-│   └── META-INF/
-│ ├── webapp/
-│   ├── css/
-│   ├── META-INF/
-│   ├── views/
-│   └── WEB-INF/
+main/
+└── main/
+  └── java/
+  │ ├── businesslayers/
+  │ │   ├── builder/
+  │ │   ├── command/
+  │ │   ├── observer/
+  │ │   ├── simplefactory/
+  │ │   ├── strategy/
+  │ │   └── controller/
+  │ ├── datacccesslayer/
+  │ │   ├── consumptionlogs/
+  │ │   ├── operatorlogs/
+  │ │   ├── users/
+  │ │   ├── vehicleassignment/
+  │ │   ├── vehiclelocation/
+  │ │   └── vehicles/
+  │ ├── database/
+  │ ├── datatransferobject/
+  │ ├── filter/
+  │ ├── MaintenanceLogDAO/
+  │ └── viewLayer/
+  ├── resources/
+  │ └── META-INF/
+  ├── webapp/
+    ├── css/
+    ├── META-INF/
+    ├── views/
+    └── WEB-INF/
 ```
 ---
 
