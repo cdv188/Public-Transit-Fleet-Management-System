@@ -91,19 +91,19 @@ src/
 ├── main/
 │ └── java/
 │   ├── businesslayers/
-│   ├── builder/
-│   ├── command/
-│   ├── observer/
-│   ├── simplefactory/
-│   ├── strategy/
-│   ├── controller/
+│       ├── builder/
+│       ├── command/
+│       ├── observer/
+│       ├── simplefactory/
+│       ├── strategy/
+│       └── controller/
 │   ├── datacccesslayer/
-│   │ ├── consumptionlogs/
-│   │ ├── operatorlogs/
-│   │ ├── users/
-│   │ ├── vehicleassignment/
-│   │ ├── vehiclelocation/
-│   │ └── vehicles/
+│       ├── consumptionlogs/
+│       ├── operatorlogs/
+│       ├── users/
+│       ├── vehicleassignment/
+│       ├── vehiclelocation/
+│       └── vehicles/
 │   ├── database/
 │   ├── datatransferobject/
 │   ├── filter/
@@ -111,15 +111,11 @@ src/
 │   └── viewLayer/
 │ ├── resources/
 │   └── META-INF/
-│ └── webapp/
-│ ├── css/
-│ ├── META-INF/
-│ ├── views/
-│ └── WEB-INF/
-└── test/
-├── java/
-└── resources/
-
+│ ├── webapp/
+│   ├── css/
+│   ├── META-INF/
+│   ├── views/
+│   └── WEB-INF/
 ```
 ---
 
