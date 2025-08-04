@@ -123,6 +123,14 @@ tr:nth-child(even) {
     border-radius: 4px; 
     margin-bottom: 20px; 
 }
+.inprogress { 
+    color: #ffc107; 
+    background-color: rgba(252, 255, 0, 0.1); 
+    border: 1px solid #ffc107; 
+    padding: 10px; 
+    border-radius: 4px; 
+    margin-bottom: 20px; 
+}
 .nav { 
     margin-bottom: 20px; 
 }
