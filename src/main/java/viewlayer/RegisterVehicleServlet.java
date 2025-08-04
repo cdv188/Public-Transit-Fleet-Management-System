@@ -26,7 +26,7 @@ public class RegisterVehicleServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         response.setContentType("text/html;charset=UTF-8");
+        response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         
         String error = (String) request.getParameter("error");
@@ -48,7 +48,7 @@ public class RegisterVehicleServlet extends HttpServlet {
         out.println("</div>");
         out.println("<h1>Register New Vehicle</h1>");
         
-        if (error != null) {
+        if ("emptyFields".equals(request.getParameter("error"))) {
             out.println("<div class='error'>All fields must not be empty</div>");
         }
         
@@ -113,32 +113,53 @@ public class RegisterVehicleServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String vehicleNumber = request.getParameter("vehicleNumber");
-        String vehicleType = request.getParameter("vehicleType");
-        String fuelType = request.getParameter("fuelType");
-        double consumptionRate = Double.parseDouble(request.getParameter("consumptionRate"));
-        int maxPassengers = Integer.parseInt(request.getParameter("maxPassengers"));
-        String route = request.getParameter("assignedRoute");
+            String vehicleNumber = request.getParameter("vehicleNumber");
+            String vehicleType = request.getParameter("vehicleType");
+            String fuelType = request.getParameter("fuelType");
+            String consumptionRateStr = request.getParameter("consumptionRate");
+            String maxPassengersStr = request.getParameter("maxPassengers");
+            String route = request.getParameter("assignedRoute");
+            
+            if (vehicleNumber == null || vehicleNumber.trim().isEmpty() || 
+               vehicleType == null || vehicleType.trim().isEmpty() || 
+               fuelType == null || fuelType.trim().isEmpty() ||
+               consumptionRateStr == null || consumptionRateStr.trim().isEmpty() ||
+               maxPassengersStr == null || maxPassengersStr.trim().isEmpty() ||
+               route == null || route.trim().isEmpty()) {
+
+               response.sendRedirect("RegisterVehicle?error=emptyFields");
+               return;
+            }
+            
+            try {
+               double consumptionRate = Double.parseDouble(consumptionRateStr.trim());
+               int maxPassengers = Integer.parseInt(maxPassengersStr.trim());
+
+               if (consumptionRate < 0 || maxPassengers < 0) {
+                   response.sendRedirect("RegisterVehicle?error=emptyFields");
+                   return;
+               }
+
+               Vehicle vehicle = new Vehicle();
+               VehicleLogic logic = new VehicleLogic();
+
+               vehicle = Vehicle.builder()
+                           .vehicleNumber(vehicleNumber.trim())
+                           .vehicleType(vehicleType.trim())
+                           .fuelType(fuelType.trim())
+                           .consumptionRate(consumptionRate)
+                           .maxCapacity(maxPassengers)
+                           .route(route.trim())
+                           .build();
+
+               logic.addVehicle(vehicle);
+               response.sendRedirect("RegisterVehicle?successMessage=success");
+
+           } catch (NumberFormatException e) {
+               // Handle parsing errors
+               response.sendRedirect("RegisterVehicle?error=emptyFields");
+           }
         
-        if (vehicleNumber.isEmpty() || vehicleType.isEmpty() || fuelType.isEmpty()
-                || consumptionRate < 0 || maxPassengers < 0 || route.isEmpty()){
-            response.sendRedirect("RegisterVehicle?error");
-        }else{
-//            Vehicle vehicle = new Vehicle();
-//            VehicleLogic logic = new VehicleLogic();
-//            
-//            vehicle = Vehicle.builder()
-//                        .vehicleNumber(vehicleNumber)
-//                        .vehicleType(vehicleType)
-//                        .fuelType(fuelType)
-//                        .consumptionRate(consumptionRate)
-//                        .maxCapacity(maxPassengers)
-//                        .route(route)
-//                        .build();
-//            
-//            logic.addVehicle(vehicle);
-            response.sendRedirect("RegisterVehicle?successMessage=success");
-        }
     }
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
