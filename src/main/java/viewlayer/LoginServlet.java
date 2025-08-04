@@ -72,7 +72,7 @@ public class LoginServlet extends HttpServlet {
         // Validate credentials
         if (usr.equals(username) && pass.equals(password)) {
             request.getSession().setAttribute("authenticated", true);
-            response.sendRedirect("VehicleController");
+            response.sendRedirect("ShowVehicleList");
         } else {
             response.sendRedirect("Login?error=true");
         }
