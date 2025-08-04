@@ -1,19 +1,20 @@
 package viewlayer;
 
+import MaintenanceLogDAO.MaintenanceLog;
+import MaintenanceLogDAO.MaintenanceLogLogic;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import vehicelDAO.VehicleLogic;
-import vehicleSimpleFactory.Vehicle;
 
 /**
  *
  * @author Chester
  */
-public class ShowVehicleByIdServlet extends HttpServlet {
+public class ShowMaintenanceByIdServlet extends HttpServlet {
+    private MaintenanceLogLogic logic = new MaintenanceLogLogic();
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -26,12 +27,15 @@ public class ShowVehicleByIdServlet extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String vehicleIdStr = request.getParameter("id");
+         String taskIdStr = request.getParameter("id");
+         try {
+            int taskId = Integer.parseInt(taskIdStr);
+            MaintenanceLog task = logic.getMaintenanceLogById(taskId);
 
-        try {
-            int vehicleId = Integer.parseInt(vehicleIdStr);
-            VehicleLogic logic = new VehicleLogic();
-            Vehicle vehicle = logic.getVehicleById(vehicleId);
+            if (task == null) {
+                response.sendRedirect("ShowMaintenance?action=schedule");
+                return;
+            }
 
             response.setContentType("text/html;charset=UTF-8");
             PrintWriter out = response.getWriter();
@@ -39,65 +43,63 @@ public class ShowVehicleByIdServlet extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Vehicle Details - " + vehicle.getNumber() + "</title>");
+            out.println("<title>Maintenance Task Details - " +task.getVehicleNumber() + "</title>");
             out.println("<meta charset='UTF-8'>");
             out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-            out.println("<link rel=\"stylesheet\" href=\"vehicle.css\">  ");
+            out.println("<link rel=\"stylesheet\" href=\"maintenance.css\">  ");
             out.println("</head>");
             out.println("<body>");
             out.println("<div class='container-id'>");
             out.println("<div class='nav'>");
-            out.println("<a href='ShowVehicleList'>Back to Vehicle List</a>");
-            out.println("<a href='ShowMaintenance'>Maintenance Dashboard</a>");
+            out.println("<a href='ShowMaintenance'>Back to Dashboard</a>");
+            out.println("<a href='ShowVehicleList'>Vehicle List</a>");
             out.println("</div>");
-            out.println("<h1>Vehicle Details: " + vehicle.getNumber() + "</h1>");
+            out.println("<h1>Maintenance Task Details</h1>");
             
             out.println("<div class='detail-row'>");
-            out.println("<span class='detail-label'>Vehicle ID:</span>");
-            out.println("<span class='detail-value'>" + vehicle.getVehicleId() + "</span>");
-            out.println("</div>");
-            
-            out.println("<div class='detail-row'>");
-            out.println("<span class='detail-label'>Vehicle Number:</span>");
-            out.println("<span class='detail-value'>" + vehicle.getNumber() + "</span>");
+            out.println("<span class='detail-label'>Task ID:</span>");
+            out.println("<span class='detail-value'>" + task.getTaskId() + "</span>");
             out.println("</div>");
             
             out.println("<div class='detail-row'>");
-            out.println("<span class='detail-label'>Vehicle Type:</span>");
-            out.println("<span class='detail-value'>" + vehicle.getVehicleType() + "</span>");
+            out.println("<span class='detail-label'>Vehicle:</span>");
+            out.println("<span class='detail-value'>" + task.getVehicleNumber() + " (ID: " + task.getVehicleId() + ")</span>");
             out.println("</div>");
             
             out.println("<div class='detail-row'>");
-            out.println("<span class='detail-label'>Fuel Type:</span>");
-            out.println("<span class='detail-value'>" + vehicle.getFuelType() + "</span>");
+            out.println("<span class='detail-label'>Task Description:</span>");
+            out.println("<span class='detail-value'>" + task.getTaskDescription() + "</span>");
             out.println("</div>");
             
             out.println("<div class='detail-row'>");
-            out.println("<span class='detail-label'>Consumption Rate:</span>");
-            out.println("<span class='detail-value'>" + vehicle.getConsumptionRate() + "</span>");
+            out.println("<span class='detail-label'>Status:</span>");
+            out.println("<span class='detail-value'>");
+            out.println("<span class='status-badge status-" + task.getStatus().toLowerCase().replace("-", "") + "'>" + task.getStatus() + "</span>");
+            out.println("</span>");
             out.println("</div>");
             
             out.println("<div class='detail-row'>");
-            out.println("<span class='detail-label'>Maximum Passengers:</span>");
-            out.println("<span class='detail-value'>" + vehicle.getMaxCapacity() + "</span>");
+            out.println("<span class='detail-label'>Scheduled Date:</span>");
+            out.println("<span class='detail-value'>" + (task.getScheduledDate() != null ? task.getScheduledDate().toString() : "Not Set") + "</span>");
             out.println("</div>");
             
             out.println("<div class='detail-row'>");
-            out.println("<span class='detail-label'>Assigned Route:</span>");
-            out.println("<span class='detail-value'>" + vehicle.getRoute() + "</span>");
+            out.println("<span class='detail-label'>Completion Date:</span>");
+            out.println("<span class='detail-value'>" +  (task.getCompletionDate() != null ? task.getCompletionDate().toString() : "Not Completed") + "</span>");
             out.println("</div>");
             
             out.println("<div style='margin-top: 30px;'>");
-            out.println("<a href='ShowVehicleList' class='btn'>Back to List</a>");
-            out.println("<a href='ShowMaintenanceById?id=" + vehicle.getVehicleId() + "' class='btn'>Schedule Maintenance</a>");
-            out.println("</div>");
+            out.println("<a href='ShowMaintenance' class='btn'>Back to Dashboard</a>");
+            out.println("<a href='ShowVehicleById?id=" + task.getVehicleId() + "' class='btn'>View Vehicle</a>");
+            out.println(" </div>");
             out.println("</div>");
             out.println("</body>");
             out.println("</html>");
 
         } catch (NumberFormatException e) {
-            response.sendRedirect(request.getContextPath() + "ShowVehicleList");
+            response.sendRedirect("ShowMaintenance");
         }
+         
     }
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">

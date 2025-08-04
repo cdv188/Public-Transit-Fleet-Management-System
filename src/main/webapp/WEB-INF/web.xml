@@ -20,6 +20,14 @@
         <servlet-name>ShowVehicleByIdServlet</servlet-name>
         <servlet-class>viewlayer.ShowVehicleByIdServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ShowMaintenanceServlet</servlet-name>
+        <servlet-class>viewlayer.ShowMaintenanceServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ShowMaintenanceByIdServlet</servlet-name>
+        <servlet-class>viewlayer.ShowMaintenanceByIdServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -39,6 +47,14 @@
     <servlet-mapping>
         <servlet-name>ShowVehicleByIdServlet</servlet-name>
         <url-pattern>/ShowVehicleById</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowMaintenanceServlet</servlet-name>
+        <url-pattern>/ShowMaintenance</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ShowMaintenanceByIdServlet</servlet-name>
+        <url-pattern>/ShowMaintenanceById</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
