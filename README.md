@@ -89,7 +89,7 @@ A controller class is used to manage communication across all layers.
 ```
 main/
 └── main/
-  └── java/
+  ├── java/
   │ ├── businesslayers/
   │ │   ├── builder/
   │ │   ├── command/
@@ -111,7 +111,7 @@ main/
   │ └── viewLayer/
   ├── resources/
   │ └── META-INF/
-  ├── webapp/
+  └── webapp/
     ├── css/
     ├── META-INF/
     ├── views/
