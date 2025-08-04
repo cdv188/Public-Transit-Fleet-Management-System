@@ -1,6 +1,6 @@
 package filter;
 
-import userDAO.User;
+import dataaccesslayer.users.User;
 import java.io.IOException;
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

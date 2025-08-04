@@ -1,6 +1,16 @@
 package controller;
 
-import command.*; // Import from the new package
+import businesslayers.command.LogOperatorStatusCommand; // Import from the new package
+import businesslayers.command.NavigateToRegisterPageCommand;
+import businesslayers.command.Command;
+import businesslayers.command.MaintenanceDashboardCommand;
+import businesslayers.command.LoginCommand;
+import businesslayers.command.SimulateGPSCommand;
+import businesslayers.command.GenerateReportCommand;
+import businesslayers.command.RegisterVehicleCommand;
+import businesslayers.command.RegisterUserCommand;
+import businesslayers.command.LogoutCommand;
+import businesslayers.command.RunSystemChecksCommand;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;

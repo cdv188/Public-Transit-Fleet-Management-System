@@ -2,7 +2,7 @@ package viewlayer;
 
 import MaintenanceLogDAO.MaintenanceLog;
 import MaintenanceLogDAO.MaintenanceLogLogic;
-import command.MaintenanceDashboardCommand;
+import businesslayers.command.MaintenanceDashboardCommand;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import userDAO.User;
+import dataaccesslayer.users.User;
 
 /**
  *

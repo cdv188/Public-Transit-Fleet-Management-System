@@ -1,6 +1,6 @@
 package controller;
 
-import command.Command;
+import businesslayers.command.Command;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
