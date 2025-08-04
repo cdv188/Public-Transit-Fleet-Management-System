@@ -38,7 +38,6 @@ The application uses a **3-tier architecture**:
 - DAO  
 - Builder  
 - Strategy  
-- Adapter  
 - Observer  
 - Command  
 
