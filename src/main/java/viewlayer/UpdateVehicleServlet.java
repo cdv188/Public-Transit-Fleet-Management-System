@@ -1,7 +1,7 @@
 package viewlayer;
 
-import command.UpdateVehicleCommand;
-import userDAO.User;
+import businesslayers.command.UpdateVehicleCommand;
+import dataaccesslayer.users.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

@@ -1,15 +1,15 @@
 package viewlayer;
 
-import command.DeleteVehicleCommand;
-import userDAO.User;
+import businesslayers.command.DeleteVehicleCommand;
+import dataaccesslayer.users.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import vehicelDAO.VehicleLogic;
-import vehicleSimpleFactory.Vehicle;
+import dataaccesslayer.vehicles.VehicleLogic;
+import businesslayers.builder.Vehicle;
 
 /**
  * ShowVehicleByIdServlet - Shows vehicle details and handles delete operations
