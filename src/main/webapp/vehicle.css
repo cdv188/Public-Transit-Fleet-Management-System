@@ -26,8 +26,11 @@ th, td {
     border-bottom: 1px solid #ddd;
 }
 th { 
-    background-color: black; 
+    background-color: #393E46; 
     font-weight: bold; 
+}
+tr:nth-child(even) {
+    background-color: #2C2C2C;
 }
 tr:hover { 
     background-color: grey; 

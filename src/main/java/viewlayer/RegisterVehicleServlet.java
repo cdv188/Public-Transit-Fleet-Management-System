@@ -1,5 +1,6 @@
 package viewlayer;
 
+import command.RegisterVehicleCommand;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,7 +15,13 @@ import vehicleSimpleFactory.Vehicle;
  * @author Chester
  */
 public class RegisterVehicleServlet extends HttpServlet {
-
+    private RegisterVehicleCommand registerCommand;
+    
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        this.registerCommand = new RegisterVehicleCommand();
+    }
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
      * methods.
@@ -44,7 +51,7 @@ public class RegisterVehicleServlet extends HttpServlet {
         out.println("<div class='container-register'>");
         out.println("<div class='nav'>");
         out.println("<a href='ShowVehicleList'>Vehicle List</a>");
-        out.println("<a href='" + request.getContextPath() + "/maintenance?action=dashboard'>Maintenance Dashboard</a>");
+        out.println("<a href='ShowMaintenance'>Maintenance Dashboard</a>");
         out.println("</div>");
         out.println("<h1>Register New Vehicle</h1>");
         
@@ -56,7 +63,11 @@ public class RegisterVehicleServlet extends HttpServlet {
             out.println("<div class='success'>Vehicle Successfully Added</div>");
         }
         
-        out.println("<form method='post'>");
+        if("failed".equals(request.getParameter("error"))){
+            out.println("<div class='error'>Failed to Register</div>");
+        }
+        
+        out.println("<form method='post' action='RegisterVehicle?action=register'>");
         
         out.println("<div class='form-group'>");
         out.println("<label for='vehicleNumber'>Vehicle Number *</label>");
@@ -120,6 +131,8 @@ public class RegisterVehicleServlet extends HttpServlet {
             String maxPassengersStr = request.getParameter("maxPassengers");
             String route = request.getParameter("assignedRoute");
             
+            String action = request.getParameter("action");
+            
             if (vehicleNumber == null || vehicleNumber.trim().isEmpty() || 
                vehicleType == null || vehicleType.trim().isEmpty() || 
                fuelType == null || fuelType.trim().isEmpty() ||
@@ -139,28 +152,18 @@ public class RegisterVehicleServlet extends HttpServlet {
                    response.sendRedirect("RegisterVehicle?error=emptyFields");
                    return;
                }
-
-               Vehicle vehicle = new Vehicle();
-               VehicleLogic logic = new VehicleLogic();
-
-               vehicle = Vehicle.builder()
-                           .vehicleNumber(vehicleNumber.trim())
-                           .vehicleType(vehicleType.trim())
-                           .fuelType(fuelType.trim())
-                           .consumptionRate(consumptionRate)
-                           .maxCapacity(maxPassengers)
-                           .route(route.trim())
-                           .build();
-
-               logic.addVehicle(vehicle);
-               response.sendRedirect("RegisterVehicle?successMessage=success");
-
+               if ("register".equals(action)) {
+                    registerCommand.execute(request, response);
+               }else{
+                   response.sendRedirect("RegisterVehicle?error=register");
+               }
            } catch (NumberFormatException e) {
                // Handle parsing errors
                response.sendRedirect("RegisterVehicle?error=emptyFields");
            }
         
-    }
+    } 
+
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.
