@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
  * @author Chester
  */
 public class RegisterVehicleServlet extends HttpServlet {
-    private RegisterVehicleCommand registerCommand;
+    private RegisterVehicleCommand registerCommand = new RegisterVehicleCommand();
 
     /**
      * Check if user has Manager role
@@ -107,7 +107,7 @@ public class RegisterVehicleServlet extends HttpServlet {
 
            // Set error message as request attribute and forward back to form
            request.setAttribute("errorMessage", "All fields must not be empty");
-           request.getRequestDispatcher("/register-vehicle.jsp").forward(request, response);
+           request.getRequestDispatcher("/views/register-vehicle.jsp").forward(request, response);
            return;
         }
         
@@ -117,7 +117,7 @@ public class RegisterVehicleServlet extends HttpServlet {
 
            if (consumptionRate < 0 || maxPassengers < 0) {
                request.setAttribute("errorMessage", "Values cannot be negative");
-               request.getRequestDispatcher("/register-vehicle.jsp").forward(request, response);
+               request.getRequestDispatcher("/views/register-vehicle.jsp").forward(request, response);
                return;
            }
            
@@ -125,12 +125,12 @@ public class RegisterVehicleServlet extends HttpServlet {
                 registerCommand.execute(request, response);
            } else {
                request.setAttribute("errorMessage", "Invalid action");
-               request.getRequestDispatcher("/register-vehicle.jsp").forward(request, response);
+               request.getRequestDispatcher("/views/register-vehicle.jsp").forward(request, response);
            }
            
        } catch (NumberFormatException e) {
            request.setAttribute("errorMessage", "Please enter valid numbers for consumption rate and passengers");
-           request.getRequestDispatcher("/register-vehicle.jsp").forward(request, response);
+           request.getRequestDispatcher("/views/register-vehicle.jsp").forward(request, response);
        }
     }
 

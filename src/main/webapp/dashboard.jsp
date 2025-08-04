@@ -33,6 +33,8 @@
                     <a href="RegisterVehicle" class="button">Register New Vehicle</a>
                     <a href="ShowMaintenance" class="button">Maintenance Dashboard</a>
                     <a href="ShowMaintenance?action=schedule" class="button">Schedule Maintenance</a>
+                    <a href="gpsDashboard.jsp" class="button">GPS Dashboard</a>
+                    <a href="reports.jsp" class="button">Reports</a>
                 </div>
                 
                 <!-- Manager Features -->
@@ -44,6 +46,8 @@
                         <li>✓ Schedule maintenance tasks</li>
                         <li>✓ Update maintenance status</li>
                         <li>✓ View maintenance reports</li>
+                        <li>✓ Monitor system</li>
+                        <li>✓ Make reports</li>
                         <li>✓ Full system access</li>
                     </ul>
                 </div>
@@ -70,6 +74,8 @@
                         <li>✗ Register new vehicles (Manager only)</li>
                         <li>✗ Schedule maintenance (Manager only)</li>
                         <li>✗ Update maintenance status (Manager only)</li>
+                        <li>✗ Monitor System (Manager only)</li>
+                        <li>✗ Make Report (Manager only)</li>
                     </ul>
                 </div>
             </c:otherwise>
@@ -98,6 +104,9 @@
             padding: 15px;
             background-color: #f8f9fa;
             border-radius: 5px;
+        }
+        a{
+            margin-top: 5px;
         }
         
         .feature-list {

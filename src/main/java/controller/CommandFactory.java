@@ -16,6 +16,16 @@ public class CommandFactory {
         commands.put("logout", new LogoutCommand());
         commands.put("register", new RegisterUserCommand());
         commands.put("navigateToRegister", new NavigateToRegisterPageCommand());
+        
+        // Ali's commands
+        commands.put("runSystemChecks", new RunSystemChecksCommand());
+        commands.put("logOperatorStatus", new LogOperatorStatusCommand());
+        commands.put("simulateGPS", new SimulateGPSCommand());
+        commands.put("generateReport", new GenerateReportCommand());
+        
+        // Chester's commands
+        commands.put("maintenanceDashboard", new MaintenanceDashboardCommand());
+        commands.put("registerVehicle", new RegisterVehicleCommand());
     }
 
     public static Command getCommand(String action) {

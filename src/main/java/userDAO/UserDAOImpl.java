@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class UserDAOImpl implements UserDAO {
@@ -91,5 +93,25 @@ public class UserDAOImpl implements UserDAO {
         user.setPassword(rs.getString("password"));
         user.setUserType(rs.getString("user_type"));
         return user;
+    }
+     @Override
+    public List<User> getUsersByType(String userType) {
+        List<User> users = new ArrayList<>();
+        String sql = "SELECT * FROM Users WHERE user_type = ?";
+        
+        try (Connection conn = DataSource.getInstance().getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            
+            pstmt.setString(1, userType);
+            
+            try (ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    users.add(mapRowToUser(rs));
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
     }
 }

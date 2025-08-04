@@ -1,5 +1,6 @@
 package userDAO;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface UserDAO {
@@ -24,4 +25,11 @@ public interface UserDAO {
      * @return An Optional containing the user if validation is successful, otherwise empty.
      */
     Optional<User> validateUser(String email, String password);
+    /**
+     * Get all users of a specific type (e.g., "Manager", "Operator")
+     * Added for Ali's OperatorPerformanceReportStrategy
+     * @param userType the user type to filter by
+     * @return list of matching users
+     */
+    List<User> getUsersByType(String userType);
 }
