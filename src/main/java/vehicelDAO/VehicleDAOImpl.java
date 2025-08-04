@@ -26,7 +26,7 @@ public class VehicleDAOImpl implements VehicleDAO {
             "SELECT * FROM vehicles";
     
     private static final String UPDATE_VEHICLE = 
-            "UPDATE vehicle SET vehicle_number = ?,  vehicle_type = ?, fuel_type = ?, consumption_rate = ?, max_passengers = ?, assigned_route = ? WHERE vehicle_id = ?";
+            "UPDATE vehicles SET vehicle_number = ?,  vehicle_type = ?, fuel_type = ?, consumption_rate = ?, max_passengers = ?, assigned_route = ? WHERE vehicle_id = ?";
     
     private static final String DELETE_VEHICLE = 
             "DELETE FROM vehicles WHERE vehicle_id = ?";
@@ -140,6 +140,7 @@ public class VehicleDAOImpl implements VehicleDAO {
              pstmt.setDouble(4, vehicle.getConsumptionRate());
              pstmt.setInt(5, vehicle.getMaxCapacity());
              pstmt.setString(6, vehicle.getRoute());
+             pstmt.setInt(7, vehicle.getVehicleId());
              
              pstmt.executeUpdate();
              

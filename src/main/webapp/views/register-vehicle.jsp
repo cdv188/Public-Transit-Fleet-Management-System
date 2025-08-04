@@ -19,6 +19,8 @@
         <div class="nav">
             <a href="ShowVehicleList">Vehicle List</a>
             <a href="ShowMaintenance">Maintenance Dashboard</a>
+            <a href="reports.jsp">Reports</a>
+            <a href="gpsDashboard.jsp">GPS Dashboard</a>
             <a href="dashboard.jsp">Dashboard</a>
         </div>
         
@@ -45,18 +47,24 @@
                 <label for="vehicleType">Vehicle Type *</label>
                 <select id="vehicleType" name="vehicleType" required>
                     <option value="">Select Vehicle Type</option>
-                    <option value="Diesel Bus" ${param.vehicleType == 'Diesel Bus' ? 'selected' : ''}>Diesel Bus</option>
-                    <option value="Electric Light Rail" ${param.vehicleType == 'Electric Light Rail' ? 'selected' : ''}>Electric Light Rail</option>
-                    <option value="Diesel-Electric Train" ${param.vehicleType == 'Diesel-Electric Train' ? 'selected' : ''}>Diesel-Electric Train</option>
+                    <option value="Bus" ${param.vehicleType == 'Bus' ? 'selected' : ''}>Bus</option>
+                    <option value="Van" ${param.vehicleType == 'Van' ? 'selected' : ''}>Van</option>
+                    <option value="Truck" ${param.vehicleType == 'Truck' ? 'selected' : ''}>Truck</option>
+                    <option value="Car" ${param.vehicleType == 'Car' ? 'selected' : ''}>Car</option>
+                    <option value="Train" ${param.vehicleType == 'Train' ? 'selected' : ''}>Train</option>
                 </select>
             </div>
-            
+                      
             <div class="form-group">
-                <label for="fuelType">Fuel Type *</label>
-                <input type="text" id="fuelType" name="fuelType" 
-                       placeholder="e.g., Diesel, Electricity, CNG" 
-                       value="${param.fuelType}" required>
-            </div>
+                    <label for="fuelType">Fuel Type *</label>
+                    <select id="fuelType" name="fuelType" required>
+                        <option value="">Select Fuel Type</option>
+                        <option value="Petrol" ${param.fuelType == 'Petrol' ? 'selected' : ''}>Petrol</option>
+                        <option value="Diesel" ${param.fuelType == 'Diesel' ? 'selected' : ''}>Diesel</option>
+                        <option value="Electric" ${param.fuelType == 'Electric' ? 'selected' : ''}>Electric</option>
+                        <option value="Hybrid" ${param.fuelType == 'Hybrid' ? 'selected' : ''}>Hybrid</option>
+                    </select>
+                </div>
             
             <div class="form-group">
                 <label for="consumptionRate">Consumption Rate *</label>

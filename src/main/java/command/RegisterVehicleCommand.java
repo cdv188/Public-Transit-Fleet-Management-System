@@ -74,7 +74,7 @@ public class RegisterVehicleCommand implements Command {
             Vehicle newVehicle = vehicleFactory.createVehicle(
                 vehicleNumber.trim(),
                 vehicleType,
-                fuelType,
+                fuelType.trim(),
                 maxPassengers,
                 consumptionRate,
                 assignedRoute.trim()
