@@ -1,0 +1,198 @@
+/* 
+    Author     : Chester
+*/
+body { 
+    font-family: Arial, sans-serif; 
+    margin: 0; 
+    background-color: #f4f4f4; 
+    color: #333; 
+}
+
+header {
+    background-color: #004d40;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    margin-top: 2rem;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.container { 
+     max-width: 1200px; 
+     margin: 2rem auto; 
+     background: white; 
+     padding: 2rem; 
+     border-radius: 8px; 
+     box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+ }
+
+table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    margin-top: 20px; 
+}
+
+th, td { 
+    padding: 12px; 
+    text-align: left; 
+    border-bottom: 1px solid #ccc;
+    color: #333;
+}
+
+th { 
+    background-color: #f4f4f4; 
+    font-weight: bold; 
+}
+
+tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+tr:hover { 
+    background-color: #f0f0f0; 
+    transition: 0.3s;
+}
+
+.button, .btn { 
+    display: inline-block;
+    background: #00796b; 
+    color: white; 
+    padding: 10px 15px; 
+    text-decoration: none; 
+    border: none;
+    border-radius: 4px; 
+    margin-right: 10px; 
+    cursor: pointer;
+    font-size: 1em;
+    transition: 0.3s;
+}
+
+.button:hover, .btn:hover { 
+    background-color: #004d40;
+    transition: 0.3s;
+}
+
+.btn-success { 
+    background: #388e3c; 
+}
+
+.btn-success:hover { 
+    background: #2e7d32; 
+}
+
+.success, .message { 
+    color: #388e3c; 
+    font-weight: bold;
+    margin-bottom: 15px; 
+    padding: 10px; 
+    background: rgba(56, 142, 60, 0.1); 
+    border: 1px solid #388e3c;
+    border-radius: 4px; 
+}
+
+.error {
+    color: #d32f2f;
+    font-weight: bold;
+    margin-bottom: 15px;
+    padding: 10px;
+    background: rgba(211, 47, 47, 0.1);
+    border: 1px solid #d32f2f;
+    border-radius: 4px;
+}
+
+.nav { 
+    margin-bottom: 20px; 
+}
+
+.nav a { 
+    margin-right: 15px; 
+    text-decoration: none; 
+    color: #00796b; 
+    transition: 0.3s; 
+    font-weight: 600;
+}
+
+.nav a:hover { 
+    text-decoration: underline;  
+    color: #004d40; 
+    transition: 0.3s;
+}
+
+.container-id { 
+    max-width: 800px; 
+    margin: 2rem auto; 
+    background: white; 
+    padding: 2rem; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.detail-row { 
+    margin-bottom: 15px; 
+    padding: 10px; 
+    background: #f4f4f4; 
+    border-radius: 4px; 
+}
+
+.detail-label { 
+    font-weight: bold; 
+    color: #333; 
+}
+
+.detail-value { 
+    margin-left: 10px; 
+}
+
+.container-register{ 
+    max-width: 600px; 
+    margin: 2rem auto; 
+    background: white; 
+    padding: 2rem; 
+    border-radius: 8px; 
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); 
+}
+
+.form-group { 
+    margin-bottom: 1rem; 
+}
+
+.form-group label { 
+    display: block; 
+    margin-bottom: 0.5rem; 
+    font-weight: bold; 
+    color: #333;
+}
+
+.form-group input, 
+.form-group select, 
+.form-group textarea { 
+    width: 100%; 
+    padding: 0.5rem; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
+    box-sizing: border-box; 
+    background-color: white;
+    color: #333;
+}
+
+button { 
+    background: #00796b; 
+    color: white; 
+    padding: 10px 15px; 
+    border: none; 
+    border-radius: 4px; 
+    cursor: pointer; 
+    font-size: 1em;
+    transition: 0.3s; 
+}
+
+button:hover { 
+    background-color: #004d40;
+    transition: 0.3s; 
+}

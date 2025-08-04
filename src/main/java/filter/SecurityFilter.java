@@ -16,7 +16,6 @@ public class SecurityFilter implements Filter {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         HttpSession session = request.getSession(false);
-
         boolean isManager = false;
 
         if (session != null && session.getAttribute("user") != null) {
@@ -26,7 +25,7 @@ public class SecurityFilter implements Filter {
                 isManager = true;
             }
         }
-
+        
         if (isManager) {
             chain.doFilter(request, response); // User is an authorized Manager.
         } else {
