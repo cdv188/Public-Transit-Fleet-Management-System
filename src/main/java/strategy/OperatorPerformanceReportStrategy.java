@@ -7,9 +7,9 @@ package strategy;
 import dao.OperatorStatusLogsDAO;
 import dao.OperatorStatusLogsDAOImpl;
 import dto.OperatorStatusLog;
-import dao.UserDAO;
-import dao.UserDAOImpl;
-import dto.User;
+import userDAO.UserDAO;
+import userDAO.UserDAOImpl;
+import userDAO.User;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

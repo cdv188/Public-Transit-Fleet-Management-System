@@ -65,10 +65,11 @@ public class SimulateGPSCommand implements Command {
             response.getWriter().println("<!DOCTYPE html><html><head>"
                     + "<meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'>"
                     + "<title>GPS Simulation</title>"
-                    + "<link rel='stylesheet' href='css/commands.css'>"
+                    + "<link rel='stylesheet' href='commands.css'>"
                     + "</head><body><div class='container'>"
                     + "<h1>GPS Simulation</h1>"
                     + "<p class='success'>GPS simulation complete. Updated " + updatedCount + " vehicle locations.</p>"
+                     + "<a href='gpsDashboard.jsp' class='btn'>Back to GPS Dashboard</a>" 
                     + "</div></body></html>");
 
             return null;

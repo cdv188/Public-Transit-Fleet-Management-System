@@ -145,4 +145,3 @@ INSERT INTO VehicleComponents (vehicle_id, component_name, hours_of_use, wear_th
 INSERT INTO MaintenanceLog (vehicle_id, task_description, scheduled_date, completion_date, status) VALUES
 (1, 'Oil change', '2025-08-10', NULL, 'Scheduled'),
 (2, 'Brake replacement', '2025-08-12', NULL, 'Scheduled');
-

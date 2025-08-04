@@ -3,7 +3,7 @@ package command;
 import dao.OperatorStatusLogsDAO;
 import dao.OperatorStatusLogsDAOImpl;
 import dto.OperatorStatusLog;
-import dto.User;
+import userDAO.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -84,7 +84,7 @@ private void showStatusPage(PrintWriter out, HttpServletRequest request, User us
     out.println("<title>Operator Status - PTFMS</title>");
     out.println("<meta charset='UTF-8'>");
     out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-    out.println("<link rel='stylesheet' href='commands.css'>"); // CSS 
+    out.println("<link rel='stylesheet' href='css/commands.css'>"); // CSS link added
     out.println("</head>");
     out.println("<body>");
     out.println("<div class='container'>");

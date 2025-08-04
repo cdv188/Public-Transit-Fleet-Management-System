@@ -8,7 +8,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import dto.User;
 
 /**
  *
@@ -56,39 +55,28 @@ public class LoginServlet extends HttpServlet {
     /**
      * Handles POST requests to validate credentials
      */
-protected void doPost(HttpServletRequest request, HttpServletResponse response) 
-        throws ServletException, IOException {
-    String username = request.getParameter("username");
-    String password = request.getParameter("password");
-    Properties props = new Properties();
-    try(InputStream in = Thread.currentThread()
-            .getContextClassLoader()
-            .getResourceAsStream("database.properties")){
-        props.load(in);
-    }catch(IOException e){
-        e.printStackTrace();
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) 
+            throws ServletException, IOException {
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        Properties props = new Properties();
+        try(InputStream in = Thread.currentThread()
+                .getContextClassLoader()
+                .getResourceAsStream("database.properties")){
+            props.load(in);
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+        String usr = props.getProperty("jdbc.username");
+        String pass = props.getProperty("jdbc.password");
+        // Validate credentials
+        if (usr.equals(username) && pass.equals(password)) {
+            request.getSession().setAttribute("authenticated", true);
+            response.sendRedirect("ShowVehicleList");
+        } else {
+            response.sendRedirect("Login?error=true");
+        }
     }
-    String usr = props.getProperty("jdbc.username");
-    String pass = props.getProperty("jdbc.password");
-    
-    // Validate credentials
-    if (usr.equals(username) && pass.equals(password)) {
-        // ADD THIS SECTION - Create and store User object
-        User user = new User();
-        user.setUserId(1); // Default ID for demo
-        user.setName("Demo Manager");
-        user.setEmail(username);
-        user.setUserType("Manager"); // Default to Manager for demo
-        
-        // Store both authenticated flag and user object
-        request.getSession().setAttribute("authenticated", true);
-        request.getSession().setAttribute("user", user);
-        
-        response.sendRedirect("ShowVehicleList");
-    } else {
-        response.sendRedirect("Login?error=true");
-    }
-}
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
      * Handles the HTTP <code>GET</code> method.

@@ -5,6 +5,10 @@
          http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
 
     <servlet>
+        <servlet-name>FrontController</servlet-name>
+        <servlet-class>controller.FrontController</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>LoginServlet</servlet-name>
         <servlet-class>viewlayer.LoginServlet</servlet-class>
     </servlet>
@@ -32,27 +36,6 @@
         <servlet-name>ShowMaintenanceByIdServlet</servlet-name>
         <servlet-class>viewlayer.ShowMaintenanceByIdServlet</servlet-class>
     </servlet>
-
-    <!-- New servlets -->
-    <servlet>
-        <servlet-name>ReportsServlet</servlet-name>
-        <servlet-class>viewlayer.ReportsServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>GpsDashboardServlet</servlet-name>
-        <servlet-class>viewlayer.GpsDashboardServlet</servlet-class>
-    </servlet>
-    <servlet>
-        <servlet-name>FrontController</servlet-name>
-        <servlet-class>viewlayer.FrontController</servlet-class>
-    </servlet>
-  
-    <servlet>
-     <servlet-name>SimulateGPSServlet</servlet-name>
-     <servlet-class>viewlayer.SimulateGPSServlet</servlet-class>
-    </servlet>
-
-    <!-- Existing mappings -->
     <servlet-mapping>
         <servlet-name>LoginServlet</servlet-name>
         <url-pattern>/Login</url-pattern>
@@ -82,28 +65,25 @@
         <url-pattern>/ShowMaintenanceById</url-pattern>
     </servlet-mapping>
 
-    <!-- New mappings -->
-    <servlet-mapping>
-        <servlet-name>ReportsServlet</servlet-name>
-        <url-pattern>/reports</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>GpsDashboardServlet</servlet-name>
-        <url-pattern>/gpsDashboard</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>FrontController</servlet-name>
-        <url-pattern>/FrontController</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-     <servlet-name>SimulateGPSServlet</servlet-name>
-     <url-pattern>/simulateGPS</url-pattern>
-    </servlet-mapping>
+  
+ 
+    
+         <servlet-mapping>
+              <servlet-name>FrontController</servlet-name>
+              <url-pattern>/controller</url-pattern>
+        </servlet-mapping>
 
     <session-config>
         <session-timeout>
             30
         </session-timeout>
     </session-config>
-
+    <filter>
+        <filter-name>SecurityFilter</filter-name>
+        <filter-class>filter.SecurityFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>SecurityFilter</filter-name>
+        <url-pattern>/dashboard.jsp</url-pattern>
+    </filter-mapping>
 </web-app>
