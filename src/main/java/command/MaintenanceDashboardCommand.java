@@ -3,114 +3,202 @@ package command;
 import MaintenanceLogDAO.MaintenanceLog;
 import MaintenanceLogDAO.MaintenanceLogDAO;
 import MaintenanceLogDAO.MaintenanceLogImpl;
-import java.io.IOException;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import MaintenanceLogDAO.MaintenanceLogLogic;
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import vehicelDAO.VehicleDAO;
 import vehicelDAO.VehicleDAOImpl;
 import vehicleSimpleFactory.Vehicle;
-
+import java.io.PrintWriter;
+import java.io.IOException;
+import java.util.List;
 /**
  *
  * @author Chester
  */
-public class MaintenanceDashboardCommand implements Command{
+public class MaintenanceDashboardCommand implements Command {
     private MaintenanceLogDAO maintenanceLogDAO;
     private VehicleDAO vehicleDAO;
+    private MaintenanceLogLogic logic = new MaintenanceLogLogic();
 
     public MaintenanceDashboardCommand() {
         this.maintenanceLogDAO = new MaintenanceLogImpl();
         this.vehicleDAO = new VehicleDAOImpl();
     }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
+        String method = request.getMethod();
         
-        try {
-            // Fetch all maintenance logs and tasks
-            List<MaintenanceLog> allMaintenanceLogs = maintenanceLogDAO.getAlarmsAndTasks();
-            
-            // Separate alerts from regular maintenance tasks
-            List<MaintenanceLog> alerts = allMaintenanceLogs.stream()
-                .filter(log -> "Alert".equals(log.getStatus()))
-                .collect(Collectors.toList());
-            
-            List<MaintenanceLog> scheduledTasks = allMaintenanceLogs.stream()
-                .filter(log -> "Scheduled".equals(log.getStatus()))
-                .collect(Collectors.toList());
-            
-            List<MaintenanceLog> inProgressTasks = allMaintenanceLogs.stream()
-                .filter(log -> "In-Progress".equals(log.getStatus()))
-                .collect(Collectors.toList());
-            
-            List<MaintenanceLog> completedTasks = allMaintenanceLogs.stream()
-                .filter(log -> "Completed".equals(log.getStatus()))
-                .collect(Collectors.toList());
+        if ("GET".equalsIgnoreCase(method)) {
+            showSchedulingForm(request, response);
+        } else if ("POST".equalsIgnoreCase(method)) {
+            processScheduling(request, response);
+        }
+        
+    }
 
-            // Get all vehicles for dropdown in scheduling form
+    private void showSchedulingForm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+         try {
+            // Get all vehicles for the dropdown
             List<Vehicle> allVehicles = vehicleDAO.getAllVehicles();
-
-            // Group maintenance logs by status for statistics
-            Map<String, Long> statusCounts = allMaintenanceLogs.stream()
-                .collect(Collectors.groupingBy(
-                    MaintenanceLog::getStatus,
-                    Collectors.counting()
-                ));
-
-            // Calculate maintenance statistics
-            long totalTasks = allMaintenanceLogs.size();
-            long activeAlerts = alerts.size();
-            long pendingTasks = scheduledTasks.size() + inProgressTasks.size();
             
-            // Set attributes for JSP
-            request.setAttribute("alerts", alerts);
-            request.setAttribute("scheduledTasks", scheduledTasks);
-            request.setAttribute("inProgressTasks", inProgressTasks);
-            request.setAttribute("completedTasks", completedTasks);
-            request.setAttribute("allVehicles", allVehicles);
-            request.setAttribute("statusCounts", statusCounts);
-            request.setAttribute("totalTasks", totalTasks);
-            request.setAttribute("activeAlerts", activeAlerts);
-            request.setAttribute("pendingTasks", pendingTasks);
+            // Set vehicles as request attribute for JSP
+            request.setAttribute("vehicles", allVehicles);
+            
+            // Forward to JSP
+            request.getRequestDispatcher("/views/schedule-maintenance.jsp").forward(request, response);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Failed to load scheduling form");
+            request.getRequestDispatcher("/views/error.jsp").forward(request, response);
+        }
+    }
 
-            // Check for success message from session
-            String successMessage = (String) request.getSession().getAttribute("successMessage");
-            if (successMessage != null) {
-                request.setAttribute("successMessage", successMessage);
-                request.getSession().removeAttribute("successMessage");
+    private void processScheduling(HttpServletRequest request, HttpServletResponse response) {
+            try {
+            // Extract form parameters
+            String vehicleIdStr = request.getParameter("vehicleId");
+            String taskDescription = request.getParameter("taskDescription");
+            String scheduledDateStr = request.getParameter("scheduledDate");
+            String status = request.getParameter("status");
+
+            // Validate required fields
+            if (vehicleIdStr == null || vehicleIdStr.trim().isEmpty()) {
+                response.sendRedirect("ShowMaintenance?error=selectionrequired");
+                return;
             }
 
-            // Forward to the maintenance dashboard JSP
-            request.getRequestDispatcher("/WEB-INF/views/maintenance-dashboard.jsp").forward(request, response);
+            if (taskDescription == null || taskDescription.trim().isEmpty()) {
+                response.sendRedirect("ShowMaintenance?error=descriptionrequired");
+                return;
+            }
+
+            // Parse vehicle ID
+            int vehicleId;
+            try {
+                vehicleId = Integer.parseInt(vehicleIdStr);
+            } catch (NumberFormatException e) {
+                response.sendRedirect("ShowMaintenance?error=invalidvehicleselections");
+                return;
+            }
+
+            // Verify vehicle exists
+            Vehicle vehicle = vehicleDAO.getVehicleById(vehicleId);
+            if (vehicle == null) {
+                response.sendRedirect("ShowMaintenance?error=notexist");
+                return;
+            }
+
+            // Parse scheduled date if provided
+            LocalDate scheduledDate = null;
+            if (scheduledDateStr != null && !scheduledDateStr.trim().isEmpty()) {
+                try {
+                    scheduledDate = LocalDate.parse(scheduledDateStr);
+                    
+                    // Validate that the scheduled date is not in the past
+                    if (scheduledDate.isBefore(LocalDate.now())) {
+                        response.sendRedirect("ShowMaintenance?error=olddate");
+                        return;
+                    }
+                } catch (DateTimeParseException e) {
+                    response.sendRedirect("ShowMaintenance?error=invalidformat");
+                    return;
+                }
+            }
+
+            // Validate status
+            if (status == null || status.trim().isEmpty()) {
+                status = "Scheduled";
+            }
+
+            // Create the maintenance log entry
+            MaintenanceLog maintenanceLog = new MaintenanceLog();
+            maintenanceLog.setVehicleId(vehicleId);
+            maintenanceLog.setTaskDescription(taskDescription.trim());
+            maintenanceLog.setScheduledDate(scheduledDate);
+            maintenanceLog.setStatus(status);
+
+            // Save the maintenance task
+            boolean success = maintenanceLogDAO.scheduleNewTask(maintenanceLog);
+
+            if (success) {
+                response.sendRedirect("ShowMaintenance?successMessage=scheduledsuccess");
+            } else {
+                response.sendRedirect("ShowMaintenance?successMessage=failed");
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
-
+    } 
     /**
-     * Helper method to get maintenance logs filtered by vehicle ID
+     * Helper method to update an existing maintenance task
      */
-    public void getMaintenanceLogsByVehicle(HttpServletRequest request, HttpServletResponse response) 
-            throws ServletException, IOException {
-        
-        String vehicleIdStr = request.getParameter("vehicleId");
-        
-        if (vehicleIdStr != null && !vehicleIdStr.trim().isEmpty()) {
-            try {
-                int vehicleId = Integer.parseInt(vehicleIdStr);
-                List<MaintenanceLog> vehicleLogs = maintenanceLogDAO.getMaintenanceLogsByVehicleId(vehicleId);
-                
-                request.setAttribute("maintenanceLogs", vehicleLogs);
-                request.setAttribute("selectedVehicleId", vehicleId);
-                
-            } catch (NumberFormatException e) {
-                request.setAttribute("error", "Invalid vehicle ID");
+    public void updateMaintenanceTask(HttpServletRequest request, HttpServletResponse response) 
+        throws ServletException, IOException {
+        try {
+            String taskIdStr = request.getParameter("taskId");
+            String newStatus = request.getParameter("status");
+            String completionDateStr = request.getParameter("completionDate");
+
+            int taskId = Integer.parseInt(taskIdStr);
+            MaintenanceLog existingTask = logic.getMaintenanceLogById(taskId);
+
+            // Update completion date if provided
+            if (completionDateStr != null && !completionDateStr.trim().isEmpty()) {
+                try {
+                    LocalDate completionDate = LocalDate.parse(completionDateStr);
+                    existingTask.setCompletionDate(completionDate);
+                } catch (DateTimeParseException e) {
+                    response.sendRedirect("ShowMaintenance?error=invalidformat");
+                    return;
+                }
             }
+            
+            if (newStatus != null && !newStatus.trim().isEmpty() && isValidStatus(newStatus)) {
+                existingTask.setStatus(newStatus);
+            }
+            
+            // If status is being set to "Completed" and no completion date is set, use today
+            if ("Completed".equals(existingTask.getStatus()) && existingTask.getCompletionDate() == null) {
+                existingTask.setCompletionDate(LocalDate.now());
+            }
+
+            boolean success = logic.updateMaintenanceLog(existingTask);
+
+            if (success) {
+                if (newStatus.equals("In-Progress")){
+                    response.sendRedirect("ShowMaintenance?successMessage=taskstarted");
+                }else{
+                    response.sendRedirect("ShowMaintenance?successMessage=success");
+                }
+            } else {
+                response.sendRedirect("ShowMaintenance?error=failed");
+            }
+
+        } catch (NumberFormatException e) {
+            response.sendRedirect("ShowMaintenance?error=invalidid");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+    /**
+     * Validates maintenance status against allowed values
+     * @param status The status to validate
+     * @return true if valid, false otherwise
+     */
+    private boolean isValidStatus(String status) {
+        return status != null && (
+            "Scheduled".equals(status) ||
+            "In-Progress".equals(status) ||
+            "Completed".equals(status) ||
+            "Alert".equals(status)
+        );
     }
 }

@@ -1,141 +1,97 @@
 package viewlayer;
 
+import userDAO.User;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import vehicelDAO.VehicleDAO;
+import javax.servlet.http.HttpSession;
 import vehicelDAO.VehicleLogic;
 import vehicleSimpleFactory.Vehicle;
 
 /**
- *
+ * ShowVehicleListServlet - Displays list of vehicles
+ * Accessible by all authenticated users (Managers and Operators)
  * @author Chester
  */
 public class ShowVehicleListServlet extends HttpServlet {
 
     /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * Check if user is authenticated
+     */
+    private boolean isAuthenticated(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        return session != null && session.getAttribute("user") != null;
+    }
+
+    /**
+     * Check if user has Manager role
+     */
+    private boolean isManager(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("user") != null) {
+            User user = (User) session.getAttribute("user");
+            return "Manager".equals(user.getUserType());
+        }
+        return false;
+    }
+
+    /**
+     * Processes requests for both HTTP GET and POST methods.
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String successMessage = (String) request.getSession().getAttribute("successMessage");
-        VehicleLogic logic = new VehicleLogic();
-        List<Vehicle> vehicles = logic.getAllVehicles();
         
-        PrintWriter out = response.getWriter();
-        out.println("<!DOCTYPE html>");
-        out.println("<html>");
-        out.println("<head>");
-        out.println("<title>Vehicle List - PTFMS</title>");
-        out.println("<meta charset='UTF-8'>");
-        out.println("<meta name='viewport' content='width=device-width, initial-scale=1.0'>");
-        out.println("<link rel=\"stylesheet\" href=\"vehicle.css\">  ");
-        out.println("</head>");
-        out.println("<body>");
-        out.println("<div class='container'>");
-        out.println("<div class='nav'>");
-        out.println("<a href='RegisterVehicle'>Register Vehicle</a>");
-        out.println("<a href='ShowMaintenance'>Maintenance Dashboard</a>");
-        out.println("</div>");
-        out.println("<h1>Vehicle Fleet Management</h1>");
-        
-        if (successMessage != null) {
-            out.println("<div class='success'>" + successMessage + "</div>");
-            request.getSession().removeAttribute("successMessage");
+        // Check if user is authenticated
+        if (!isAuthenticated(request)) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp");
+            return;
         }
         
-        out.println("<div style='margin-bottom: 20px;'>");
-        out.println("<a href='RegisterVehicle' class='btn btn-success'>Add New Vehicle</a>");
-        out.println("</div>");
-        
-        if (vehicles.isEmpty()) {
-            out.println("<p>No vehicles registered yet. <a href='RegisterVehicle'>Register the first vehicle</a></p>");
-        } else {
-            out.println("<table>");
-            out.println("<thead>");
-            out.println("<tr>");
-            out.println("<th>Vehicle Number</th>");
-            out.println("<th>Type</th>");
-            out.println("<th>Fuel Type</th>");
-            out.println("<th>Consumption Rate</th>");
-            out.println("<th>Max Passengers</th>");
-            out.println("<th>Assigned Route</th>");
-            out.println("<th>Actions</th>");
-            out.println("</tr>");
-            out.println("</thead>");
-            out.println("<tbody>");
+        try {
+            VehicleLogic logic = new VehicleLogic();
+            List<Vehicle> vehicles = logic.getAllVehicles();
             
-            for (Vehicle vehicle : vehicles) {
-                out.println("<tr>");
-                out.println("<td>" + vehicle.getNumber() + "</td>");
-                out.println("<td>" + vehicle.getVehicleType() + "</td>");
-                out.println("<td>" + vehicle.getFuelType() + "</td>");
-                out.println("<td>" + vehicle.getConsumptionRate() + "</td>");
-                out.println("<td>" + vehicle.getMaxCapacity() + "</td>");
-                out.println("<td>" + vehicle.getRoute() + "</td>");
-                out.println("<td>");
-                out.println("<a href='ShowVehicleById?id=" + vehicle.getVehicleId() + "' class='btn'>View Details</a>");
-                out.println("</td>");
-                out.println("</tr>");
+            // Set attributes for JSP
+            request.setAttribute("vehicles", vehicles);
+            request.setAttribute("isManager", isManager(request));
+            
+            // Get success message from session if exists
+            HttpSession session = request.getSession(false);
+            if (session != null) {
+                String successMessage = (String) session.getAttribute("successMessage");
+                if (successMessage != null) {
+                    request.setAttribute("successMessage", successMessage);
+                    session.removeAttribute("successMessage");
+                }
             }
             
-            out.println("</tbody>");
-            out.println("</table>");
-            out.println("<p><strong>Total Vehicles:</strong> " + vehicles.size() + "</p>");
+            // Forward to JSP
+            request.getRequestDispatcher("/views/vehicle-list.jsp").forward(request, response);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            request.setAttribute("error", "Failed to load vehicle list");
+            request.getRequestDispatcher("/views/vehicle-list.jsp").forward(request, response);
         }
-        
-        out.println("</div>");
-        out.println("</body>");
-        out.println("</html>");
-        
     }
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
     @Override
     public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
+        return "Vehicle List Servlet - Authenticated Access";
+    }
 }
