@@ -1,4 +1,4 @@
-package MaintenanceLogDAO;
+package dataaccesslayer.maintenance;
 
 import java.time.LocalDate;
 

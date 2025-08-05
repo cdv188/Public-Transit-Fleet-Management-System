@@ -1,7 +1,7 @@
 package viewlayer;
 
-import MaintenanceLogDAO.MaintenanceLog;
-import MaintenanceLogDAO.MaintenanceLogLogic;
+import dataaccesslayer.maintenance.MaintenanceLog;
+import dataaccesslayer.maintenance.MaintenanceLogLogic;
 import businesslayers.command.MaintenanceDashboardCommand;
 import java.io.IOException;
 import java.util.ArrayList;

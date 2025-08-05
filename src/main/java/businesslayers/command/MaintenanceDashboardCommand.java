@@ -1,9 +1,9 @@
 package businesslayers.command;
 
-import MaintenanceLogDAO.MaintenanceLog;
-import MaintenanceLogDAO.MaintenanceLogDAO;
-import MaintenanceLogDAO.MaintenanceLogImpl;
-import MaintenanceLogDAO.MaintenanceLogLogic;
+import dataaccesslayer.maintenance.MaintenanceLog;
+import dataaccesslayer.maintenance.MaintenanceLogDAO;
+import dataaccesslayer.maintenance.MaintenanceLogImpl;
+import dataaccesslayer.maintenance.MaintenanceLogLogic;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import javax.servlet.ServletException;

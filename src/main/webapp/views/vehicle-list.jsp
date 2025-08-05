@@ -19,7 +19,6 @@
     
     <div class="container">
         <div class="nav">
-            <!-- Only show Register Vehicle link to Managers -->
             <c:if test="${isManager}">
                 <a href="RegisterVehicle">Register Vehicle</a>
                 <a href="reports.jsp">Reports</a>
@@ -30,18 +29,24 @@
         </div>
         
         <h1>Vehicle Fleet Management</h1>
-        
-        <!-- Display success message -->
+        <c:if test="${param.error == 'deletefailed'}">
+            <div class="error">
+                Failed to delete the vehicle. Please try again.
+            </div>
+        </c:if>
+        <c:if test="${param.successMessage == 'deleted'}">
+            <div class="success">
+                Successfully Deleted Vehicle.
+            </div>
+        </c:if>
         <c:if test="${not empty successMessage}">
             <div class="success">${successMessage}</div>
         </c:if>
         
-        <!-- Display error message -->
         <c:if test="${not empty error}">
             <div class="error">${error}</div>
         </c:if>
         
-        <!-- Only show Add New Vehicle button to Managers -->
         <c:if test="${isManager}">
             <div style="margin-bottom: 20px;">
                 <a href="RegisterVehicle" class="btn btn-success">Add New Vehicle</a>

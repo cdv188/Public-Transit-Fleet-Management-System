@@ -1,7 +1,7 @@
 package businesslayers.builder;
 
 /**
- * Builder for creating {@link Vehicle} objects with a fluent API.
+ * Builder for creating objects with a fluent API.
  */
 public class VehicleBuilder {
 

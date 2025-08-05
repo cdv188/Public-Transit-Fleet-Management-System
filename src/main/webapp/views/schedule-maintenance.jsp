@@ -21,19 +21,16 @@
     <div class="schedule-container">
         <h1>Schedule Maintenance Task</h1>
         
-        <!-- Display success message -->
         <c:if test="${not empty sessionScope.successMessage}">
             <div class="success">Scheduled Successfully Made</div>
             <c:remove var="successMessage" scope="session"/>
         </c:if>
         
-        <!-- Display error message -->
         <c:if test="${not empty requestScope.error}">
             <div class="error">Something Went Wrong</div>
         </c:if>
         
         <form method="POST" action="ShowMaintenance?action=schedule">
-            <!-- Vehicle selection dropdown -->
             <div class="form-group">
                 <label for="vehicleId">Select Vehicle <span class="required">*</span></label>
                 <select id="vehicleId" name="vehicleId" required>
@@ -47,7 +44,6 @@
                 </select>
             </div>
             
-            <!-- Task description -->
             <div class="form-group">
                 <label for="taskDescription">Task Description <span class="required">*</span></label>
                 <textarea id="taskDescription" name="taskDescription" 
@@ -55,7 +51,6 @@
                          required><c:out value="${param.taskDescription}"/></textarea>
             </div>
             
-            <!-- Scheduled date -->
             <div class="form-group">
                 <label for="scheduledDate">Scheduled Date</label>
                 <input type="date" id="scheduledDate" name="scheduledDate" 
@@ -64,7 +59,6 @@
                 <small style="color: #666; font-size: 12px;">Leave empty if no specific date is required</small>
             </div>
             
-            <!-- Status selection -->
             <div class="form-group">
                 <label for="status">Status</label>
                 <select id="status" name="status">
@@ -78,7 +72,6 @@
                 </select>
             </div>
             
-            <!-- Form buttons -->
             <div class="form-actions">
                 <button type="submit" class="btn">Schedule Task</button>
                 <button type="button" class="btn btn-secondary" 

@@ -1,9 +1,9 @@
 package businesslayers.observer;
 
 import businesslayers.builder.Vehicle;
-import MaintenanceLogDAO.MaintenanceLogDAO;
-import MaintenanceLogDAO.MaintenanceLogImpl;
-import MaintenanceLogDAO.MaintenanceLog;
+import dataaccesslayer.maintenance.MaintenanceLogDAO;
+import dataaccesslayer.maintenance.MaintenanceLogImpl;
+import dataaccesslayer.maintenance.MaintenanceLog;
 
 /**
  * Observer that creates maintenance log alerts for vehicles.

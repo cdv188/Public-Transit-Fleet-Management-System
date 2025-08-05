@@ -50,7 +50,6 @@
         
         <h1>Vehicle Details: ${vehicle.number}</h1>
         
-        <!-- Display success message if any -->
         <c:if test="${not empty successMessage}">
             <div class="success-message">
                 ${successMessage}
@@ -95,12 +94,10 @@
         <div style="margin-top: 30px;">
             <a href="ShowVehicleList" class="btn">Back to List</a>
             
-            <!-- Only Managers can schedule maintenance, update, and delete vehicles -->
             <c:if test="${isManager}">
                 <a href="ShowMaintenance?action=schedule&vehicleId=${vehicle.vehicleId}" class="btn">Schedule Maintenance</a>
                 <a href="UpdateVehicle?vehicleId=${vehicle.vehicleId}" class="btn-update">Update Vehicle</a>
                 
-                <!-- Delete Vehicle Form -->
                 <form method="post" style="display: inline-block; margin-left: 10px;">
                     <input type="hidden" name="action" value="delete">
                     <input type="hidden" name="vehicleId" value="${vehicle.vehicleId}">

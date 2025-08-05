@@ -19,7 +19,6 @@
     <div class="container">
         <div class="nav">
             <a href="ShowVehicleList">Vehicle List</a>
-            <!-- Only show Schedule Maintenance link to Managers -->
             <c:if test="${isManager}">
                 <a href="ShowMaintenance?action=schedule">Schedule Maintenance</a>
                 <a href="RegisterVehicle">Register Vehicle</a>
@@ -79,7 +78,6 @@
             </div>
         </div>
         
-        <!-- Quick actions - Only for Managers -->
         <c:if test="${isManager}">
             <div style="margin: 30px 0;">
                 <a href="ShowMaintenance?action=schedule" class="btn btn-success">Schedule New Maintenance</a>

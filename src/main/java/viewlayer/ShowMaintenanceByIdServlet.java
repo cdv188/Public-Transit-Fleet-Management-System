@@ -1,7 +1,7 @@
 package viewlayer;
 
-import MaintenanceLogDAO.MaintenanceLog;
-import MaintenanceLogDAO.MaintenanceLogLogic;
+import dataaccesslayer.maintenance.MaintenanceLog;
+import dataaccesslayer.maintenance.MaintenanceLogLogic;
 import dataaccesslayer.users.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Servlet for showing details of a specific maintenance task.
- * Accessible to all authenticated users.
  */
 public class ShowMaintenanceByIdServlet extends HttpServlet {
 

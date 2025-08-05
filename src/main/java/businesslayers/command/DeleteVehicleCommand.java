@@ -41,13 +41,6 @@ public class DeleteVehicleCommand implements Command {
             }
 
             int vehicleId = Integer.parseInt(vehicleIdStr);
-
-            Vehicle vehicle = vehicleDAO.getVehicleById(vehicleId);
-            if (vehicle == null) {
-                response.sendRedirect("ShowVehicleList?error=notfound");
-                return;
-            }
-
             boolean success = vehicleDAO.deleteVehicle(vehicleId);
 
             if (success) {
