@@ -84,7 +84,7 @@ A controller class is used to manage communication across all layers.
 
 ---
 
-## 📁 Updated Project Structure
+## 📁 Project File Structure
 
 ```
 java/
