@@ -1,5 +1,6 @@
-package businesslayers.command;
+package businesslayers.command.ReportAndGpsCommand;
 
+import businesslayers.command.Command;
 import dataaccesslayer.operatorlogs.OperatorStatusLogsDAO;
 import dataaccesslayer.operatorlogs.OperatorStatusLogsDAOImpl;
 import datatransferobject.OperatorStatusLog;

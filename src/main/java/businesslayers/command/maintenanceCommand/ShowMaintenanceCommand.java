@@ -1,31 +1,24 @@
-package viewlayer;
+package businesslayers.command.maintenanceCommand;
 
+import businesslayers.command.Command;
 import dataaccesslayer.maintenance.MaintenanceLog;
 import dataaccesslayer.maintenance.MaintenanceLogLogic;
-import businesslayers.command.MaintenanceDashboardCommand;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import dataaccesslayer.users.User;
 
 /**
- * Servlet for displaying and managing the maintenance dashboard.
+ * Command for displaying and managing the maintenance dashboard.
  */
-public class ShowMaintenanceServlet extends HttpServlet {
+public class ShowMaintenanceCommand implements Command {
 
     private final MaintenanceLogLogic logic = new MaintenanceLogLogic();
-    private MaintenanceDashboardCommand schedule;
-
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        this.schedule = new MaintenanceDashboardCommand();
-    }
+    private MaintenanceDashboardCommand schedule = new MaintenanceDashboardCommand();
 
     /** @return true if the user is logged in. */
     private boolean isAuthenticated(HttpServletRequest request) {
@@ -43,14 +36,60 @@ public class ShowMaintenanceServlet extends HttpServlet {
         return false;
     }
 
-    /** Displays the maintenance dashboard with categorized task lists. */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         if (!isAuthenticated(request)) {
             response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
+
+        String method = request.getMethod();
+        String action = request.getParameter("action");
+
+        if ("POST".equalsIgnoreCase(method)) {
+            handlePost(request, response, action);
+        } else {
+            handleGet(request, response, action);
+        }
+    }
+
+    private void handleGet(HttpServletRequest request, HttpServletResponse response, String action)
+            throws ServletException, IOException {
+
+        if ("schedule".equals(action)) {
+            if (!isManager(request)) {
+                response.sendRedirect("FrontController?action=showMaintenance&error=unauthorized");
+                return;
+            }
+            schedule.execute(request, response);
+        } else {
+            displayDashboard(request, response);
+        }
+    }
+
+    private void handlePost(HttpServletRequest request, HttpServletResponse response, String action)
+            throws ServletException, IOException {
+
+        if ("schedule".equals(action) || "update".equals(action)) {
+            if (!isManager(request)) {
+                response.sendRedirect("FrontController?action=showMaintenance&error=unauthorized");
+                return;
+            }
+            if ("schedule".equals(action)) {
+                schedule.execute(request, response);
+            } else {
+                schedule.updateMaintenanceTask(request, response);
+            }
+        } else {
+            response.sendRedirect("FrontController?action=showMaintenance&error=invalid");
+        }
+    }
+
+    /** Displays the maintenance dashboard with categorized task lists. */
+    private void displayDashboard(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         try {
             List<MaintenanceLog> allMaintenanceLogs = logic.getAlarmsAndTasks();
@@ -92,53 +131,5 @@ public class ShowMaintenanceServlet extends HttpServlet {
             request.setAttribute("error", "Failed to load maintenance dashboard");
             request.getRequestDispatcher("/views/maintenance-dashboard.jsp").forward(request, response);
         }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        if (!isAuthenticated(request)) {
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
-            return;
-        }
-
-        String action = request.getParameter("action");
-
-        if ("schedule".equals(action) || "update".equals(action)) {
-            if (!isManager(request)) {
-                response.sendRedirect("ShowMaintenance?error=unauthorized");
-                return;
-            }
-            if ("schedule".equals(action)) {
-                schedule.execute(request, response);
-            } else {
-                schedule.updateMaintenanceTask(request, response);
-            }
-        } else {
-            response.sendRedirect("ShowMaintenance?error=invalid");
-        }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
-        String action = request.getParameter("action");
-
-        if ("schedule".equals(action)) {
-            if (!isManager(request)) {
-                response.sendRedirect("ShowMaintenance?error=unauthorized");
-                return;
-            }
-            schedule.execute(request, response);
-        } else {
-            processRequest(request, response);
-        }
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Displays and manages the maintenance dashboard (authenticated access).";
     }
 }

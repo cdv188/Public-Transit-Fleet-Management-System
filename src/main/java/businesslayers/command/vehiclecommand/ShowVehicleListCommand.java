@@ -1,21 +1,21 @@
-package viewlayer;
+package businesslayers.command.vehiclecommand;
 
 import dataaccesslayer.users.User;
 import java.io.IOException;
 import java.util.List;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import dataaccesslayer.vehicles.VehicleLogic;
 import businesslayers.builder.Vehicle;
+import businesslayers.command.Command;
 
 /**
- * Servlet for displaying the list of vehicles.
+ * Command for displaying the list of vehicles.
  * Accessible to all authenticated users; Manager role adds extra actions.
  */
-public class ShowVehicleListServlet extends HttpServlet {
+public class ShowVehicleListCommand implements Command {
 
     /** @return true if the user is logged in. */
     private boolean isAuthenticated(HttpServletRequest request) {
@@ -33,8 +33,8 @@ public class ShowVehicleListServlet extends HttpServlet {
         return false;
     }
 
-    /** Loads and displays the vehicle list. */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         if (!isAuthenticated(request)) {
@@ -65,22 +65,5 @@ public class ShowVehicleListServlet extends HttpServlet {
             request.setAttribute("error", "Failed to load vehicle list");
             request.getRequestDispatcher("/views/vehicle-list.jsp").forward(request, response);
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Displays a list of vehicles for authenticated users.";
     }
 }

@@ -1,19 +1,19 @@
-package viewlayer;
+package businesslayers.command.maintenanceCommand;
 
+import businesslayers.command.Command;
 import dataaccesslayer.maintenance.MaintenanceLog;
 import dataaccesslayer.maintenance.MaintenanceLogLogic;
 import dataaccesslayer.users.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet for showing details of a specific maintenance task.
+ * Command for showing details of a specific maintenance task.
  */
-public class ShowMaintenanceByIdServlet extends HttpServlet {
+public class ShowMaintenanceByIdCommand implements Command {
 
     private MaintenanceLogLogic logic = new MaintenanceLogLogic();
 
@@ -33,8 +33,8 @@ public class ShowMaintenanceByIdServlet extends HttpServlet {
         return false;
     }
 
-    /** Processes both GET and POST requests for showing maintenance details. */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         if (!isAuthenticated(request)) {
@@ -49,7 +49,7 @@ public class ShowMaintenanceByIdServlet extends HttpServlet {
             MaintenanceLog task = logic.getMaintenanceLogById(taskId);
 
             if (task == null) {
-                response.sendRedirect("ShowMaintenance?error=notfound");
+                response.sendRedirect("FrontController?action=showMaintenance&error=notfound");
                 return;
             }
 
@@ -58,27 +58,10 @@ public class ShowMaintenanceByIdServlet extends HttpServlet {
             request.getRequestDispatcher("/views/maintenance-details.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {
-            response.sendRedirect("ShowMaintenance?error=invalid");
+            response.sendRedirect("FrontController?action=showMaintenance&error=invalid");
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("ShowMaintenance?error=system");
+            response.sendRedirect("FrontController?action=showMaintenance&error=system");
         }
-    }
-
-    @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        processRequest(request, response);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Shows details of a maintenance task (authenticated access).";
     }
 }

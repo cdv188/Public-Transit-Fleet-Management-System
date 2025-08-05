@@ -1,16 +1,20 @@
-package businesslayers.command;
+package businesslayers.command.vehiclecommand;
 
+import dataaccesslayer.users.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import dataaccesslayer.vehicles.VehicleDAO;
 import dataaccesslayer.vehicles.VehicleDAOImpl;
 import businesslayers.builder.Vehicle;
+import businesslayers.command.Command;
 import businesslayers.simplefactory.VehicleFactory;
 
 /**
- * Command that updates vehicle details.
+ * Command for updating vehicle details.
+ * Accessible only by Managers.
  */
 public class UpdateVehicleCommand implements Command {
 
@@ -23,20 +27,72 @@ public class UpdateVehicleCommand implements Command {
         this.vehicleFactory = new VehicleFactory();
     }
 
-    /**
-     * Executes vehicle update logic for GET (form display) or POST (submission).
-     *
-     * @param request  the HTTP request
-     * @param response the HTTP response
-     */
+    /** @return true if the logged-in user has the Manager role. */
+    private boolean isManager(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session != null && session.getAttribute("user") != null) {
+            User user = (User) session.getAttribute("user");
+            return "Manager".equals(user.getUserType());
+        }
+        return false;
+    }
+
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
+        if (!isManager(request)) {
+            response.sendRedirect(request.getContextPath() + "/login.jsp?error=unauthorized");
+            return;
+        }
+
         String method = request.getMethod();
         if ("GET".equalsIgnoreCase(method)) {
             showUpdateForm(request, response);
         } else if ("POST".equalsIgnoreCase(method)) {
+            handlePost(request, response);
+        }
+    }
+
+    private void handlePost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        String vehicleNumber = request.getParameter("vehicleNumber");
+        String vehicleType = request.getParameter("vehicleType");
+        String fuelType = request.getParameter("fuelType");
+        String consumptionRateStr = request.getParameter("consumptionRate");
+        String maxPassengersStr = request.getParameter("maxPassengers");
+        String route = request.getParameter("assignedRoute");
+
+        if (vehicleNumber == null || vehicleNumber.trim().isEmpty() ||
+            vehicleType == null || vehicleType.trim().isEmpty() ||
+            fuelType == null || fuelType.trim().isEmpty() ||
+            consumptionRateStr == null || consumptionRateStr.trim().isEmpty() ||
+            maxPassengersStr == null || maxPassengersStr.trim().isEmpty() ||
+            route == null || route.trim().isEmpty()) {
+
+            request.setAttribute("errorMessage", "All fields must not be empty");
+            showUpdateForm(request, response);
+            return;
+        }
+
+        try {
+            double consumptionRate = Double.parseDouble(consumptionRateStr.trim());
+            int maxPassengers = Integer.parseInt(maxPassengersStr.trim());
+
+            if (consumptionRate < 0 || maxPassengers <= 0) {
+                request.setAttribute("errorMessage",
+                        "Invalid values: consumption rate cannot be negative and passengers must be positive");
+                showUpdateForm(request, response);
+                return;
+            }
+
             processUpdate(request, response);
+
+        } catch (NumberFormatException e) {
+            request.setAttribute("errorMessage",
+                    "Please enter valid numbers for consumption rate and passengers");
+            showUpdateForm(request, response);
         }
     }
 
@@ -46,7 +102,7 @@ public class UpdateVehicleCommand implements Command {
         try {
             String vehicleIdStr = request.getParameter("vehicleId");
             if (vehicleIdStr == null || vehicleIdStr.trim().isEmpty()) {
-                response.sendRedirect("ShowVehicleList?error=invalid");
+                response.sendRedirect("ShowVehicleById?error=invalid");
                 return;
             }
 
@@ -54,7 +110,7 @@ public class UpdateVehicleCommand implements Command {
             Vehicle vehicle = vehicleDAO.getVehicleById(vehicleId);
 
             if (vehicle == null) {
-                response.sendRedirect("ShowVehicleList?error=notfound");
+                response.sendRedirect("ShowVehicleById?error=notfound");
                 return;
             }
 
@@ -62,10 +118,10 @@ public class UpdateVehicleCommand implements Command {
             request.getRequestDispatcher("/views/update-vehicle.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {
-            response.sendRedirect("ShowVehicleList?error=invalid");
+            response.sendRedirect("ShowVehicleById?error=invalid");
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("ShowVehicleList?error=system");
+            response.sendRedirect("ShowVehicleById?error=system");
         }
     }
 
@@ -83,7 +139,7 @@ public class UpdateVehicleCommand implements Command {
 
             Vehicle existingVehicle = vehicleDAO.getVehicleById(vehicleId);
             if (existingVehicle == null) {
-                response.sendRedirect("ShowVehicleList?error=notfound");
+                response.sendRedirect("ShowVehicleById?error=notfound");
                 return;
             }
 
@@ -132,10 +188,10 @@ public class UpdateVehicleCommand implements Command {
             }
 
         } catch (NumberFormatException e) {
-            response.sendRedirect("ShowVehicleList?error=invalid");
+            response.sendRedirect("ShowVehicleById?error=invalid");
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("ShowVehicleList?error=system");
+            response.sendRedirect("ShowVehicleById?error=system");
         }
     }
 }

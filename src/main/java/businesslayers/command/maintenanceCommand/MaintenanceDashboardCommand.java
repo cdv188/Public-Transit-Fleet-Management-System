@@ -1,4 +1,4 @@
-package businesslayers.command;
+package businesslayers.command.maintenanceCommand;
 
 import dataaccesslayer.maintenance.MaintenanceLog;
 import dataaccesslayer.maintenance.MaintenanceLogDAO;
@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import dataaccesslayer.vehicles.VehicleDAO;
 import dataaccesslayer.vehicles.VehicleDAOImpl;
 import businesslayers.builder.Vehicle;
+import businesslayers.command.Command;
 import java.io.IOException;
 import java.util.List;
 

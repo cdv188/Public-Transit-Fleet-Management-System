@@ -1,4 +1,4 @@
-package businesslayers.command;
+package businesslayers.command.vehiclecommand;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 import dataaccesslayer.vehicles.VehicleDAO;
 import dataaccesslayer.vehicles.VehicleDAOImpl;
 import businesslayers.builder.Vehicle;
+import businesslayers.command.Command;
 
 /**
  * Command that handles deletion of a vehicle by its ID.

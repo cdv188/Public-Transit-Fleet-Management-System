@@ -1,20 +1,30 @@
-package viewlayer;
+package businesslayers.command.vehiclecommand;
 
-import businesslayers.command.RegisterVehicleCommand;
 import dataaccesslayer.users.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import dataaccesslayer.vehicles.VehicleDAO;
+import dataaccesslayer.vehicles.VehicleDAOImpl;
+import businesslayers.builder.Vehicle;
+import businesslayers.command.Command;
+import businesslayers.simplefactory.VehicleFactory;
 
 /**
- * Servlet for handling vehicle registration, accessible only by Managers.
+ * Command for handling vehicle registration, accessible only by Managers.
  */
-public class RegisterVehicleServlet extends HttpServlet {
+public class RegisterVehicleCommand implements Command {
 
-    private RegisterVehicleCommand registerCommand = new RegisterVehicleCommand();
+    private VehicleDAO vehicleDAO;
+    private VehicleFactory vehicleFactory;
+
+    /** Creates a new command with default DAO and factory implementations. */
+    public RegisterVehicleCommand() {
+        this.vehicleDAO = new VehicleDAOImpl();
+        this.vehicleFactory = new VehicleFactory();
+    }
 
     /** Checks if the current user is a Manager. */
     private boolean isManager(HttpServletRequest request) {
@@ -27,13 +37,24 @@ public class RegisterVehicleServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         if (!isManager(request)) {
             response.sendRedirect(request.getContextPath() + "/login.jsp?error=unauthorized");
             return;
         }
+
+        String method = request.getMethod();
+        if ("GET".equalsIgnoreCase(method)) {
+            handleGet(request, response);
+        } else if ("POST".equalsIgnoreCase(method)) {
+            handlePost(request, response);
+        }
+    }
+
+    private void handleGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         String error = request.getParameter("error");
         String success = request.getParameter("successMessage");
@@ -48,24 +69,8 @@ public class RegisterVehicleServlet extends HttpServlet {
         request.getRequestDispatcher("/views/register-vehicle.jsp").forward(request, response);
     }
 
-    /** Returns the error message for a given code. */
-    private String getErrorMessage(String error) {
-        switch (error) {
-            case "emptyFields": return "All fields must not be empty";
-            case "failed": return "Failed to Register";
-            case "exist": return "Vehicle number already exists";
-            default: return "An error occurred";
-        }
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    private void handlePost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-        if (!isManager(request)) {
-            response.sendRedirect(request.getContextPath() + "/login.jsp?error=unauthorized");
-            return;
-        }
 
         String vehicleNumber = request.getParameter("vehicleNumber");
         String vehicleType = request.getParameter("vehicleType");
@@ -98,7 +103,8 @@ public class RegisterVehicleServlet extends HttpServlet {
             }
 
             if ("register".equals(action)) {
-                registerCommand.execute(request, response);
+                processRegistration(request, response, vehicleNumber, vehicleType, fuelType, 
+                                  consumptionRate, maxPassengers, route);
             } else {
                 request.setAttribute("errorMessage", "Invalid action");
                 request.getRequestDispatcher("/views/register-vehicle.jsp").forward(request, response);
@@ -110,8 +116,52 @@ public class RegisterVehicleServlet extends HttpServlet {
         }
     }
 
-    @Override
-    public String getServletInfo() {
-        return "Vehicle Registration Servlet - Manager Access Only";
+    private void processRegistration(HttpServletRequest request, HttpServletResponse response,
+                                   String vehicleNumber, String vehicleType, String fuelType,
+                                   double consumptionRate, int maxPassengers, String route)
+            throws ServletException, IOException {
+        try {
+            if (vehicleDAO.getVehicleByNumber(vehicleNumber.trim()) != null) {
+                response.sendRedirect("RegisterVehicle?error=exist");
+                return;
+            }
+
+            if (maxPassengers <= 0) {
+                request.setAttribute("errorMessage", "Invalid maximum passengers value");
+                request.getRequestDispatcher("/views/register-vehicle.jsp").forward(request, response);
+                return;
+            }
+
+            Vehicle newVehicle = vehicleFactory.createVehicle(
+                    vehicleNumber.trim(),
+                    vehicleType,
+                    fuelType.trim(),
+                    maxPassengers,
+                    consumptionRate,
+                    route.trim()
+            );
+
+            boolean success = vehicleDAO.addVehicle(newVehicle);
+
+            if (success) {
+                response.sendRedirect("RegisterVehicle?successMessage=success");
+            } else {
+                response.sendRedirect("RegisterVehicle?error=failed");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            response.sendRedirect("RegisterVehicle?error=failed");
+        }
+    }
+
+    /** Returns the error message for a given code. */
+    private String getErrorMessage(String error) {
+        switch (error) {
+            case "emptyFields": return "All fields must not be empty";
+            case "failed": return "Failed to Register";
+            case "exist": return "Vehicle number already exists";
+            default: return "An error occurred";
+        }
     }
 }

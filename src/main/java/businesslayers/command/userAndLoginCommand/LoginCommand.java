@@ -1,5 +1,6 @@
-package businesslayers.command;
+package businesslayers.command.userAndLoginCommand;
 
+import businesslayers.command.Command;
 import dataaccesslayer.users.UserDAO;
 import dataaccesslayer.users.UserDAOImpl;
 import dataaccesslayer.users.User;

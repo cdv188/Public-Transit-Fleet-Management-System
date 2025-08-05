@@ -1,21 +1,20 @@
-package viewlayer;
+package businesslayers.command.vehiclecommand;
 
-import businesslayers.command.DeleteVehicleCommand;
 import dataaccesslayer.users.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import dataaccesslayer.vehicles.VehicleLogic;
 import businesslayers.builder.Vehicle;
+import businesslayers.command.Command;
 
 /**
- * Servlet for displaying vehicle details and processing delete operations.
+ * Command for displaying vehicle details and processing delete operations.
  * Accessible to all authenticated users; delete requires Manager role.
  */
-public class ShowVehicleByIdServlet extends HttpServlet {
+public class ShowVehicleByIdCommand implements Command {
 
     private final DeleteVehicleCommand deleteCommand = new DeleteVehicleCommand();
 
@@ -36,13 +35,24 @@ public class ShowVehicleByIdServlet extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         if (!isAuthenticated(request)) {
             response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
+
+        String method = request.getMethod();
+        if ("POST".equalsIgnoreCase(method)) {
+            handlePost(request, response);
+        } else {
+            handleGet(request, response);
+        }
+    }
+
+    private void handleGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         String vehicleIdStr = request.getParameter("id");
         String success = request.getParameter("success");
@@ -53,7 +63,7 @@ public class ShowVehicleByIdServlet extends HttpServlet {
             Vehicle vehicle = logic.getVehicleById(vehicleId);
 
             if (vehicle == null) {
-                response.sendRedirect("ShowVehicleList?error=notfound");
+                response.sendRedirect("FrontController?action=showVehicleList&error=notfound");
                 return;
             }
 
@@ -66,37 +76,26 @@ public class ShowVehicleByIdServlet extends HttpServlet {
             request.getRequestDispatcher("/views/vehicle-details.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {
-            response.sendRedirect("ShowVehicleList?error=invalid");
+            response.sendRedirect("FrontController?action=showVehicleList&error=invalid");
         } catch (Exception e) {
             e.printStackTrace();
-            response.sendRedirect("ShowVehicleList?error=system");
+            response.sendRedirect("FrontController?action=showVehicleList&error=system");
         }
     }
 
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    private void handlePost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        if (!isAuthenticated(request)) {
-            response.sendRedirect(request.getContextPath() + "/login.jsp");
-            return;
-        }
-
         if (!isManager(request)) {
-            response.sendRedirect("ShowVehicleList?error=unauthorized");
+            response.sendRedirect("FrontController?action=showVehicleList&error=unauthorized");
             return;
         }
 
-        String action = request.getParameter("action");
+        String action = request.getParameter("deleteAction");
         if ("delete".equals(action)) {
             deleteCommand.execute(request, response);
         } else {
-            response.sendRedirect("ShowVehicleList?error=invalidaction");
+            response.sendRedirect("FrontController?action=showVehicleList&error=invalidaction");
         }
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Displays vehicle details and processes delete requests (Manager only).";
     }
 }

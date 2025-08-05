@@ -1,5 +1,6 @@
-package businesslayers.command;
+package businesslayers.command.userAndLoginCommand;
 
+import businesslayers.command.Command;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

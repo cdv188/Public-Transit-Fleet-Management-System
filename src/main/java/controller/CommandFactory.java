@@ -1,16 +1,21 @@
 package controller;
 
-import businesslayers.command.LogOperatorStatusCommand;
-import businesslayers.command.NavigateToRegisterPageCommand;
+import businesslayers.command.ReportAndGpsCommand.LogOperatorStatusCommand;
+import businesslayers.command.userAndLoginCommand.NavigateToRegisterPageCommand;
 import businesslayers.command.Command;
-import businesslayers.command.MaintenanceDashboardCommand;
-import businesslayers.command.LoginCommand;
-import businesslayers.command.SimulateGPSCommand;
-import businesslayers.command.GenerateReportCommand;
-import businesslayers.command.RegisterVehicleCommand;
-import businesslayers.command.RegisterUserCommand;
-import businesslayers.command.LogoutCommand;
-import businesslayers.command.RunSystemChecksCommand;
+import businesslayers.command.maintenanceCommand.MaintenanceDashboardCommand;
+import businesslayers.command.userAndLoginCommand.LoginCommand;
+import businesslayers.command.ReportAndGpsCommand.SimulateGPSCommand;
+import businesslayers.command.ReportAndGpsCommand.GenerateReportCommand;
+import businesslayers.command.vehiclecommand.RegisterVehicleCommand;
+import businesslayers.command.userAndLoginCommand.RegisterUserCommand;
+import businesslayers.command.userAndLoginCommand.LogoutCommand;
+import businesslayers.command.ReportAndGpsCommand.RunSystemChecksCommand;
+import businesslayers.command.maintenanceCommand.ShowMaintenanceByIdCommand;
+import businesslayers.command.maintenanceCommand.ShowMaintenanceCommand;
+import businesslayers.command.vehiclecommand.ShowVehicleByIdCommand;
+import businesslayers.command.vehiclecommand.ShowVehicleListCommand;
+import businesslayers.command.vehiclecommand.UpdateVehicleCommand;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -34,9 +39,15 @@ public class CommandFactory {
         commands.put("logOperatorStatus", new LogOperatorStatusCommand());
         commands.put("simulateGPS", new SimulateGPSCommand());
         commands.put("generateReport", new GenerateReportCommand());
-
+        
+        
         commands.put("maintenanceDashboard", new MaintenanceDashboardCommand());
         commands.put("registerVehicle", new RegisterVehicleCommand());
+        commands.put("updateVehicle", new UpdateVehicleCommand());
+        commands.put("showVehicleList", new ShowVehicleListCommand());
+        commands.put("showVehicleById", new ShowVehicleByIdCommand());
+        commands.put("showMaintenance", new ShowMaintenanceCommand());
+        commands.put("showMaintenanceById", new ShowMaintenanceByIdCommand());
     }
 
     /**

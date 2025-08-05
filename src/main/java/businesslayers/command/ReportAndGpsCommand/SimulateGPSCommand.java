@@ -1,4 +1,4 @@
-package businesslayers.command;
+package businesslayers.command.ReportAndGpsCommand;
 
 import dataaccesslayer.vehiclelocation.VehicleLocationsDAO;
 import dataaccesslayer.vehiclelocation.VehicleLocationsDAOImpl;
@@ -8,6 +8,7 @@ import datatransferobject.VehicleLocation;
 import datatransferobject.ConsumptionLog;
 import dataaccesslayer.vehicles.VehicleLogic;
 import businesslayers.builder.Vehicle;
+import businesslayers.command.Command;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;

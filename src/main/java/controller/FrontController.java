@@ -41,7 +41,7 @@ public class FrontController extends HttpServlet {
                 request.getRequestDispatcher("/gpsDashboard").forward(request, response);
                 return;
             }
-
+            
             Command command = CommandFactory.getCommand(action);
             command.execute(request, response);
 

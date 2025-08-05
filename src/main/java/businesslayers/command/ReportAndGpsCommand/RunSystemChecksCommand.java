@@ -1,5 +1,6 @@
-package businesslayers.command;
+package businesslayers.command.ReportAndGpsCommand;
 
+import businesslayers.command.Command;
 import businesslayers.observer.ComponentWearMonitor;
 import businesslayers.observer.AlertCreationObserver;
 import businesslayers.observer.FuelConsumptionMonitor;
