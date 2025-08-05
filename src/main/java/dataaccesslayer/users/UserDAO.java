@@ -3,31 +3,39 @@ package dataaccesslayer.users;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * DAO interface for user management.
+ */
 public interface UserDAO {
+
     /**
      * Adds a new user.
-     * @param user The user object to be added.
-     * @return The added user
+     *
+     * @param user the user to add
+     * @return the added user
      */
     User addUser(User user);
 
     /**
-     * Finds a user by their email address.
-     * @param email The email of the user to find.
-     * @return An Optional containing the user if found, otherwise empty.
+     * Finds a user by email.
+     *
+     * @param email the email to search for
+     * @return an Optional containing the user if found
      */
     Optional<User> findUserByEmail(String email);
 
     /**
-     * Validates a user's credentials.
-     * @param email The user's email.
-     * @param password The user's password.
-     * @return An Optional containing the user if validation is successful, otherwise empty.
+     * Validates user credentials.
+     *
+     * @param email    the user's email
+     * @param password the user's password
+     * @return an Optional containing the user if valid
      */
     Optional<User> validateUser(String email, String password);
+
     /**
-     * Get all users of a specific type (e.g., "Manager", "Operator")
-     * Added for Ali's OperatorPerformanceReportStrategy
+     * Retrieves all users of a specific type.
+     *
      * @param userType the user type to filter by
      * @return list of matching users
      */

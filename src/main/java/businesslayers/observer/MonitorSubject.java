@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package businesslayers.observer;
 
 import java.util.ArrayList;
@@ -9,42 +5,44 @@ import java.util.List;
 import businesslayers.builder.Vehicle;
 
 /**
- * Abstract class for monitor subjects in the Observer pattern
- * @author Ali
+ * Abstract subject for monitors in the Observer pattern.
  */
 public abstract class MonitorSubject {
+
     private List<MonitorObserver> observers = new ArrayList<>();
-    
+
     /**
-     * Attach an observer to this subject
-     * @param observer The observer to attach
+     * Attaches an observer to this subject.
+     *
+     * @param observer the observer to attach
      */
     public void attach(MonitorObserver observer) {
         observers.add(observer);
     }
-    
+
     /**
-     * Detach an observer from this subject
-     * @param observer The observer to detach
+     * Detaches an observer from this subject.
+     *
+     * @param observer the observer to detach
      */
     public void detach(MonitorObserver observer) {
         observers.remove(observer);
     }
-    
+
     /**
-     * Notify all observers of a change
-     * @param vehicle The vehicle affected
-     * @param message The notification message
+     * Notifies all attached observers of an issue.
+     *
+     * @param vehicle the affected vehicle
+     * @param message the alert message
      */
     protected void notifyObservers(Vehicle vehicle, String message) {
         for (MonitorObserver observer : observers) {
             observer.update(vehicle, message);
         }
     }
-    
+
     /**
-     * Abstract method to check for issues
-     * Implementations should check their specific conditions and notify observers if needed
+     * Performs a system check and notifies observers if issues are found.
      */
     public abstract void check();
 }

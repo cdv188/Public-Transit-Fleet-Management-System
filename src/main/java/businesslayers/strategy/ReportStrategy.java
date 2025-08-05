@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package businesslayers.strategy;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,21 +5,21 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * Strategy interface for generating different types of reports
- * @author Ali
+ * Strategy interface for generating reports.
  */
 public interface ReportStrategy {
+
     /**
-     * Generate a report based on the request parameters
-     * @param request The HTTP request
-     * @param response The HTTP response
-     * @return Map containing report data
+     * Generates a report using the given request parameters.
+     *
+     * @param request  the HTTP request
+     * @param response the HTTP response
+     * @return a map containing the report data
      */
     Map<String, Object> generate(HttpServletRequest request, HttpServletResponse response);
-    
+
     /**
-     * Get the report title
-     * @return The title of the report
+     * @return the report title
      */
     String getReportTitle();
 }

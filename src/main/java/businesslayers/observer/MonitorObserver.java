@@ -1,20 +1,17 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package businesslayers.observer;
 
 import businesslayers.builder.Vehicle;
 
 /**
- * Observer interface for monitoring system
- * @author Ali
+ * Observer interface for receiving monitoring alerts.
  */
 public interface MonitorObserver {
+
     /**
-     * Method called when a monitor detects an issue
-     * @param vehicle The vehicle with the issue
-     * @param message Alert message describing the issue
+     * Called when a monitor detects an issue with a vehicle.
+     *
+     * @param vehicle the affected vehicle
+     * @param message the alert message
      */
     void update(Vehicle vehicle, String message);
 }

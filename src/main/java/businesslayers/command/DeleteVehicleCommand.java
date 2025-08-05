@@ -9,45 +9,53 @@ import dataaccesslayer.vehicles.VehicleDAOImpl;
 import businesslayers.builder.Vehicle;
 
 /**
- * Command to handle vehicle deletion
- * @author Chester
+ * Command that handles deletion of a vehicle by its ID.
  */
 public class DeleteVehicleCommand implements Command {
+
     private VehicleDAO vehicleDAO;
-    
+
+    /** Creates a new command with a default {@link VehicleDAOImpl}. */
     public DeleteVehicleCommand() {
         this.vehicleDAO = new VehicleDAOImpl();
     }
-    
+
+    /**
+     * Executes the vehicle deletion process.
+     *
+     * @param request  the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if a servlet error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) 
+    public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
+
         try {
             String vehicleIdStr = request.getParameter("vehicleId");
-            
+
             if (vehicleIdStr == null || vehicleIdStr.trim().isEmpty()) {
                 response.sendRedirect("ShowVehicleList?error=invalid");
                 return;
             }
-            
+
             int vehicleId = Integer.parseInt(vehicleIdStr);
-            
-            // Check if vehicle exists before attempting deletion
+
             Vehicle vehicle = vehicleDAO.getVehicleById(vehicleId);
             if (vehicle == null) {
                 response.sendRedirect("ShowVehicleList?error=notfound");
                 return;
             }
-            
+
             boolean success = vehicleDAO.deleteVehicle(vehicleId);
-            
+
             if (success) {
                 response.sendRedirect("ShowVehicleList?successMessage=deleted");
             } else {
                 response.sendRedirect("ShowVehicleList?error=deletefailed");
             }
-            
+
         } catch (NumberFormatException e) {
             response.sendRedirect("ShowVehicleList?error=invalid");
         } catch (Exception e) {

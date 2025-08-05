@@ -3,70 +3,82 @@ package MaintenanceLogDAO;
 import java.util.List;
 
 /**
- *
- * @author Chester
+ * Provides a higher-level interface for managing maintenance logs by delegating
+ * operations to the {@link MaintenanceLogImpl} data access object.
+ * This class acts as the business logic layer for scheduling, retrieving,
+ * updating, and deleting maintenance log records.
  */
 public class MaintenanceLogLogic {
+
+    /** Data access object used to interact with the maintenance log database. */
     private MaintenanceLogImpl maintenanceDAO = new MaintenanceLogImpl();
-     /**
-     * Schedules a new maintenance task
-     * @param task The maintenance task to be scheduled
-     * @return true if the task was successfully scheduled, false otherwise
+
+    /**
+     * Schedules a new maintenance task.
+     *
+     * @param task the {@link MaintenanceLog} object to be scheduled
+     * @return {@code true} if the task was successfully scheduled, {@code false} otherwise
      */
-    public boolean scheduleNewTask(MaintenanceLog task){
+    public boolean scheduleNewTask(MaintenanceLog task) {
         return maintenanceDAO.scheduleNewTask(task);
     }
-    
+
     /**
-     * Retrieves all alerts and maintenance tasks
-     * @return List of all maintenance logs including alerts
+     * Retrieves all alerts and maintenance tasks.
+     *
+     * @return a list of all {@link MaintenanceLog} records including alerts
      */
-    public List<MaintenanceLog> getAlarmsAndTasks(){
+    public List<MaintenanceLog> getAlarmsAndTasks() {
         return maintenanceDAO.getAlarmsAndTasks();
     }
-    
+
     /**
-     * Retrieves maintenance logs by vehicle ID
-     * @param vehicleId The ID of the vehicle
-     * @return List of maintenance logs for the specified vehicle
+     * Retrieves maintenance logs for a specific vehicle.
+     *
+     * @param vehicleId the ID of the vehicle
+     * @return a list of {@link MaintenanceLog} records associated with the given vehicle ID
      */
-    public List<MaintenanceLog> getMaintenanceLogsByVehicleId(int vehicleId){
+    public List<MaintenanceLog> getMaintenanceLogsByVehicleId(int vehicleId) {
         return maintenanceDAO.getMaintenanceLogsByVehicleId(vehicleId);
     }
-    
+
     /**
-     * Retrieves maintenance logs by status
-     * @param status The status to filter by
-     * @return List of maintenance logs with the specified status
+     * Retrieves maintenance logs filtered by a specific status.
+     *
+     * @param status the status to filter by (e.g., "Scheduled", "Completed")
+     * @return a list of {@link MaintenanceLog} records matching the given status
      */
-    public List<MaintenanceLog> getMaintenanceLogsByStatus(String status){
+    public List<MaintenanceLog> getMaintenanceLogsByStatus(String status) {
         return maintenanceDAO.getMaintenanceLogsByStatus(status);
     }
-    
+
     /**
-     * Updates an existing maintenance log
-     * @param maintenanceLog The maintenance log to be updated
-     * @return true if the log was successfully updated, false otherwise
+     * Updates an existing maintenance log record.
+     *
+     * @param maintenanceLog the {@link MaintenanceLog} object containing updated details
+     * @return {@code true} if the log was successfully updated, {@code false} otherwise
      */
-    public boolean updateMaintenanceLog(MaintenanceLog maintenanceLog){
+    public boolean updateMaintenanceLog(MaintenanceLog maintenanceLog) {
         return maintenanceDAO.updateMaintenanceLog(maintenanceLog);
     }
-    
+
     /**
-     * Retrieves a maintenance log by its ID
-     * @param taskId The ID of the maintenance task
-     * @return The maintenance log object or null if not found
+     * Retrieves a maintenance log by its task ID.
+     *
+     * @param taskId the ID of the maintenance task
+     * @return the {@link MaintenanceLog} object if found, or {@code null} if not found
      */
-    public MaintenanceLog getMaintenanceLogById(int taskId){
+    public MaintenanceLog getMaintenanceLogById(int taskId) {
         return maintenanceDAO.getMaintenanceLogById(taskId);
     }
-    
+
     /**
-     * Deletes a maintenance log by its ID
-     * @param taskId The ID of the maintenance task to be deleted
-     * @return true if the log was successfully deleted, false otherwise
+     * Deletes a maintenance log by its task ID.
+     *
+     * @param taskId the ID of the maintenance task to delete
+     * @return {@code true} if the log was successfully deleted, {@code false} otherwise
      */
-    public boolean deleteMaintenanceLog(int taskId){
+    public boolean deleteMaintenanceLog(int taskId) {
         return maintenanceDAO.deleteMaintenanceLog(taskId);
     }
 }

@@ -10,44 +10,45 @@ import businesslayers.builder.Vehicle;
 import businesslayers.simplefactory.VehicleFactory;
 
 /**
- *
- * @author Chester
+ * Command that handles vehicle registration.
  */
 public class RegisterVehicleCommand implements Command {
+
     private VehicleDAO vehicleDAO;
     private VehicleFactory vehicleFactory;
-    
+
+    /** Creates a new command with default DAO and factory implementations. */
     public RegisterVehicleCommand() {
         this.vehicleDAO = new VehicleDAOImpl();
         this.vehicleFactory = new VehicleFactory();
     }
-    
+
+    /**
+     * Executes vehicle registration logic for GET (form display) or POST (submission).
+     *
+     * @param request  the HTTP request
+     * @param response the HTTP response
+     */
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) 
+    public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         String method = request.getMethod();
-        
         if ("GET".equalsIgnoreCase(method)) {
             showRegistrationForm(request, response);
         } else if ("POST".equalsIgnoreCase(method)) {
             processRegistration(request, response);
         }
     }
-    /**
-     * Displays the vehicle registration form
-     */
-    private void showRegistrationForm(HttpServletRequest request, HttpServletResponse response) 
+
+    /** Redirects to the vehicle registration form. */
+    private void showRegistrationForm(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.sendRedirect("RegisterVehicle");
     }
 
-    /**
-     * Processes the vehicle registration form submission
-     */
-    private void processRegistration(HttpServletRequest request, HttpServletResponse response) 
+    /** Processes vehicle registration form submission. */
+    private void processRegistration(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
         try {
             String vehicleNumber = request.getParameter("vehicleNumber");
             String vehicleType = request.getParameter("vehicleType");
@@ -56,28 +57,23 @@ public class RegisterVehicleCommand implements Command {
             int maxPassengers = Integer.parseInt(request.getParameter("maxPassengers"));
             String assignedRoute = request.getParameter("assignedRoute");
 
-            // Check if vehicle number already exists
             if (vehicleDAO.getVehicleByNumber(vehicleNumber.trim()) != null) {
                 response.sendRedirect("RegisterVehicle?error=exist");
                 return;
             }
-            
-            try {
-                if (maxPassengers <= 0) {
-                    throw new NumberFormatException("Max passengers must be positive");
-                }
-            } catch (NumberFormatException e) {
+
+            if (maxPassengers <= 0) {
                 request.setAttribute("error", "Invalid maximum passengers value");
                 return;
             }
 
             Vehicle newVehicle = vehicleFactory.createVehicle(
-                vehicleNumber.trim(),
-                vehicleType,
-                fuelType.trim(),
-                maxPassengers,
-                consumptionRate,
-                assignedRoute.trim()
+                    vehicleNumber.trim(),
+                    vehicleType,
+                    fuelType.trim(),
+                    maxPassengers,
+                    consumptionRate,
+                    assignedRoute.trim()
             );
 
             boolean success = vehicleDAO.addVehicle(newVehicle);
@@ -92,5 +88,4 @@ public class RegisterVehicleCommand implements Command {
             e.printStackTrace();
         }
     }
-    
 }

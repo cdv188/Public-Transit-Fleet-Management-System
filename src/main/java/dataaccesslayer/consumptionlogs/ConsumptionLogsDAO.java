@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
 package dataaccesslayer.consumptionlogs;
 
 import datatransferobject.ConsumptionLog;
@@ -10,37 +5,41 @@ import java.sql.Date;
 import java.util.List;
 
 /**
- * DAO interface for ConsumptionLogs operations
- * @author Ali
+ * DAO interface for vehicle fuel consumption logs.
  */
 public interface ConsumptionLogsDAO {
+
     /**
-     * Add a new consumption log
-     * @param log The consumption log to add
+     * Adds a new consumption log.
+     *
+     * @param log the log to add
      * @return true if successful
      */
     boolean addConsumptionLog(ConsumptionLog log);
-    
+
     /**
-     * Get all consumption logs for a vehicle
-     * @param vehicleId The vehicle ID
-     * @return List of consumption logs
+     * Retrieves all consumption logs for a vehicle.
+     *
+     * @param vehicleId the vehicle ID
+     * @return list of logs
      */
     List<ConsumptionLog> getConsumptionByVehicle(int vehicleId);
-    
+
     /**
-     * Get consumption logs for a vehicle within a date range
-     * @param vehicleId The vehicle ID
-     * @param startDate Start date
-     * @param endDate End date
-     * @return List of consumption logs
+     * Retrieves logs for a vehicle within a date range.
+     *
+     * @param vehicleId the vehicle ID
+     * @param startDate start date
+     * @param endDate   end date
+     * @return list of logs
      */
     List<ConsumptionLog> getConsumptionByDateRange(int vehicleId, Date startDate, Date endDate);
-    
+
     /**
-     * Get average consumption for a vehicle
-     * @param vehicleId The vehicle ID
-     * @return Average consumption amount
+     * Retrieves the average consumption for a vehicle.
+     *
+     * @param vehicleId the vehicle ID
+     * @return average consumption
      */
     double getAverageConsumption(int vehicleId);
 }

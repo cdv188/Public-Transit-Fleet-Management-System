@@ -1,10 +1,10 @@
 package businesslayers.builder;
 
 /**
- *
- * @author Chester
+ * Represents a vehicle with type, fuel type, capacity, route, and consumption rate.
  */
 public class Vehicle {
+
     private String vehicleType;
     private String fuelType;
     private String number;
@@ -12,8 +12,19 @@ public class Vehicle {
     private int maxCapacity;
     private String route;
     private int vehicleId;
-    
-    Vehicle(String number, String vehicleType, String fuelType, int maxCapacity, double consumptionRate, String route, int vehicleId){
+
+    /**
+     * Creates a new vehicle with all details specified.
+     *
+     * @param number           vehicle number
+     * @param vehicleType      type of vehicle
+     * @param fuelType         fuel type
+     * @param maxCapacity      maximum capacity
+     * @param consumptionRate  fuel consumption rate
+     * @param route            route assigned
+     * @param vehicleId        unique vehicle ID
+     */
+    Vehicle(String number, String vehicleType, String fuelType, int maxCapacity, double consumptionRate, String route, int vehicleId) {
         this.consumptionRate = consumptionRate;
         this.number = number;
         this.maxCapacity = maxCapacity;
@@ -23,63 +34,62 @@ public class Vehicle {
         this.vehicleId = vehicleId;
     }
 
+    /** Default constructor. */
     public Vehicle() {
-    }
-    
-    public String getVehicleDetails(){
-        return String.format("Number: %s\nType: %s\nFuel Type: %s\nConsumption Rate: %.2f"
-                        + "\nMax Capacity: %d\nRoute: %s", getNumber(), getVehicleType(), getFuelType(), getConsumptionRate(), getMaxCapacity(), getRoute());
-    }
-    
-    public static VehicleBuilder builder(){
-        return new VehicleBuilder();
     }
 
     /**
-     * @return the vehicleType
+     * Returns formatted vehicle details.
+     *
+     * @return a string with vehicle details
      */
+    public String getVehicleDetails() {
+        return String.format("Number: %s\nType: %s\nFuel Type: %s\nConsumption Rate: %.2f"
+                        + "\nMax Capacity: %d\nRoute: %s",
+                getNumber(), getVehicleType(), getFuelType(), getConsumptionRate(), getMaxCapacity(), getRoute());
+    }
+
+    /**
+     * Returns a new {@link VehicleBuilder}.
+     *
+     * @return a vehicle builder
+     */
+    public static VehicleBuilder builder() {
+        return new VehicleBuilder();
+    }
+
+    /** @return vehicle type */
     public String getVehicleType() {
         return vehicleType;
     }
 
-    /**
-     * @return the fuelType
-     */
+    /** @return fuel type */
     public String getFuelType() {
         return fuelType;
     }
 
-    /**
-     * @return the number
-     */
+    /** @return vehicle number */
     public String getNumber() {
         return number;
     }
 
-    /**
-     * @return the consumptionRate
-     */
+    /** @return fuel consumption rate */
     public double getConsumptionRate() {
         return consumptionRate;
     }
 
-    /**
-     * @return the maxCapacity
-     */
+    /** @return maximum capacity */
     public int getMaxCapacity() {
         return maxCapacity;
     }
 
-    /**
-     * @return the route
-     */
+    /** @return route */
     public String getRoute() {
         return route;
     }
-    
-    public int getVehicleId(){
+
+    /** @return vehicle ID */
+    public int getVehicleId() {
         return vehicleId;
     }
-    
-    
 }

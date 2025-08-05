@@ -12,23 +12,18 @@ import dataaccesslayer.vehicles.VehicleLogic;
 import businesslayers.builder.Vehicle;
 
 /**
- * ShowVehicleListServlet - Displays list of vehicles
- * Accessible by all authenticated users (Managers and Operators)
- * @author Chester
+ * Servlet for displaying the list of vehicles.
+ * Accessible to all authenticated users; Manager role adds extra actions.
  */
 public class ShowVehicleListServlet extends HttpServlet {
 
-    /**
-     * Check if user is authenticated
-     */
+    /** @return true if the user is logged in. */
     private boolean isAuthenticated(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         return session != null && session.getAttribute("user") != null;
     }
 
-    /**
-     * Check if user has Manager role
-     */
+    /** @return true if the logged-in user has the Manager role. */
     private boolean isManager(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") != null) {
@@ -38,27 +33,22 @@ public class ShowVehicleListServlet extends HttpServlet {
         return false;
     }
 
-    /**
-     * Processes requests for both HTTP GET and POST methods.
-     */
+    /** Loads and displays the vehicle list. */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        // Check if user is authenticated
+
         if (!isAuthenticated(request)) {
             response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
-        
+
         try {
             VehicleLogic logic = new VehicleLogic();
             List<Vehicle> vehicles = logic.getAllVehicles();
-            
-            // Set attributes for JSP
+
             request.setAttribute("vehicles", vehicles);
             request.setAttribute("isManager", isManager(request));
-            
-            // Get success message from session if exists
+
             HttpSession session = request.getSession(false);
             if (session != null) {
                 String successMessage = (String) session.getAttribute("successMessage");
@@ -67,10 +57,9 @@ public class ShowVehicleListServlet extends HttpServlet {
                     session.removeAttribute("successMessage");
                 }
             }
-            
-            // Forward to JSP
+
             request.getRequestDispatcher("/views/vehicle-list.jsp").forward(request, response);
-            
+
         } catch (Exception e) {
             e.printStackTrace();
             request.setAttribute("error", "Failed to load vehicle list");
@@ -92,6 +81,6 @@ public class ShowVehicleListServlet extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "Vehicle List Servlet - Authenticated Access";
+        return "Displays a list of vehicles for authenticated users.";
     }
 }

@@ -4,57 +4,68 @@ import java.util.List;
 import businesslayers.builder.Vehicle;
 
 /**
- *
- * @author Chester
+ * Business logic layer for vehicle operations.
  */
 public class VehicleLogic {
+
     private VehicleDAOImpl vehicleDAO = new VehicleDAOImpl();
+
     /**
-     * Retrieves all authors from the database.
-     * @return A list of all AuthorDTO objects
+     * Adds a new vehicle.
+     *
+     * @param vehicle the vehicle to add
+     * @return true if successful
      */
-    public boolean addVehicle(Vehicle vehicle){
-       return vehicleDAO.addVehicle(vehicle);
+    public boolean addVehicle(Vehicle vehicle) {
+        return vehicleDAO.addVehicle(vehicle);
     }
-     /**
-     * Retrieves a specific author by their ID.
-     * @param id The ID of the author to retrieve
-     * @return The AuthorDTO object with the specified ID, or null if not found
-     */
-    public Vehicle getVehicleById(int vehicleId){
-       return vehicleDAO.getVehicleById(vehicleId);
-    }
-     /**
-     * Adds a new author to the database.
-     * @param author The AuthorDTO object containing the author information to add
-     */
-    public Vehicle getVehicleByNumber(String num){
-       return vehicleDAO.getVehicleByNumber(num);
-    }
-    
+
     /**
-     * Retrieves all vehicle
-     * @return 
+     * Retrieves a vehicle by its ID.
+     *
+     * @param vehicleId the vehicle ID
+     * @return the vehicle, or null if not found
      */
-    public List<Vehicle> getAllVehicles(){
+    public Vehicle getVehicleById(int vehicleId) {
+        return vehicleDAO.getVehicleById(vehicleId);
+    }
+
+    /**
+     * Retrieves a vehicle by its number.
+     *
+     * @param num the vehicle number
+     * @return the vehicle, or null if not found
+     */
+    public Vehicle getVehicleByNumber(String num) {
+        return vehicleDAO.getVehicleByNumber(num);
+    }
+
+    /**
+     * Retrieves all vehicles.
+     *
+     * @return list of all vehicles
+     */
+    public List<Vehicle> getAllVehicles() {
         return vehicleDAO.getAllVehicles();
     }
-    
+
     /**
-     * Updates an existing Vehicle
-     * @param vehicle to be updated
-     * @return true if the update was successful
+     * Updates an existing vehicle.
+     *
+     * @param vehicle the vehicle to update
+     * @return true if successful
      */
-    public boolean updateVehicle(Vehicle vehicle){
+    public boolean updateVehicle(Vehicle vehicle) {
         return vehicleDAO.updateVehicle(vehicle);
     }
-    
+
     /**
-     * Deletes a vehicle by its ID
-     * @param vehicleId vehicle ID to be deleted
-     * @return true if the deleted successful
+     * Deletes a vehicle by its ID.
+     *
+     * @param vehicleId the vehicle ID
+     * @return true if successful
      */
-    public boolean deleteVehicle(int vehicleId){
-       return vehicleDAO.deleteVehicle(vehicleId);
+    public boolean deleteVehicle(int vehicleId) {
+        return vehicleDAO.deleteVehicle(vehicleId);
     }
 }

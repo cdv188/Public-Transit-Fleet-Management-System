@@ -1,50 +1,57 @@
 package dataaccesslayer.vehicles;
+
 import java.util.List;
 import businesslayers.builder.Vehicle;
+
 /**
- * DAO interface for vehicle Operations
- * @author Chester
+ * DAO interface for vehicle operations.
  */
 public interface VehicleDAO {
+
     /**
-     * Adds a new vehicle to the database
-     * @param vehicle the vehicle to be added
-     * @return true if the vehicle was added successfully
+     * Adds a new vehicle.
+     *
+     * @param vehicle the vehicle to add
+     * @return true if successful
      */
-    public boolean addVehicle(Vehicle vehicle);
-    
+    boolean addVehicle(Vehicle vehicle);
+
     /**
-     * Retrieves the vehicle by it's ID
-     * @param vehicleId
-     * @return The vehicle object
+     * Retrieves a vehicle by its ID.
+     *
+     * @param vehicleId the vehicle ID
+     * @return the vehicle, or null if not found
      */
-    public Vehicle getVehicleById(int vehicleId);
-    
+    Vehicle getVehicleById(int vehicleId);
+
     /**
-     * Retrieves the vehicle by it's Number
-     * @param num vehicle Number
-     * @return vehicle Object
+     * Retrieves a vehicle by its number.
+     *
+     * @param num the vehicle number
+     * @return the vehicle, or null if not found
      */
-    public Vehicle getVehicleByNumber(String num);
-    
+    Vehicle getVehicleByNumber(String num);
+
     /**
-     * Retrieves all vehicle
-     * @return 
+     * Retrieves all vehicles.
+     *
+     * @return list of all vehicles
      */
-    public List<Vehicle> getAllVehicles();
-    
+    List<Vehicle> getAllVehicles();
+
     /**
-     * Updates an existing Vehicle
-     * @param vehicle to be updated
-     * @return true if the update was successful
+     * Updates an existing vehicle.
+     *
+     * @param vehicle the vehicle to update
+     * @return true if successful
      */
-    public boolean updateVehicle(Vehicle vehicle);
-    
+    boolean updateVehicle(Vehicle vehicle);
+
     /**
-     * Deletes a vehicle by its ID
-     * @param vehicleId vehicle ID to be deleted
-     * @return true if the deleted successful
+     * Deletes a vehicle by its ID.
+     *
+     * @param vehicleId the vehicle ID
+     * @return true if successful
      */
-    public boolean deleteVehicle(int vehicleId);
-    
+    boolean deleteVehicle(int vehicleId);
 }

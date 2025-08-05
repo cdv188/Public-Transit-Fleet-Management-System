@@ -6,7 +6,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Command that logs the user out and ends their session.
+ */
 public class LogoutCommand implements Command {
+
+    /**
+     * Invalidates the current session and redirects to the home page.
+     *
+     * @param request  the HTTP request
+     * @param response the HTTP response
+     * @throws ServletException if a servlet error occurs
+     * @throws IOException      if an I/O error occurs
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -14,7 +26,6 @@ public class LogoutCommand implements Command {
         if (session != null) {
             session.invalidate();
         }
-        // Redirect to the home page after logging out
         response.sendRedirect(request.getContextPath() + "/index.jsp");
     }
 }

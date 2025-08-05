@@ -11,24 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * ShowMaintenanceByIdServlet - Shows maintenance task details
- * Accessible by all authenticated users (Managers and Operators)
- * @author Chester
+ * Servlet for showing details of a specific maintenance task.
+ * Accessible to all authenticated users.
  */
 public class ShowMaintenanceByIdServlet extends HttpServlet {
+
     private MaintenanceLogLogic logic = new MaintenanceLogLogic();
 
-    /**
-     * Check if user is authenticated
-     */
+    /** @return true if the user is logged in. */
     private boolean isAuthenticated(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         return session != null && session.getAttribute("user") != null;
     }
 
-    /**
-     * Check if user has Manager role
-     */
+    /** @return true if the logged-in user has the Manager role. */
     private boolean isManager(HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("user") != null) {
@@ -38,20 +34,17 @@ public class ShowMaintenanceByIdServlet extends HttpServlet {
         return false;
     }
 
-    /**
-     * Processes requests for both HTTP GET and POST methods.
-     */
+    /** Processes both GET and POST requests for showing maintenance details. */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        // Check if user is authenticated
+
         if (!isAuthenticated(request)) {
             response.sendRedirect(request.getContextPath() + "/login.jsp");
             return;
         }
-        
+
         String taskIdStr = request.getParameter("id");
-        
+
         try {
             int taskId = Integer.parseInt(taskIdStr);
             MaintenanceLog task = logic.getMaintenanceLogById(taskId);
@@ -61,18 +54,14 @@ public class ShowMaintenanceByIdServlet extends HttpServlet {
                 return;
             }
 
-            // Set attributes for JSP
             request.setAttribute("task", task);
             request.setAttribute("isManager", isManager(request));
-
-            // Forward to JSP
             request.getRequestDispatcher("/views/maintenance-details.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {
             response.sendRedirect("ShowMaintenance?error=invalid");
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("error", "Failed to load maintenance details");
             response.sendRedirect("ShowMaintenance?error=system");
         }
     }
@@ -91,6 +80,6 @@ public class ShowMaintenanceByIdServlet extends HttpServlet {
 
     @Override
     public String getServletInfo() {
-        return "Maintenance Details Servlet - Authenticated Access";
+        return "Shows details of a maintenance task (authenticated access).";
     }
 }

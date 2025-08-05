@@ -1,10 +1,10 @@
 package businesslayers.builder;
 
 /**
- *
- * @author Chester
+ * Builder for creating {@link Vehicle} objects with a fluent API.
  */
 public class VehicleBuilder {
+
     private String vehicleType;
     private String fuelType;
     private String number;
@@ -12,43 +12,90 @@ public class VehicleBuilder {
     private int maxCapacity;
     private String route;
     private int vehicleId;
-    
-    public VehicleBuilder vehicleNumber(String num){
+
+    /**
+     * Sets the vehicle number.
+     *
+     * @param num vehicle number
+     * @return this builder
+     */
+    public VehicleBuilder vehicleNumber(String num) {
         this.number = num;
         return this;
     }
-    
-    public VehicleBuilder vehicleType(String type){
+
+    /**
+     * Sets the vehicle type.
+     *
+     * @param type vehicle type
+     * @return this builder
+     */
+    public VehicleBuilder vehicleType(String type) {
         this.vehicleType = type;
         return this;
     }
-    
-    public VehicleBuilder fuelType(String type){
+
+    /**
+     * Sets the fuel type.
+     *
+     * @param type fuel type
+     * @return this builder
+     */
+    public VehicleBuilder fuelType(String type) {
         this.fuelType = type;
         return this;
     }
-    
-    public VehicleBuilder consumptionRate(double rate){
+
+    /**
+     * Sets the fuel consumption rate.
+     *
+     * @param rate fuel consumption rate
+     * @return this builder
+     */
+    public VehicleBuilder consumptionRate(double rate) {
         this.consumptionRate = rate;
         return this;
     }
-    
-    public VehicleBuilder route(String route){
+
+    /**
+     * Sets the route.
+     *
+     * @param route route
+     * @return this builder
+     */
+    public VehicleBuilder route(String route) {
         this.route = route;
         return this;
     }
-    
-    public VehicleBuilder maxCapacity(int max){
+
+    /**
+     * Sets the maximum capacity.
+     *
+     * @param max maximum capacity
+     * @return this builder
+     */
+    public VehicleBuilder maxCapacity(int max) {
         this.maxCapacity = max;
         return this;
     }
-    
-    public VehicleBuilder vehicleId (int id){
+
+    /**
+     * Sets the vehicle ID.
+     *
+     * @param id vehicle ID
+     * @return this builder
+     */
+    public VehicleBuilder vehicleId(int id) {
         this.vehicleId = id;
         return this;
     }
-    
-    public Vehicle build(){
+
+    /**
+     * Builds and returns the {@link Vehicle}.
+     *
+     * @return a new vehicle instance
+     */
+    public Vehicle build() {
         return new Vehicle(number, vehicleType, fuelType, maxCapacity, consumptionRate, route, vehicleId);
     }
 }

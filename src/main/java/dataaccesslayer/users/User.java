@@ -3,6 +3,9 @@ package dataaccesslayer.users;
 import java.io.Serializable;
 import java.util.Objects;
 
+/**
+ * Entity representing a system user.
+ */
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -11,11 +14,14 @@ public class User implements Serializable {
     private String name;
     private String email;
     private String password;
-    private String userType; // Corresponds to ENUM('Manager', 'Operator')
+    /** User role, e.g., Manager or Operator. */
+    private String userType;
 
+    /** Default constructor. */
     public User() {
     }
 
+    /** Creates a new user with the given details. */
     public User(String name, String email, String password, String userType) {
         this.name = name;
         this.email = email;
@@ -23,7 +29,6 @@ public class User implements Serializable {
         this.userType = userType;
     }
 
-    // Getters and Setters
     public int getUserId() {
         return userId;
     }
