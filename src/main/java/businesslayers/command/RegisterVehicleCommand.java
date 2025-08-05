@@ -10,8 +10,7 @@ import businesslayers.builder.Vehicle;
 import businesslayers.simplefactory.VehicleFactory;
 
 /**
- *
- * @author Chester
+ * Handles vehicle registration operations.
  */
 public class RegisterVehicleCommand implements Command {
     private VehicleDAO vehicleDAO;
@@ -21,7 +20,9 @@ public class RegisterVehicleCommand implements Command {
         this.vehicleDAO = new VehicleDAOImpl();
         this.vehicleFactory = new VehicleFactory();
     }
-    
+    /**
+     * Executes GET or POST requests for vehicle registration.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {

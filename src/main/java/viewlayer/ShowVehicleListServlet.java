@@ -12,9 +12,7 @@ import dataaccesslayer.vehicles.VehicleLogic;
 import businesslayers.builder.Vehicle;
 
 /**
- * ShowVehicleListServlet - Displays list of vehicles
- * Accessible by all authenticated users (Managers and Operators)
- * @author Chester
+ * Displays list of vehicles
  */
 public class ShowVehicleListServlet extends HttpServlet {
 
@@ -39,7 +37,7 @@ public class ShowVehicleListServlet extends HttpServlet {
     }
 
     /**
-     * Processes requests for both HTTP GET and POST methods.
+     * Processes requests for both GET and POST request.
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -54,11 +52,10 @@ public class ShowVehicleListServlet extends HttpServlet {
             VehicleLogic logic = new VehicleLogic();
             List<Vehicle> vehicles = logic.getAllVehicles();
             
-            // Set attributes for JSP
+            // Set attributes for role
             request.setAttribute("vehicles", vehicles);
             request.setAttribute("isManager", isManager(request));
             
-            // Get success message from session if exists
             HttpSession session = request.getSession(false);
             if (session != null) {
                 String successMessage = (String) session.getAttribute("successMessage");
@@ -68,7 +65,7 @@ public class ShowVehicleListServlet extends HttpServlet {
                 }
             }
             
-            // Forward to JSP
+            // Forward to vehicle list
             request.getRequestDispatcher("/views/vehicle-list.jsp").forward(request, response);
             
         } catch (Exception e) {

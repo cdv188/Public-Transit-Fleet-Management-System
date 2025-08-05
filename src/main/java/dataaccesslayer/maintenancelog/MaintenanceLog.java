@@ -1,20 +1,17 @@
-package MaintenanceLogDAO;
+package dataaccesslayer.maintenancelog;
 
 import java.time.LocalDate;
 
 /**
- *
- * @author Chester
+ * Represents a maintenance log entry.
  */
 public class MaintenanceLog {
-     private int taskId;
+    private int taskId;
     private int vehicleId;
     private String taskDescription;
     private LocalDate scheduledDate;
     private LocalDate completionDate;
     private String status;
-    
-    // Additional field for display purposes (not in database)
     private String vehicleNumber;
     
     /**

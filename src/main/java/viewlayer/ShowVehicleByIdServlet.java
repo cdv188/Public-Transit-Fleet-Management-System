@@ -12,10 +12,7 @@ import dataaccesslayer.vehicles.VehicleLogic;
 import businesslayers.builder.Vehicle;
 
 /**
- * ShowVehicleByIdServlet - Shows vehicle details and handles delete operations
- * Accessible by all authenticated users (Managers and Operators)
- * Delete functionality only available to Managers
- * @author Chester
+ * Shows vehicle details based on ID
  */
 public class ShowVehicleByIdServlet extends HttpServlet {
     private DeleteVehicleCommand deleteCommand = new DeleteVehicleCommand();
@@ -41,7 +38,7 @@ public class ShowVehicleByIdServlet extends HttpServlet {
     }
 
     /**
-     * Handles GET requests - Shows vehicle details
+     * Handles GET requests to Shows vehicle details
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -71,11 +68,11 @@ public class ShowVehicleByIdServlet extends HttpServlet {
                 request.setAttribute("successMessage", "Vehicle updated successfully!");
             }
 
-            // Set attributes for JSP
+            // Set attributes for role
             request.setAttribute("vehicle", vehicle);
             request.setAttribute("isManager", isManager(request));
 
-            // Forward to JSP
+            // Forward to vehicle details
             request.getRequestDispatcher("/views/vehicle-details.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {
@@ -88,7 +85,7 @@ public class ShowVehicleByIdServlet extends HttpServlet {
     }
 
     /**
-     * Handles POST requests - Processes delete operations
+     * Handles POST requests to Processes delete
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)

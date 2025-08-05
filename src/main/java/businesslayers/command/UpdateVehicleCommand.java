@@ -10,8 +10,7 @@ import businesslayers.builder.Vehicle;
 import businesslayers.simplefactory.VehicleFactory;
 
 /**
- * Command to handle vehicle updates
- * @author Chester
+ * Handles vehicle update operations.
  */
 public class UpdateVehicleCommand implements Command {
     private VehicleDAO vehicleDAO;
@@ -21,7 +20,9 @@ public class UpdateVehicleCommand implements Command {
         this.vehicleDAO = new VehicleDAOImpl();
         this.vehicleFactory = new VehicleFactory();
     }
-    
+    /**
+     * Executes GET or POST requests for vehicle updates.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {

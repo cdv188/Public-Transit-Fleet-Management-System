@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * RegisterVehicleServlet - Handles vehicle registration
- * Only accessible by Managers
- * @author Chester
+ * Handles vehicle registration
  */
 public class RegisterVehicleServlet extends HttpServlet {
     private RegisterVehicleCommand registerCommand = new RegisterVehicleCommand();
@@ -42,8 +40,7 @@ public class RegisterVehicleServlet extends HttpServlet {
             return;
         }
         
-        // Clear any previous form data and messages for fresh form load
-        // Only preserve messages if explicitly passed
+        // Set messages for fresh form load
         String error = request.getParameter("error");
         String success = request.getParameter("successMessage");
         
@@ -55,7 +52,7 @@ public class RegisterVehicleServlet extends HttpServlet {
             request.setAttribute("successMessage", "Vehicle Successfully Added");
         }
         
-        // Forward to JSP page
+        // Forward to register vehicle page
         request.getRequestDispatcher("/views/register-vehicle.jsp").forward(request, response);
     }
 
@@ -105,7 +102,7 @@ public class RegisterVehicleServlet extends HttpServlet {
            maxPassengersStr == null || maxPassengersStr.trim().isEmpty() ||
            route == null || route.trim().isEmpty()) {
 
-           // Set error message as request attribute and forward back to form
+           // Set error message
            request.setAttribute("errorMessage", "All fields must not be empty");
            request.getRequestDispatcher("/views/register-vehicle.jsp").forward(request, response);
            return;

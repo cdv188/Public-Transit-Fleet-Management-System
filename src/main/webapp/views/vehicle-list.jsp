@@ -13,13 +13,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="views/vehicle.css">
+    <style>
+        .error-message {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+    </style>
 </head>
 <body>
     <jsp:include page="../header.jsp" />
     
     <div class="container">
         <div class="nav">
-            <!-- Only show Register Vehicle link to Managers -->
             <c:if test="${isManager}">
                 <a href="RegisterVehicle">Register Vehicle</a>
                 <a href="reports.jsp">Reports</a>
@@ -30,18 +39,19 @@
         </div>
         
         <h1>Vehicle Fleet Management</h1>
-        
-        <!-- Display success message -->
+        <c:if test="${param.error == 'deletefailed'}">
+            <div class="error-message">
+                Failed to delete the vehicle. Please try again.
+            </div>
+        </c:if>
         <c:if test="${not empty successMessage}">
             <div class="success">${successMessage}</div>
         </c:if>
         
-        <!-- Display error message -->
         <c:if test="${not empty error}">
             <div class="error">${error}</div>
         </c:if>
         
-        <!-- Only show Add New Vehicle button to Managers -->
         <c:if test="${isManager}">
             <div style="margin-bottom: 20px;">
                 <a href="RegisterVehicle" class="btn btn-success">Add New Vehicle</a>

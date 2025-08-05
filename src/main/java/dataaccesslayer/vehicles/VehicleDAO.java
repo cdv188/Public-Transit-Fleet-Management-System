@@ -3,7 +3,6 @@ import java.util.List;
 import businesslayers.builder.Vehicle;
 /**
  * DAO interface for vehicle Operations
- * @author Chester
  */
 public interface VehicleDAO {
     /**

@@ -1,4 +1,4 @@
-package MaintenanceLogDAO;
+package dataaccesslayer.maintenancelog;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -11,8 +11,7 @@ import java.util.List;
 import database.DataSource;
 
 /**
- *
- * @author Chester
+ * Implementation of MaintenanceLogDAO for database operations.
  */
 public class MaintenanceLogImpl implements MaintenanceLogDAO {
     private static final String INSERT_MAINTENANCE_LOG = 

@@ -19,7 +19,6 @@
     <div class="container">
         <div class="nav">
             <a href="ShowVehicleList">Vehicle List</a>
-            <!-- Only show Schedule Maintenance link to Managers -->
             <c:if test="${isManager}">
                 <a href="ShowMaintenance?action=schedule">Schedule Maintenance</a>
                 <a href="RegisterVehicle">Register Vehicle</a>
@@ -31,7 +30,6 @@
         
         <h1>Maintenance Dashboard</h1>
 
-        <!-- Display messages -->
         <c:if test="${param.successMessage == 'success'}">
             <div class="success">Successfully Completed</div>
         </c:if>
@@ -52,7 +50,6 @@
             <div class="inprogress">Task Started</div>
         </c:if>
 
-        <!-- Dashboard Cards -->
         <div class="dashboard-grid">
             <div class="card alert">
                 <div class="card-title">Active Alerts</div>
@@ -79,7 +76,6 @@
             </div>
         </div>
         
-        <!-- Quick actions - Only for Managers -->
         <c:if test="${isManager}">
             <div style="margin: 30px 0;">
                 <a href="ShowMaintenance?action=schedule" class="btn btn-success">Schedule New Maintenance</a>
@@ -87,7 +83,6 @@
             </div>
         </c:if>
         
-        <!-- Alerts section -->
         <c:if test="${not empty alerts}">
             <h2 style="color: #dc3545; margin-top: 40px;">Active Alerts</h2>
             <div style="overflow-x: auto;">
@@ -125,7 +120,6 @@
             </div>
         </c:if>
         
-        <!-- Scheduled tasks section -->
         <c:if test="${not empty scheduledTasks}">
             <h2 style="margin-top: 40px;">Scheduled Maintenance</h2>
             <div style="overflow-x: auto;">
@@ -151,7 +145,6 @@
                                     </span></td>
                                 <td>
                                     <a href="ShowMaintenanceById?id=${task.taskId}" class="btn">View</a>
-                                    <!-- Only Managers can start tasks -->
                                     <c:if test="${isManager}">
                                         <form style="display:inline;" method="post" action="ShowMaintenance?action=update">
                                             <input type="hidden" name="taskId" value="${task.taskId}">
@@ -192,7 +185,6 @@
                                 </td>
                                  <td>
                                     <a href="ShowMaintenanceById?id=${task.taskId}" class="btn">View</a>
-                                    <!-- Only Managers can start tasks -->
                                     <c:if test="${isManager}">
                                         <form style="display:inline;" method="post" action="ShowMaintenance?action=update">
                                             <input type="hidden" name="taskId" value="${task.taskId}">

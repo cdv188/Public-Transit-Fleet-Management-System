@@ -98,14 +98,12 @@
         <h1>Update Vehicle: ${vehicle.number}</h1>
         
         <div class="form-container">
-            <!-- Display error message if any -->
             <c:if test="${not empty errorMessage}">
                 <div class="error-message">
                     ${errorMessage}
                 </div>
             </c:if>
             
-            <!-- Display success message if any -->
             <c:if test="${not empty successMessage}">
                 <div class="success-message">
                     ${successMessage}

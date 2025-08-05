@@ -9,8 +9,7 @@ import dataaccesslayer.vehicles.VehicleDAOImpl;
 import businesslayers.builder.Vehicle;
 
 /**
- * Command to handle vehicle deletion
- * @author Chester
+ * Handles vehicle deletion operations.
  */
 public class DeleteVehicleCommand implements Command {
     private VehicleDAO vehicleDAO;
@@ -18,7 +17,9 @@ public class DeleteVehicleCommand implements Command {
     public DeleteVehicleCommand() {
         this.vehicleDAO = new VehicleDAOImpl();
     }
-    
+    /**
+     * Executes vehicle deletion requests.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
@@ -32,14 +33,7 @@ public class DeleteVehicleCommand implements Command {
             }
             
             int vehicleId = Integer.parseInt(vehicleIdStr);
-            
-            // Check if vehicle exists before attempting deletion
             Vehicle vehicle = vehicleDAO.getVehicleById(vehicleId);
-            if (vehicle == null) {
-                response.sendRedirect("ShowVehicleList?error=notfound");
-                return;
-            }
-            
             boolean success = vehicleDAO.deleteVehicle(vehicleId);
             
             if (success) {

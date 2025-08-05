@@ -1,7 +1,7 @@
 package viewlayer;
 
-import MaintenanceLogDAO.MaintenanceLog;
-import MaintenanceLogDAO.MaintenanceLogLogic;
+import dataaccesslayer.maintenancelog.MaintenanceLog;
+import dataaccesslayer.maintenancelog.MaintenanceLogLogic;
 import businesslayers.command.MaintenanceDashboardCommand;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -14,18 +14,12 @@ import javax.servlet.http.HttpSession;
 import dataaccesslayer.users.User;
 
 /**
- *
+ * Shows Maintenance Dashboard
  * @author Chester
  */
 public class ShowMaintenanceServlet extends HttpServlet {
     private final MaintenanceLogLogic logic = new MaintenanceLogLogic();
     private MaintenanceDashboardCommand schedule;
-    
-    @Override
-    public void init() throws ServletException {
-        super.init();
-        this.schedule = new MaintenanceDashboardCommand();
-    }
 
     /**
      * Check if user is authenticated
@@ -62,8 +56,6 @@ public class ShowMaintenanceServlet extends HttpServlet {
         try {
             // Fetch maintenance data
             List<MaintenanceLog> allMaintenanceLogs = logic.getAlarmsAndTasks();
-            
-            // Separate lists for different status types
             List<MaintenanceLog> alerts = new ArrayList<>();
             List<MaintenanceLog> scheduledTasks = new ArrayList<>();
             List<MaintenanceLog> inProgressTasks = new ArrayList<>();
@@ -86,7 +78,7 @@ public class ShowMaintenanceServlet extends HttpServlet {
                 }
             }
 
-            // Set attributes for JSP
+            // Set attributes for status
             request.setAttribute("alerts", alerts);
             request.setAttribute("scheduledTasks", scheduledTasks);
             request.setAttribute("inProgressTasks", inProgressTasks);
@@ -94,7 +86,7 @@ public class ShowMaintenanceServlet extends HttpServlet {
             request.setAttribute("allMaintenanceLogs", allMaintenanceLogs);
             request.setAttribute("isManager", isManager(request));
             
-            // Forward to JSP
+            // Forward to maintenance dashboard
             request.getRequestDispatcher("/views/maintenance-dashboard.jsp").forward(request, response);
             
         } catch (Exception e) {
@@ -105,7 +97,7 @@ public class ShowMaintenanceServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP POST method
+     * Handles the POST request
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -139,7 +131,7 @@ public class ShowMaintenanceServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP GET method
+     * Handles the GET request
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

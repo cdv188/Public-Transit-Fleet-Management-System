@@ -1,10 +1,4 @@
--- CST8288 Final Project: Public Transit Fleet Management System (PTFMS)
--- This script creates the database, all required tables, and populates them with
--- sample data for testing purposes.
-
--- =============================================
--- DATABASE CREATION
--- =============================================
+    -- DATABASE CREATION
 DROP DATABASE IF EXISTS `ptfms_db`;
 CREATE DATABASE `ptfms_db`;
 USE `ptfms_db`;
@@ -18,11 +12,7 @@ CREATE TABLE `Users` (
     `user_type` ENUM('Manager', 'Operator') NOT NULL
 );
 
--- =============================================
 -- ASSOCIATION TABLE: VehicleAssignments
--- This table connects an Operator (User) to a Vehicle for a specific shift or time period.
--- This is the missing link between Users and Vehicles.
--- =============================================
 CREATE TABLE `VehicleAssignments` (
     `assignment_id` INT AUTO_INCREMENT PRIMARY KEY,
     `user_id` INT NOT NULL,
@@ -45,8 +35,6 @@ CREATE TABLE `Vehicles` (
 );
 
 -- FR-03: GPS Tracking
--- For simplicity, this table can store the latest reported location.
--- A full history table would not have a UNIQUE constraint on vehicle_id.
 CREATE TABLE `VehicleLocations` (
     `location_id` INT AUTO_INCREMENT PRIMARY KEY,
     `vehicle_id` INT NOT NULL,
@@ -96,10 +84,7 @@ CREATE TABLE `MaintenanceLog` (
     FOREIGN KEY (`vehicle_id`) REFERENCES `Vehicles`(`vehicle_id`)
 );
 
--- =============================================
 -- SAMPLE DATA
--- =============================================
-
 -- Add Users (1 Manager, 3 Operators)
 INSERT INTO `Users` (`name`, `email`, `password`, `user_type`) VALUES
 ('Alice Manager', 'manager@ptfms.com', 'manager123', 'Manager'),
@@ -150,7 +135,6 @@ INSERT INTO `VehicleComponents` (`vehicle_id`, `component_name`, `hours_of_use`,
 (3, 'Circuit Breakers', 150, 2000),
 (5, 'Engine', 1800, 2500);
 
--- Add sample maintenance logs
 INSERT INTO `MaintenanceLog` (`vehicle_id`, `task_description`, `scheduled_date`, `completion_date`, `status`) VALUES
 (1, 'Routine 500-hour inspection.', '2025-06-01', '2025-06-02', 'Completed'),
 (3, 'ALERT: Pantograph nearing wear threshold.', NULL, NULL, 'Alert'),

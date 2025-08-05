@@ -26,12 +26,10 @@
         
         <h1>Register New Vehicle</h1>
         
-        <!-- Display error message from request attribute -->
         <c:if test="${not empty errorMessage}">
             <div class="error">${errorMessage}</div>
         </c:if>
         
-        <!-- Display success message from request attribute -->
         <c:if test="${not empty successMessage}">
             <div class="success">${successMessage}</div>
         </c:if>

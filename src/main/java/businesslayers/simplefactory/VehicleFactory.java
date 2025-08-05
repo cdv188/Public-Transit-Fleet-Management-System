@@ -4,23 +4,11 @@ import businesslayers.builder.Vehicle;
 import businesslayers.builder.VehicleBuilder;
 
 /**
- * Simple Factory Pattern implementation for creating vehicles
- * Centralizes vehicle creation logic and uses Builder pattern internally
- * 
- * @author Chester Don Valencerina
+ * Factory class for creating Vehicle objects.
  */
 public class VehicleFactory {
     /**
-     * Creates a vehicle based on form input parameters
-     * Uses the Builder pattern internally to construct the vehicle
-     * 
-     * @param number Vehicle identification number
-     * @param vehicleType Type of vehicle (Bus, Train, etc.)
-     * @param fuelType Type of fuel used
-     * @param maxCapacity Maximum passenger capacity
-     * @param consumptionRate Fuel consumption rate
-     * @param route Vehicle route information
-     * @return Fully constructed Vehicle object
+     * Creates a vehicle with specified parameters.
      */
     public static Vehicle createVehicle(String number, String vehicleType, 
                                       String fuelType, int maxCapacity, 
@@ -50,16 +38,7 @@ public class VehicleFactory {
     }
     
     /**
-     * Creates a vehicle based on form input parameters
-     * Uses the Builder pattern internally to construct the vehicle
-     * 
-     * @param number Vehicle identification number
-     * @param vehicleType Type of vehicle (Bus, Train, etc.)
-     * @param fuelType Type of fuel used
-     * @param maxCapacity Maximum passenger capacity
-     * @param consumptionRate Fuel consumption rate
-     * @param route Vehicle route information
-     * @return Fully constructed Vehicle object
+     * Creates a vehicle with specified parameters (without vehicleId).
      */
     public static Vehicle createVehicle(String number, String vehicleType, 
                                       String fuelType, int maxCapacity, 
@@ -88,10 +67,7 @@ public class VehicleFactory {
     }
     
     /**
-     * Uses default values for other parameters
-     * 
-     * @param vehicleType Type of vehicle to create
-     * @return Vehicle with default configurations
+     * Creates a vehicle with default values based on type.
      */
     public static Vehicle createVehicle(String vehicleType) {
         return createVehicle(

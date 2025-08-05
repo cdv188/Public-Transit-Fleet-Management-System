@@ -1,7 +1,7 @@
 package viewlayer;
 
-import MaintenanceLogDAO.MaintenanceLog;
-import MaintenanceLogDAO.MaintenanceLogLogic;
+import dataaccesslayer.maintenancelog.MaintenanceLog;
+import dataaccesslayer.maintenancelog.MaintenanceLogLogic;
 import dataaccesslayer.users.User;
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -11,9 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * ShowMaintenanceByIdServlet - Shows maintenance task details
- * Accessible by all authenticated users (Managers and Operators)
- * @author Chester
+ * Shows maintenance task details based on ID
+ * Accessible by all authenticated users
  */
 public class ShowMaintenanceByIdServlet extends HttpServlet {
     private MaintenanceLogLogic logic = new MaintenanceLogLogic();
@@ -39,7 +38,7 @@ public class ShowMaintenanceByIdServlet extends HttpServlet {
     }
 
     /**
-     * Processes requests for both HTTP GET and POST methods.
+     * Processes requests for both GET and POST methods.
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -61,11 +60,11 @@ public class ShowMaintenanceByIdServlet extends HttpServlet {
                 return;
             }
 
-            // Set attributes for JSP
+            // Set attributes for role
             request.setAttribute("task", task);
             request.setAttribute("isManager", isManager(request));
 
-            // Forward to JSP
+            // Forward to maintenance details
             request.getRequestDispatcher("/views/maintenance-details.jsp").forward(request, response);
 
         } catch (NumberFormatException e) {

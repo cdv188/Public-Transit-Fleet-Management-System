@@ -1,8 +1,7 @@
 package businesslayers.builder;
 
 /**
- *
- * @author Chester
+ * Represents a vehicle with its properties and details.
  */
 public class Vehicle {
     private String vehicleType;
@@ -12,7 +11,9 @@ public class Vehicle {
     private int maxCapacity;
     private String route;
     private int vehicleId;
-    
+    /**
+     * Constructs a Vehicle with specified parameters.
+     */
     Vehicle(String number, String vehicleType, String fuelType, int maxCapacity, double consumptionRate, String route, int vehicleId){
         this.consumptionRate = consumptionRate;
         this.number = number;
@@ -22,15 +23,21 @@ public class Vehicle {
         this.route = route;
         this.vehicleId = vehicleId;
     }
-
+    /**
+     * Default constructor.
+     */
     public Vehicle() {
     }
-    
+    /**
+     * Returns formatted vehicle details as a string.
+     */
     public String getVehicleDetails(){
         return String.format("Number: %s\nType: %s\nFuel Type: %s\nConsumption Rate: %.2f"
                         + "\nMax Capacity: %d\nRoute: %s", getNumber(), getVehicleType(), getFuelType(), getConsumptionRate(), getMaxCapacity(), getRoute());
     }
-    
+    /**
+     * Creates and returns a new VehicleBuilder instance.
+     */
     public static VehicleBuilder builder(){
         return new VehicleBuilder();
     }
@@ -76,7 +83,9 @@ public class Vehicle {
     public String getRoute() {
         return route;
     }
-    
+    /**
+     * @return the vehicleId
+     */
     public int getVehicleId(){
         return vehicleId;
     }

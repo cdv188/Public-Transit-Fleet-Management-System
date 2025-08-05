@@ -80,7 +80,6 @@
             <a href="ShowMaintenance" class="btn">Back to Dashboard</a>
             <a href="ShowVehicleById?id=${task.vehicleId}" class="btn">View Vehicle</a>
             
-            <!-- Only Managers can modify task status -->
             <c:if test="${isManager}">
                 <c:choose>
                     <c:when test="${task.status == 'Scheduled'}">

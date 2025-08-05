@@ -1,9 +1,9 @@
 package businesslayers.command;
 
-import MaintenanceLogDAO.MaintenanceLog;
-import MaintenanceLogDAO.MaintenanceLogDAO;
-import MaintenanceLogDAO.MaintenanceLogImpl;
-import MaintenanceLogDAO.MaintenanceLogLogic;
+import dataaccesslayer.maintenancelog.MaintenanceLog;
+import dataaccesslayer.maintenancelog.MaintenanceLogDAO;
+import dataaccesslayer.maintenancelog.MaintenanceLogImpl;
+import dataaccesslayer.maintenancelog.MaintenanceLogLogic;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import javax.servlet.ServletException;
@@ -15,20 +15,23 @@ import businesslayers.builder.Vehicle;
 import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.List;
+
 /**
- *
- * @author Chester
+ * Handles maintenance scheduling operations.
  */
 public class MaintenanceDashboardCommand implements Command {
     private MaintenanceLogDAO maintenanceLogDAO;
     private VehicleDAO vehicleDAO;
     private MaintenanceLogLogic logic = new MaintenanceLogLogic();
-
+    
     public MaintenanceDashboardCommand() {
         this.maintenanceLogDAO = new MaintenanceLogImpl();
         this.vehicleDAO = new VehicleDAOImpl();
     }
-
+    
+    /**
+     * Executes GET or POST requests for maintenance scheduling.
+     */
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
@@ -41,7 +44,9 @@ public class MaintenanceDashboardCommand implements Command {
         }
         
     }
-
+    /**
+     * Displays the maintenance scheduling form.
+     */
     private void showSchedulingForm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
          try {
             // Get all vehicles for the dropdown
@@ -59,10 +64,11 @@ public class MaintenanceDashboardCommand implements Command {
             request.getRequestDispatcher("/views/error.jsp").forward(request, response);
         }
     }
-
+    /**
+     * Processes the maintenance scheduling form submission.
+     */
     private void processScheduling(HttpServletRequest request, HttpServletResponse response) {
             try {
-            // Extract form parameters
             String vehicleIdStr = request.getParameter("vehicleId");
             String taskDescription = request.getParameter("taskDescription");
             String scheduledDateStr = request.getParameter("scheduledDate");
@@ -138,7 +144,7 @@ public class MaintenanceDashboardCommand implements Command {
         }
     } 
     /**
-     * Helper method to update an existing maintenance task
+     * Update an existing maintenance task
      */
     public void updateMaintenanceTask(HttpServletRequest request, HttpServletResponse response) 
         throws ServletException, IOException {
@@ -189,9 +195,7 @@ public class MaintenanceDashboardCommand implements Command {
         }
     }
     /**
-     * Validates maintenance status against allowed values
-     * @param status The status to validate
-     * @return true if valid, false otherwise
+     * Validates maintenance status values.
      */
     private boolean isValidStatus(String status) {
         return status != null && (

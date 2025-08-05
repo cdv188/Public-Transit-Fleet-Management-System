@@ -1,10 +1,10 @@
 package businesslayers.observer;
 
 import businesslayers.builder.Vehicle;
-import MaintenanceLogDAO.MaintenanceLogDAO;
-import MaintenanceLogDAO.MaintenanceLogImpl;
-import MaintenanceLogDAO.MaintenanceLogLogic;
-import MaintenanceLogDAO.MaintenanceLog;
+import dataaccesslayer.maintenancelog.MaintenanceLogDAO;
+import dataaccesslayer.maintenancelog.MaintenanceLogImpl;
+import dataaccesslayer.maintenancelog.MaintenanceLogLogic;
+import dataaccesslayer.maintenancelog.MaintenanceLog;
 import java.sql.Date;
 
 /**

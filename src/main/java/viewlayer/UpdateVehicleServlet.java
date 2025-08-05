@@ -10,9 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * UpdateVehicleServlet - Handles vehicle updates
- * Only accessible by Managers
- * @author Chester
+ * Handles vehicle updates
  */
 public class UpdateVehicleServlet extends HttpServlet {
     private UpdateVehicleCommand updateCommand = new UpdateVehicleCommand();
@@ -30,7 +28,7 @@ public class UpdateVehicleServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP GET method - Shows update form
+     * Handles the GET request to Shows update form
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -46,7 +44,7 @@ public class UpdateVehicleServlet extends HttpServlet {
     }
 
     /**
-     * Handles the HTTP POST method - Processes vehicle update
+     * Handles the POST request to Processes vehicle update
      */
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -58,7 +56,7 @@ public class UpdateVehicleServlet extends HttpServlet {
             return;
         }
         
-        // Validate required fields
+        // Validate all fields
         String vehicleNumber = request.getParameter("vehicleNumber");
         String vehicleType = request.getParameter("vehicleType");
         String fuelType = request.getParameter("fuelType");

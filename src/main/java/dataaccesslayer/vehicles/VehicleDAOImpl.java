@@ -11,7 +11,6 @@ import businesslayers.simplefactory.VehicleFactory;
 
 /**
  * Implementation of VehicleDAO
- * @author Chester
  */
 public class VehicleDAOImpl implements VehicleDAO {
     private static final String INSERT_VEHICLE =
@@ -29,9 +28,11 @@ public class VehicleDAOImpl implements VehicleDAO {
     private static final String UPDATE_VEHICLE = 
             "UPDATE vehicles SET vehicle_number = ?,  vehicle_type = ?, fuel_type = ?, consumption_rate = ?, max_passengers = ?, assigned_route = ? WHERE vehicle_id = ?";
     
-    private static final String DELETE_VEHICLE = 
-            "DELETE FROM vehicles WHERE vehicle_id = ?";
-
+    /**
+     * Add Vehicle
+     * @param vehicle
+     * @return 
+     */
     @Override
     public boolean addVehicle(Vehicle vehicle) {
         try(Connection conn = DataSource.getInstance().getConnection();
@@ -52,7 +53,11 @@ public class VehicleDAOImpl implements VehicleDAO {
         }
         return false;
     }
-
+    /**
+     * Retrieve vehicle by Id
+     * @param vehicleId
+     * @return 
+     */
     @Override
     public Vehicle getVehicleById(int vehicleId) {
         Vehicle vehicle = null;
@@ -77,7 +82,10 @@ public class VehicleDAOImpl implements VehicleDAO {
         }
         return vehicle;
     }
-
+    /**
+     * Retrieves all vehicles by Number
+     * @return 
+     */
     @Override
     public Vehicle getVehicleByNumber(String num) {
         Vehicle vehicle = null;
@@ -130,7 +138,12 @@ public class VehicleDAOImpl implements VehicleDAO {
         }
         return vehicles;
     }
-
+    
+    /**
+     * Updates Vehicle
+     * @param vehicle
+     * @return true if updated success
+     */
     @Override
     public boolean updateVehicle(Vehicle vehicle) {
         try(Connection conn = DataSource.getInstance().getConnection();
@@ -152,15 +165,56 @@ public class VehicleDAOImpl implements VehicleDAO {
         }
         return false;
     }
-
+    
+    /**
+     * Delete the vehicle from every table to handle foreign key constraints
+     * @param vehicleId
+     * @return true if it was success 
+     */
     @Override
     public boolean deleteVehicle(int vehicleId) {
-        try(Connection conn = DataSource.getInstance().getConnection();
-                PreparedStatement pstmt = conn.prepareStatement(DELETE_VEHICLE)){
-            pstmt.setInt(1, vehicleId);
-            
-            pstmt.executeUpdate();
-             
+        try(Connection conn = DataSource.getInstance().getConnection();){
+            // Delete from VehicleLocations
+            try (PreparedStatement pstmt = conn.prepareStatement(
+                    "DELETE FROM VehicleLocations WHERE vehicle_id = ?")) {
+                pstmt.setInt(1, vehicleId);
+                pstmt.executeUpdate();
+            }
+
+            // Delete from ConsumptionLogs
+            try (PreparedStatement pstmt = conn.prepareStatement(
+                    "DELETE FROM ConsumptionLogs WHERE vehicle_id = ?")) {
+                pstmt.setInt(1, vehicleId);
+                pstmt.executeUpdate();
+            }
+
+            // Delete from VehicleComponents
+            try (PreparedStatement pstmt = conn.prepareStatement(
+                    "DELETE FROM VehicleComponents WHERE vehicle_id = ?")) {
+                pstmt.setInt(1, vehicleId);
+                pstmt.executeUpdate();
+            }
+
+            // Delete from MaintenanceLog
+            try (PreparedStatement pstmt = conn.prepareStatement(
+                    "DELETE FROM MaintenanceLog WHERE vehicle_id = ?")) {
+                pstmt.setInt(1, vehicleId);
+                pstmt.executeUpdate();
+            }
+
+            // Delete from VehicleAssignments
+            try (PreparedStatement pstmt = conn.prepareStatement(
+                    "DELETE FROM VehicleAssignments WHERE vehicle_id = ?")) {
+                pstmt.setInt(1, vehicleId);
+                pstmt.executeUpdate();
+            }
+
+            // Delete the vehicle 
+            try (PreparedStatement pstmt = conn.prepareStatement(
+                    "DELETE FROM vehicles WHERE vehicle_id = ?")) {
+                pstmt.setInt(1, vehicleId);
+                pstmt.executeUpdate();
+            }
             return true;
              
         }catch(SQLException e){
