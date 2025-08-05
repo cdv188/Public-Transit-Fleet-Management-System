@@ -12,7 +12,6 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Shows maintenance task details based on ID
- * Accessible by all authenticated users
  */
 public class ShowMaintenanceByIdServlet extends HttpServlet {
     private MaintenanceLogLogic logic = new MaintenanceLogLogic();
