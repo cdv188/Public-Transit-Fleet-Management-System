@@ -34,6 +34,7 @@
                     <a href="ShowMaintenance" class="button">Maintenance Dashboard</a>
                     <a href="ShowMaintenance?action=schedule" class="button">Schedule Maintenance</a>
                     <a href="gpsDashboard.jsp" class="button">GPS Dashboard</a>
+                    <a href="controller?action=runSystemChecks" class="button">Run System Checks</a>
                     <a href="reports.jsp" class="button">Reports</a>
                 </div>
                 

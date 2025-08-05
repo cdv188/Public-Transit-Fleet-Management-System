@@ -88,7 +88,7 @@ CREATE TABLE `MaintenanceLog` (
 
 -- Add Users (1 Manager, 3 Operators)
 INSERT INTO `Users` (`name`, `email`, `password`, `user_type`) VALUES
-('Alice Manager', 'manager@ptfms.com', 'manager123', 'Manager'),
+('Alice Manager', 'cst8288@ptfms.com', 'cst8288', 'Manager'),
 ('Bob Operator', 'bob@ptfms.com', 'operator123', 'Operator'),
 ('Charlie Operator', 'charlie@ptfms.com', 'operator456', 'Operator'),
 ('David Operator', 'david@ptfms.com', 'operator789', 'Operator');
@@ -122,10 +122,11 @@ INSERT INTO `ConsumptionLogs` (`vehicle_id`, `log_date`, `usage_amount`) VALUES
 (3, '2025-07-19', 255.5),
 (3, '2025-07-20', 260.0);
 
--- TRN-301 (Train)
+
 INSERT INTO `ConsumptionLogs` (`vehicle_id`, `log_date`, `usage_amount`) VALUES
 (5, '2025-07-18', 850.0),
 (5, '2025-07-19', 840.7),
+(5, '2025-07-19', 2840.7),
 (5, '2025-07-20', 865.0);
 
 INSERT INTO `VehicleComponents` (`vehicle_id`, `component_name`, `hours_of_use`, `wear_threshold_hours`) VALUES
