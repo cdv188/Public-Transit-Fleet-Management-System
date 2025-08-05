@@ -15,12 +15,11 @@ import dataaccesslayer.users.User;
 
 /**
  * Shows Maintenance Dashboard
- * @author Chester
  */
 public class ShowMaintenanceServlet extends HttpServlet {
     private final MaintenanceLogLogic logic = new MaintenanceLogLogic();
-    private MaintenanceDashboardCommand schedule;
-
+    private MaintenanceDashboardCommand schedule = new MaintenanceDashboardCommand();
+    
     /**
      * Check if user is authenticated
      */
@@ -140,7 +139,6 @@ public class ShowMaintenanceServlet extends HttpServlet {
         String action = request.getParameter("action");
     
         if ("schedule".equals(action)) {
-            // Only Managers can access the schedule form
             if (!isManager(request)) {
                 response.sendRedirect("ShowMaintenance?error=unauthorized");
                 return;

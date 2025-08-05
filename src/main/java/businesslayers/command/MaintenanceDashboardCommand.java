@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import dataaccesslayer.vehicles.VehicleDAO;
 import dataaccesslayer.vehicles.VehicleDAOImpl;
 import businesslayers.builder.Vehicle;
-import java.io.PrintWriter;
 import java.io.IOException;
 import java.util.List;
 
@@ -49,13 +48,13 @@ public class MaintenanceDashboardCommand implements Command {
      */
     private void showSchedulingForm(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
          try {
-            // Get all vehicles for the dropdown
+            // Get all vehicles for the dropdown    
             List<Vehicle> allVehicles = vehicleDAO.getAllVehicles();
             
-            // Set vehicles as request attribute for JSP
+            // Set vehicles as request attribute for vehicle
             request.setAttribute("vehicles", allVehicles);
             
-            // Forward to JSP
+            // Forward to schedule maintenance
             request.getRequestDispatcher("/views/schedule-maintenance.jsp").forward(request, response);
             
         } catch (Exception e) {
