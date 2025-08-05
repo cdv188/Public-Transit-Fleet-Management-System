@@ -33,7 +33,7 @@ public class SecurityFilter implements Filter {
             isAuthenticated = true;
             isManager = "Manager".equals(user.getUserType());
         }
-        
+        //New check to revoke access to pages if already logged
         boolean isAuthPage = servletPath.equals("/login.jsp") || servletPath.equals("/register.jsp");
         
         if (isAuthenticated && isAuthPage) {
