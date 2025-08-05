@@ -20,7 +20,7 @@ CREATE TABLE `VehicleAssignments` (
     `start_time` DATETIME NOT NULL,
     `end_time` DATETIME,
     FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`),
-    FOREIGN KEY (`vehicle_id`) REFERENCES `Vehicles`(`vehicle_id`)
+    FOREIGN KEY (`vehicle_id`) REFERENCES `Vehicles`(`vehicle_id`) ON DELETE CASCADE
 );
 
 -- FR-02: Vehicle Management
@@ -41,7 +41,7 @@ CREATE TABLE `VehicleLocations` (
     `latitude` DECIMAL(9, 6) NOT NULL,
     `longitude` DECIMAL(9, 6) NOT NULL,
     `timestamp` DATETIME NOT NULL,
-    FOREIGN KEY (`vehicle_id`) REFERENCES `Vehicles`(`vehicle_id`)
+    FOREIGN KEY (`vehicle_id`) REFERENCES `Vehicles`(`vehicle_id`) ON DELETE CASCADE
 );
 
 -- FR-03: Operator Status Logging
@@ -50,7 +50,7 @@ CREATE TABLE `OperatorStatusLogs` (
     `user_id` INT NOT NULL,
     `status` ENUM('In-Service', 'On Break', 'Out-of-Service') NOT NULL,
     `timestamp` DATETIME NOT NULL,
-    FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`)
+    FOREIGN KEY (`user_id`) REFERENCES `Users`(`user_id`) ON DELETE CASCADE
 );
 
 -- FR-04: Monitoring Energy/Fuel Consumption
@@ -59,7 +59,7 @@ CREATE TABLE `ConsumptionLogs` (
     `vehicle_id` INT NOT NULL,
     `log_date` DATE NOT NULL,
     `usage_amount` DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (`vehicle_id`) REFERENCES `Vehicles`(`vehicle_id`)
+    FOREIGN KEY (`vehicle_id`) REFERENCES `Vehicles`(`vehicle_id`) ON DELETE CASCADE
 );
 
 -- FR-05: Alerts for Predictive Maintenance (Component Tracking)
@@ -70,7 +70,7 @@ CREATE TABLE `VehicleComponents` (
     `hours_of_use` INT NOT NULL,
     `wear_threshold_hours` INT NOT NULL,
     UNIQUE(`vehicle_id`, `component_name`),
-    FOREIGN KEY (`vehicle_id`) REFERENCES `Vehicles`(`vehicle_id`)
+    FOREIGN KEY (`vehicle_id`) REFERENCES `Vehicles`(`vehicle_id`) ON DELETE CASCADE
 );
 
 -- FR-05: Alerts for Predictive Maintenance (Maintenance Scheduling)
@@ -81,7 +81,7 @@ CREATE TABLE `MaintenanceLog` (
     `scheduled_date` DATE,
     `completion_date` DATE,
     `status` ENUM('Scheduled', 'In-Progress', 'Completed', 'Alert') NOT NULL,
-    FOREIGN KEY (`vehicle_id`) REFERENCES `Vehicles`(`vehicle_id`)
+    FOREIGN KEY (`vehicle_id`) REFERENCES `Vehicles`(`vehicle_id`) ON DELETE CASCADE
 );
 
 -- SAMPLE DATA

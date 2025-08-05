@@ -174,41 +174,6 @@ public class VehicleDAOImpl implements VehicleDAO {
     @Override
     public boolean deleteVehicle(int vehicleId) {
         try(Connection conn = DataSource.getInstance().getConnection();){
-            // Delete from VehicleLocations
-            try (PreparedStatement pstmt = conn.prepareStatement(
-                    "DELETE FROM VehicleLocations WHERE vehicle_id = ?")) {
-                pstmt.setInt(1, vehicleId);
-                pstmt.executeUpdate();
-            }
-
-            // Delete from ConsumptionLogs
-            try (PreparedStatement pstmt = conn.prepareStatement(
-                    "DELETE FROM ConsumptionLogs WHERE vehicle_id = ?")) {
-                pstmt.setInt(1, vehicleId);
-                pstmt.executeUpdate();
-            }
-
-            // Delete from VehicleComponents
-            try (PreparedStatement pstmt = conn.prepareStatement(
-                    "DELETE FROM VehicleComponents WHERE vehicle_id = ?")) {
-                pstmt.setInt(1, vehicleId);
-                pstmt.executeUpdate();
-            }
-
-            // Delete from MaintenanceLog
-            try (PreparedStatement pstmt = conn.prepareStatement(
-                    "DELETE FROM MaintenanceLog WHERE vehicle_id = ?")) {
-                pstmt.setInt(1, vehicleId);
-                pstmt.executeUpdate();
-            }
-
-            // Delete from VehicleAssignments
-            try (PreparedStatement pstmt = conn.prepareStatement(
-                    "DELETE FROM VehicleAssignments WHERE vehicle_id = ?")) {
-                pstmt.setInt(1, vehicleId);
-                pstmt.executeUpdate();
-            }
-
             // Delete the vehicle 
             try (PreparedStatement pstmt = conn.prepareStatement(
                     "DELETE FROM vehicles WHERE vehicle_id = ?")) {

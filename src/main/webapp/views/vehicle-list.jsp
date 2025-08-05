@@ -13,16 +13,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="views/vehicle.css">
-    <style>
-        .error-message {
-            color: #721c24;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            padding: 10px;
-            border-radius: 4px;
-            margin-bottom: 15px;
-        }
-    </style>
 </head>
 <body>
     <jsp:include page="../header.jsp" />
@@ -40,8 +30,13 @@
         
         <h1>Vehicle Fleet Management</h1>
         <c:if test="${param.error == 'deletefailed'}">
-            <div class="error-message">
+            <div class="error">
                 Failed to delete the vehicle. Please try again.
+            </div>
+        </c:if>
+        <c:if test="${param.successMessage == 'deleted'}">
+            <div class="success">
+                Vehicles Successfully Deleted
             </div>
         </c:if>
         <c:if test="${not empty successMessage}">
