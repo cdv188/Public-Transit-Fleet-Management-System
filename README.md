@@ -87,35 +87,98 @@ A controller class is used to manage communication across all layers.
 ## 📁 Updated Project Structure
 
 ```
-main/
-└── main/
-  ├── java/
-  │ ├── businesslayers/
-  │ │   ├── builder/
-  │ │   ├── command/
-  │ │   ├── observer/
-  │ │   ├── simplefactory/
-  │ │   ├── strategy/
-  │ │   └── controller/
-  │ ├── datacccesslayer/
-  │ │   ├── consumptionlogs/
-  │ │   ├── operatorlogs/
-  │ │   ├── users/
-  │ │   ├── vehicleassignment/
-  │ │   ├── vehiclelocation/
-  │ │   └── vehicles/
-  │ ├── database/
-  │ ├── datatransferobject/
-  │ ├── filter/
-  │ ├── MaintenanceLogDAO/
-  │ └── viewLayer/
-  ├── resources/
-  │ └── META-INF/
-  └── webapp/
-    ├── css/
-    ├── META-INF/
-    ├── views/
-    └── WEB-INF/
+java/
+├───businesslayers/
+│   ├───builder/
+│   │       Vehicle.java
+│   │       VehicleBuilder.java
+│   │
+│   ├───command/
+│   │   │   Command.java
+│   │   │
+│   │   ├───maintenanceCommand/
+│   │   │       MaintenanceDashboardCommand.java
+│   │   │       ShowMaintenanceByIdCommand.java
+│   │   │       ShowMaintenanceCommand.java
+│   │   │
+│   │   ├───ReportAndGpsCommand/
+│   │   │       GenerateReportCommand.java
+│   │   │       LogOperatorStatusCommand.java
+│   │   │       RunSystemChecksCommand.java
+│   │   │       SimulateGPSCommand.java
+│   │   │
+│   │   ├───userAndLoginCommand/
+│   │   │       LoginCommand.java
+│   │   │       LogoutCommand.java
+│   │   │       NavigateToRegisterPageCommand.java
+│   │   │       RegisterUserCommand.java
+│   │   │
+│   │   └───vehiclecommand/
+│   │           DeleteVehicleCommand.java
+│   │           RegisterVehicleCommand.java
+│   │           ShowVehicleByIdCommand.java
+│   │           ShowVehicleListCommand.java
+│   │           UpdateVehicleCommand.java
+│   │
+│   ├───observer/
+│   │       AlertCreationObserver.java
+│   │       ComponentWearMonitor.java
+│   │       FuelConsumptionMonitor.java
+│   │       MonitorObserver.java
+│   │       MonitorSubject.java
+│   │
+│   ├───simplefactory/
+│   │       VehicleFactory.java
+│   │
+│   └───strategy/
+│           FuelCostReportStrategy.java
+│           OperatorPerformanceReportStrategy.java
+│           ReportStrategy.java
+│
+├───controller/
+│       CommandFactory.java
+│       FrontController.java
+│
+├───dataaccesslayer/
+│   ├───consumptionlogs/
+│   │       ConsumptionLogsDAO.java
+│   │       ConsumptionLogsDAOImpl.java
+│   │
+│   ├───maintenance/
+│   │       MaintenanceLog.java
+│   │       MaintenanceLogDAO.java
+│   │       MaintenanceLogImpl.java
+│   │       MaintenanceLogLogic.java
+│   │
+│   ├───operatorlogs/
+│   │       OperatorStatusLogsDAO.java
+│   │       OperatorStatusLogsDAOImpl.java
+│   │
+│   ├───users/
+│   │       User.java
+│   │       UserDAO.java
+│   │       UserDAOImpl.java
+│   │
+│   ├───vehiclelocation/
+│   │       VehicleLocationsDAO.java
+│   │       VehicleLocationsDAOImpl.java
+│   │
+│   └───vehicles/
+│           VehicleDAO.java
+│           VehicleDAOImpl.java
+│           VehicleLogic.java
+│
+├───database/
+│       DataSource.java
+│       ptfms_db.sql
+│
+├───datatransferobject/
+│       ConsumptionLog.java
+│       OperatorStatusLog.java
+│       VehicleLocation.java
+│
+└───filter/
+        SecurityFilter.java
 ```
 ---
 
