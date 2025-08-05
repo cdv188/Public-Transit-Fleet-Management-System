@@ -19,9 +19,11 @@
         <div class="nav">
             <a href="ShowMaintenance">Back to Dashboard</a>
             <a href="ShowVehicleList">Vehicle List</a>
+            <c:if test="${isManager}">
             <a href="reports.jsp">Reports</a>
             <a href="gpsDashboard.jsp">GPS Dashboard</a>
             <a href="dashboard.jsp">Dashboard</a>
+            </c:if>
         </div>
         
         <h1>Maintenance Task Details</h1>

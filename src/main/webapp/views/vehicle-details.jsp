@@ -43,9 +43,11 @@
         <div class="nav">
             <a href="ShowVehicleList">Back to Vehicle List</a>
             <a href="ShowMaintenance">Maintenance Dashboard</a>
-            <a href="reports.jsp">Reports</a>
-            <a href="gpsDashboard.jsp">GPS Dashboard</a>
-            <a href="dashboard.jsp">Dashboard</a>
+            <c:if test="${isManager}">
+                <a href="reports.jsp">Reports</a>
+                <a href="gpsDashboard.jsp">GPS Dashboard</a>
+                <a href="dashboard.jsp">Dashboard</a>
+            </c:if>
         </div>
         
         <h1>Vehicle Details: ${vehicle.number}</h1>

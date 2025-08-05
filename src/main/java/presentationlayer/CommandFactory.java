@@ -1,4 +1,4 @@
-package controller;
+package presentationlayer;
 
 import businesslayers.command.ReportAndGpsCommand.LogOperatorStatusCommand;
 import businesslayers.command.userAndLoginCommand.NavigateToRegisterPageCommand;

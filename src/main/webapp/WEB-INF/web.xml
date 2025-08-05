@@ -2,7 +2,7 @@
 <web-app version="4.0" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
     <servlet>
         <servlet-name>FrontController</servlet-name>
-        <servlet-class>controller.FrontController</servlet-class>
+        <servlet-class>presentationlayer.FrontController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>LoginServlet</servlet-name>
@@ -79,7 +79,7 @@
     </session-config>
     <filter>
         <filter-name>SecurityFilter</filter-name>
-        <filter-class>filter.SecurityFilter</filter-class>
+        <filter-class>dataaccesslayer.filter.SecurityFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>SecurityFilter</filter-name>

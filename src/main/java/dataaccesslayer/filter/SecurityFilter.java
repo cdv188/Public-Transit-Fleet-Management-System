@@ -1,4 +1,4 @@
-package filter;
+package dataaccesslayer.filter;
 
 import dataaccesslayer.users.User;
 import java.io.IOException;
