@@ -14,6 +14,8 @@ A web-based application designed for public transit agencies to monitor, track, 
 
 This system enables real-time GPS tracking, energy/fuel consumption monitoring, predictive maintenance alerts, and performance analytics to enhance operational efficiency and reliability of public transit fleets.
 
+<img width="1916" height="953" alt="ptfmsDashboard" src="https://github.com/user-attachments/assets/468e7e61-f265-47fd-bb3e-7792f9043b00" />
+
 ---
 
 ## 🧱 Technologies Used
@@ -53,24 +55,29 @@ A controller class is used to manage communication across all layers.
 
 ### FR-02: Vehicle Management
 - Register vehicles (type, ID, fuel type, capacity, route)
+<img width="1916" height="954" alt="ptfmsRegisterVehicle" src="https://github.com/user-attachments/assets/3c9d27e3-1337-40f6-844b-861ff4979cc6" />
 
 ### FR-03: GPS Tracking
 - Real-time location reporting
 - Arrival/departure logging
 - Operator break/out-of-service logging
+<img width="1917" height="957" alt="ptfmsGPSTracking" src="https://github.com/user-attachments/assets/43471e6b-56b5-4442-a8e4-e703e4bcf6ec" />
 
 ### FR-04: Energy/Fuel Monitoring
 - Efficiency tracking per vehicle type
 - Manager alerts for abnormal usage
+<img width="1916" height="955" alt="ptfmsFuel" src="https://github.com/user-attachments/assets/3eac0761-6285-4c71-ba01-0420fab0e567" />
 
 ### FR-05: Predictive Maintenance Alerts
 - Monitors component wear and diagnostics
 - Alerts for servicing
 - Schedule maintenance tasks
+<img width="1917" height="955" alt="ptfmsAlerts" src="https://github.com/user-attachments/assets/66dbc08f-5e34-42bc-b8da-42392a634c7b" />
 
 ### FR-06: Reporting & Analytics
 - Dashboards for maintenance and performance
 - Reports for cost, efficiency, and fuel/energy
+<img width="1916" height="952" alt="ptfmsReports" src="https://github.com/user-attachments/assets/d9e8274a-a6fd-4b10-8975-42d75d73b302" />
 
 ---
 ## 📦 Deliverables
